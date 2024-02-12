@@ -1,0 +1,25 @@
+{...}: {
+  enabledModules = [
+    "audio"
+    "comm"
+    "conn"
+    "desktop.hyprland"
+    "eda"
+    "fs"
+    "game"
+    "hardware"
+    "img"
+    "math"
+    "model"
+    "repo.nix"
+    "script"
+    "sops"
+    "term"
+    "theme"
+    "txt"
+    "util"
+    "vid"
+    "virt"
+    "wayland"
+  ];
+}

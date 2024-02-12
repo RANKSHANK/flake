@@ -1,0 +1,7 @@
+{ pkgs, config, lib, ... }:
+
+lib.mkModule "livecaptions" [ "audio" "desktop" ] config {
+    environment.systemPackages = builtins.attrValues {
+      inherit (pkgs) livecaptions;
+    };
+}

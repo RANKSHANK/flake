@@ -1,0 +1,4 @@
+.direnv
+result/*
+secrets.yaml
+.old_locks/*
