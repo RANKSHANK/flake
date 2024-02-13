@@ -3,6 +3,7 @@
     "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
 
   inputs = {
+
     disko.url = "github:nix-community/disko";
 
     home-manager = {
@@ -36,13 +37,6 @@
 
     stylix.url = "github:danth/stylix";
     #"/home/rankshank/project/stylix/";
-    wezterm = {
-      type = "github";
-      owner = "wez";
-      repo = "wezterm";
-      dir = "nix";
-      follows = "nix-unstable";
-    };
   };
 
   outputs = inputs@{ self, ... }:

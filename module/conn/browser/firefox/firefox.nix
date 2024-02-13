@@ -70,7 +70,6 @@ in lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
           };
           extraConfig = ''
           '';
-          # Originally from https://github.com/Dook97/firefox-qutebrowser-userchrome
           userChrome = import ./userchrome.nix config lib;
         };
       };
