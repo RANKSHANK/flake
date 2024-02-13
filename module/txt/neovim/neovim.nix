@@ -6,68 +6,9 @@
   lib,
   ...
 }: let
-  plugins = {
-    inherit (pkgs.vimPlugins.nvim-treesitter) withAllGrammars;
-    inherit
-      (pkgs.vimPlugins)
-      lazy-nvim
-      nvim-lspconfig
-      lsp-zero-nvim
-      nvim-cmp
-      cmp_luasnip
-      cmp-vim-lsp
-      cmp-treesitter
-      cmp-spell
-      cmp-buffer
-      cmp-path
-      cmp-nvim-lsp-signature-help
-      luasnip
-      friendly-snippets
-      telescope-nvim
-      telescope-undo-nvim
-      telescope-fzf-native-nvim
-      nvim-treesitter-textobjects
-      nvim-ts-context-commentstring
-      comment-nvim
-      nvim-dap
-      dressing-nvim
-      fidget-nvim
-      flit-nvim
-      harpoon2
-      kanagawa-nvim
-      vim-illuminate
-      leap-nvim
-      lsp_lines-nvim
-      lualine-nvim
-      nvim-navic
-      neodev-nvim
-      noice-nvim
-      no-neck-pain-nvim
-      nui-nvim
-      oil-nvim
-      vim-repeat
-      smartcolumn-nvim
-      tabout-nvim
-      todo-comments-nvim
-      rainbow-delimiters-nvim
-      treesj
-      trouble-nvim
-      vim-nix
-      vimtex
-      nvim-web-devicons
-      which-key-nvim
-      ;
 
-    lazy-nix-helper = pkgs.vimUtils.buildVimPlugin {
-      name = "lazy-nix-helper.nvim";
-      src = pkgs.fetchFromGitHub {
-        owner = "b-src";
-        repo = "lazy-nix-helper.nvim";
-        rev = "63b20ed";
-        sha256 = "sha256-TBDZGj0NXkWvJZJ5ngEqbhovf6RPm9N+Rmphz92CS3Q=";
-      };
-    };
-  };
+  plugins = import ./plugins.nix pkgs;
+
   pluginLoadStr = plugins:
     builtins.concatStringsSep ",\n" (map
       (
@@ -106,7 +47,7 @@ in lib.mkModule "neovim" [ "shell" ] config {
         defaultEditor = true;
         package = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
 
-        extraLuaConfig = ''
+        extraLuaConfig = with config.lib.stylix.colors.withHashtag; ''
                    local plugins = {
                      ${pluginLoadStr config.home-manager.users.${user}.programs.neovim.plugins}
                    }
@@ -163,16 +104,31 @@ in lib.mkModule "neovim" [ "shell" ] config {
                    },
           {
           	priority = 2,
-          	"Stylix/stylix",
-          	dir = require("lazy-nix-helper").get_plugin_path("stylix"),
-          	-- "rebelot/kanagawa.nvim",
-          	-- dir = require("lazy-nix-helper").get_plugin_path("kanagawa-nvim"),
+              "RRethy/base16-nvim",
+          	  dir = require("lazy-nix-helper").get_plugin_path("base16"),
           	lazy = false,
-          	--opts = {
-          	--	dimInactive = true,
-          	--},
+          	config = function()
+                require("base16-colorscheme").setup({
+                    base00 = "${base00}",
+                    base01 = "${base01}",
+                    base02 = "${base02}",
+                    base03 = "${base03}",
+                    base04 = "${base04}",
+                    base05 = "${base05}",
+                    base06 = "${base06}",
+                    base07 = "${base07}",
+                    base08 = "${base08}",
+                    base09 = "${base09}",
+                    base0A = "${base0A}",
+                    base0B = "${base0B}",
+                    base0C = "${base0C}",
+                    base0D = "${base0D}",
+                    base0E = "${base0E}",
+                    base0F = "${base0F}",
+                })
+            end,
           },
-                   })
+       })
         '';
       };
   };

@@ -3,7 +3,6 @@ return {
     dir = require("lazy-nix-helper").get_plugin_path("fidget.nvim"),
 	dependencies = {
         "neovim/nvim-lspconfig",
-        dir = require("lazy-nix-helper").get_plugin_path("nvim-lspconfig"),
     },
 	event = "LspAttach",
 	config = function()
