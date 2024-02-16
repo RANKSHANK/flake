@@ -22,7 +22,7 @@
 
           '';
         in ''
-          c.url.start_pages = ['${config.browsers.homePage}'];
+          c.url.start_pages = ['${config.browsers.homepage}'];
           c.hints.selectors["code"] = [
             #Selects all code tags where parent != pretage
             ":not(pre) > code",

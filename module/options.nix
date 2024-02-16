@@ -25,7 +25,7 @@
     };
 
     browsers = {
-        homePage = lib.mkOption {
+        homepage = lib.mkOption {
             default = "";
             type = lib.types.str;
             description = "Default Homepage/ new tab page";
@@ -33,7 +33,7 @@
 
         bookmarks = lib.mkOption {
           default = [];
-          type = lib.types.listOf lib.types.str;
+          type = lib.types.listOf lib.types.attrs;
           description = "Browser bookmarks";
         };
 

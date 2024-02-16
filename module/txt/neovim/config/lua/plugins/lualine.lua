@@ -2,7 +2,6 @@ return {
 	"nvim-lualine/lualine.nvim",
     dir = require("lazy-nix-helper").get_plugin_path("lualine-nvim"),
 	opts = function(_)
-		local icons = require("lazyvim.config").icons
 		return {
 			options = {
 				theme = "auto",

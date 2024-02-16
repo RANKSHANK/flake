@@ -96,7 +96,7 @@ in lib.mkModule "hyprland" [] config {
           kb_options = [
             "caps:escape"
           ];
-          follow_mouse = 3;
+          follow_mouse = 1;
           mouse_refocus = false;
           repeat_delay = 250;
           numlock_by_default = true;
@@ -129,6 +129,7 @@ in lib.mkModule "hyprland" [] config {
         };
 
         windowrulev2 = [
+          "noborder,onworkspace:1,floating:0,title:^.*(-\\sYouTube\\s—).*$"
           "bordercolor rgba(${colors.base0A}22) rgba(${colors.base0A}22) rgba(${colors.base0A}ff) rgba(${colors.base0A}44) rgba(${colors.base0A}22), focus:1"
           "bordersize 1, focus:1, fullscreen:0"
           "noborder, focus:1, fullscreen:1"

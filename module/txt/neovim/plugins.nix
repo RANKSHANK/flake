@@ -44,6 +44,8 @@ pkgs: {
       lualine-nvim
       nvim-navic
       neodev-nvim
+      neorg
+      neorg-telescope
       noice-nvim
       no-neck-pain-nvim
       nui-nvim

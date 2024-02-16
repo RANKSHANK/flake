@@ -72,9 +72,14 @@ vim.cmd([[
 	hi link LspDiagnosticUnderlineInformation DiagnosticInfo
 	hi link LspUnderlineHint DiagnosticHint
 	hi link LspDiagnosticUnderlineHint DiagnosticHint
-    hi link FloatBorder Whitespace
-	hi link NormalFloat Whitespace
-	hi link WhichKeyFloat Whitespace
+    hi link Whichkey FloatBoarder
+    hi link WhichkeyBorder FloatBoarder
+    hi link TelescopeBorder FloatBorder
+    hi link TelescopeTitle FloatBorder
+    hi link TelescopePromptBorder FloatBorder
+    hi link TelescopePreviewBorder FloatBorder
+    hi link TelescopeResultsBorder FloatBorder
+     
 ]])
 
 vim.g.icons = {

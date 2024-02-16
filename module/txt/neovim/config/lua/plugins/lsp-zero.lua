@@ -70,7 +70,6 @@ return {
         conf.pyright.setup({});
         conf.rust_analyzer.setup({});
         local cmp = require("cmp")
-        -- lsp.nvim_workspace()
         cmp.setup({
             completion = {
                 completeopt = "menu,menuone,noinsert",

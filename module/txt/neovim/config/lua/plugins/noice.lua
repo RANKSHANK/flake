@@ -109,16 +109,8 @@ return {
                 },
                 messages = {
                     enabled = true;
-                    border = {
-                        style = "rounded",
-                        padding = { 0, 1 },
-                    },
-                    size = {
-                        width = 40,
-                        height = "auto",
-                    },
                 },
-                notify = { "{title}}" },
+                notify = { "{title}" },
                 popup_menu = {
                     relative = "editor",
                     position = {

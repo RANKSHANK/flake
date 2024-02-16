@@ -17,7 +17,7 @@ in lib.mkModule "neovim" [ "shell" ] config {
             buildInputs = lib.flatten [
               prev.buildInputs
               (builtins.attrValues {
-                inherit (pkgs) rg fzf fd lazygit;
+                inherit (pkgs) rg fzf;
               })
             ];
           };
@@ -35,7 +35,7 @@ in lib.mkModule "neovim" [ "shell" ] config {
         plugins = builtins.attrValues plugins;
         enable = true;
         defaultEditor = true;
-#        package = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
+        package = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
 
         extraLuaConfig = import ./init.nix lib config plugins;
       };

@@ -16,7 +16,7 @@ return {
 			},
 		},
         autocmds = {
-            enableOnVimEnter = true,
+            -- enableOnVimEnter = true,
         },
     },
 }

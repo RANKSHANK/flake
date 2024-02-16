@@ -132,6 +132,8 @@ in rec {
 
   isEnabled = moduleName: config: !(builtins.elem moduleName config.disabledModules) && (builtins.elem moduleName config.enabledModules || builtins.elem moduleName config.enabledTags || (ternary (builtins.hasAttr moduleName config.modules) (ternary (lib.count config.modules.${moduleName}.requiredTags == 0) false (builtins.all (tag: builtins.elem tag config.enabledTags) config.modules.${moduleName}.requiredTags))) false);
 
+ genNumStrs = num: str: builtins.genList (i: builtins.replaceStrings ["<num>"] [(toString i)] str) num;
+
   # The same but marked for auto import
   mkSubModule = mkIfEnabled;
 

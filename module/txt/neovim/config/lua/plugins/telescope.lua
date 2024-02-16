@@ -16,7 +16,7 @@ return {
         },
 	},
 	cmd = "Telescope",
-	version = false, -- telescope did only one release, so use HEAD for now
+	version = false,
 	keys = {
 		{ "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
 		{ "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
@@ -44,7 +44,17 @@ return {
 	},
 	config = function()
 		require("telescope").setup({
-		defaults = {
+		defaults = vim.tbl_extend( "force", require("telescope.themes").get_cursor({
+            layout_config = {
+               preview_cutoff = 1,
+               width = function(_, max_columns, _)
+                   return math.min(math.floor(max_columns * 0.8), 120)
+                end,
+                height = function(_, _, max_lines)
+                    return math.min(math.floor(max_lines * 0.6), 20)
+                end,
+            },
+        }), {
 			prompt_prefix = " ",
 			selection_caret = "󰜴 ",
 			mappings = {
@@ -71,14 +81,10 @@ return {
 					end,
 				},
 			},
-		},
+		}),
 			extensions = {
 				undo = {
 					side_by_side = true,
-					layout_strategy = "vertical",
-					layout_config = {
-						preview_height = 0.8,
-					},
 					mappings = {
 						i = {
 							["<CR>"] = require("telescope-undo.actions").yank_additions,
@@ -89,6 +95,8 @@ return {
 				},
                 fzf = {
                     fuzzy = true,
+                    override_generic_sorter = true,
+                    override_file_sorter = true,
                 },
 			},
 		})

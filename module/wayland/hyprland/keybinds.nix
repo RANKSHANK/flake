@@ -20,7 +20,6 @@
         (lib.ternary (lib.safeIsString "exec" keybind) "exec, ${keybind.exec}" "")
       ])) (builtins.filter (attr: !builtins.hasAttr "combo" attr) config.keybinds)) ["L" "R"]);
 
-  genNumStrs = num: str: builtins.genList (i: builtins.replaceStrings ["<num>"] [(toString i)] str) num;
 in lib.mkSubModule "hyprland" config {
     home-manager.users.${user}.wayland.windowManager.hyprland.settings = {
       bindm = [
@@ -44,10 +43,10 @@ in lib.mkSubModule "hyprland" config {
         "super, p, pin, active"
         "super, f, togglefloating, active"
 
-        (genNumStrs 10 "super, <num>, focusworkspaceoncurrentmonitor, <num>")
-        (genNumStrs 10 "super, kp_<num>, focusworkspaceoncurrentmonitor, <num>")
-        (genNumStrs 10 "supershift, <num>, movetoworkspace, <num>")
-        (genNumStrs 10 "supershift, kp_<num>, movetoworkspace, <num>")
+        (lib.genNumStrs 10 "super, <num>, focusworkspaceoncurrentmonitor, <num>")
+        (lib.genNumStrs 10 "super, kp_<num>, focusworkspaceoncurrentmonitor, <num>")
+        (lib.genNumStrs 10 "supershift, <num>, movetoworkspace, <num>")
+        (lib.genNumStrs 10 "supershift, kp_<num>, movetoworkspace, <num>")
         genBind
         ", XF86AudioMute, exec, set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ", XF86AudioPlay, exec, playerctl play-pause"

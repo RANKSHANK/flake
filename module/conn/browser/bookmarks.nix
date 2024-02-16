@@ -4,7 +4,7 @@
   ...
 }: lib.mkModule "bookmarks" [ "desktop" "connectivity" ] config {
   browsers = lib.mkIfEnabled "desktop" config {
-    homePage = "https://search.brave.com";
+    homepage = lib.mkDefault "https://search.brave.com";
     searchEngines = [
       {
         name = "Brave";
@@ -67,6 +67,29 @@
         shortcut = "yt";
         url = "https://youtube.com/results?search_query={}";
       }
+      {
+        name = "Crates.io";
+        shortcut = "cr";
+        url = "https://crates.io/search?q={}";
+      }
+    ];
+
+    bookmarks = [
+        {
+            name = "OzBargain";
+            url = "https://ozbargain.com.au/deals";
+            nick = "OzB";
+        }
+        {
+            name = "UoW";
+            url = "https://www.uow.edu.au/student/";
+            nick = "UoW";
+        }
+        {
+            name = "Nix Lib Functions";
+            url = "https://teu5us.github.io/nix-lib.html";
+            nick = "NLF";
+        }
     ];
   };
 }

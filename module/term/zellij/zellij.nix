@@ -21,7 +21,6 @@
       xdg.configFile."zellij/layouts" = {
         source = ./layouts;
       };
-      # This is terrible. wtf even is kdl
-      xdg.configFile."zellij/config.kdl".text = builtins.readFile ./config.kdl;
+      xdg.configFile."zellij/config.kdl".text = import ./config.nix lib;
     };
 }

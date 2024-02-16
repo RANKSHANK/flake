@@ -11,10 +11,10 @@
 
   stylix = let
     font = {
-       package = pkgs.fira-code;
-       name = "FiraCode";
-      # package = pkgs.nerdfonts;
-      # name = "JetBrains Mono";
+       # package = pkgs.fira-code;
+       # name = "FiraCode";
+      package = pkgs.nerdfonts;
+      name = "JetBrains Mono";
       # package = pkgs.monaspace;
       # name = "Monaspace Krypton";
     };
@@ -25,7 +25,7 @@
       sha256 = "sha256-RKhIar3wMwo/5rWG5AdQbnOP4HX+C138Q5YeNY/acgY=";
     };
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
     opacity = {
       desktop = 0.9;
       applications = 0.95;

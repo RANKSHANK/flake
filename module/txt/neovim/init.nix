@@ -75,15 +75,15 @@ vim.g.maplocalleader = " "
 
 require("lazy").setup({
     {
-        priority = 0,
+        priority = 1,
         import = "config",
     },
     {
-        priority = 1,
+        priority = 2,
         import = "plugins",
     },
     {
-        priority = 2,
+        priority = 3,
         "RRethy/base16-nvim",
         dir = require("lazy-nix-helper").get_plugin_path("base16"),
         lazy = false,
@@ -104,7 +104,30 @@ require("lazy").setup({
             base0D = "${base0D}",
             base0E = "${base0E}",
             base0F = "${base0F}",
-        }) end,
+        })
+vim.cmd([[
+	hi link LspUnderlineError DiagnosticError
+	hi link DiagnosticUnderlineError DiagnosticError
+	hi link LspDiagnosticUnderlineError DiagnosticError
+	hi link LspDiagnosticsUnderlineError DiagnosticError
+	hi link LspUnderlineWarn DiagnosticWarn
+	hi link LspDiagnosticUnderlineWarn DiagnosticWarn
+	hi link LspUnderlineInformation DiagnosticInfo
+	hi link LspDiagnosticUnderlineInformation DiagnosticInfo
+	hi link LspUnderlineHint DiagnosticHint
+	hi link LspDiagnosticUnderlineHint DiagnosticHint
+    hi link Whichkey FloatBoarder
+    hi link WhichkeyBorder FloatBoarder
+    hi link TelescopeBorder FloatBorder
+    hi link TelescopeTitle FloatBorder
+    hi link TelescopePreviewBorder FloatBorder
+    hi link TelescopeResultsBorder FloatBorder
+    hi TelescopePromptBorder guifg=${base05}
+    hi TelescopePromptBorder guibg=${base00}
+    hi TelescopeBorder guifg=${base05}
+    hi TelescopeBorder guibg=${base00}
+]])
+        end,
     },
 })
 ''

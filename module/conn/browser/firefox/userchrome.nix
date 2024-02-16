@@ -28,9 +28,13 @@ in ''
 --toolbar-field-focus-border-color: transparent !important;
 }
 
-#TabsToolbar { visibility: collapse; }
 
 /* --- GENERAL DEBLOAT ---------------------------------- */
+
+/* Ui close button is pointless here */
+.titlebar-close {
+    display:none !important;
+}
 
 /* Bottom left page loading status or url preview */
 #statuspanel { display: none !important; }
@@ -86,10 +90,6 @@ padding: 0px 4px 0px 0px !important;
     margin-right: 0.4em !important;
 }
 
-#navigator-toolbox {
-    border: none !important;
-}
-
 /* keep pop-up menus from overlapping with navbar */
 #widget-overflow { margin: 0 !important; }
 #appMenu-popup { margin: 0 !important; }
@@ -143,9 +143,6 @@ padding: 0px 4px 0px 0px !important;
     /* Go to arrow button at the end of the urlbar when searching */
 #urlbar-go-button { display: none; }
 
-    /* remove container indicator from urlbar */
-#userContext-label, #userContext-indicator { display: none !important;}
-
 #titlebar {
     --proton-tab-block-margin: 0px !important;
     --tab-block-margin: 0px !important;
@@ -174,8 +171,14 @@ tab {
     border: none
 }
 
-/* Hide close button on tabs */
-#tabbrowser-tabs .tabbrowser-tab .tab-close-button { display: none !important; }
+/* Always show tab close button on hover and never otherwise */
+.tabbrowser-tab .tab-close-button{
+  display:none;
+}
+.tabbrowser-tab:not([pinned]):hover .tab-close-button{
+  display: flex !important;
+  align-items: center;
+}
 
     /* disable favicons in tab */
     /* .tab-icon-stack:not([pinned]) { display: none !important; } */
@@ -199,12 +202,6 @@ tab {
 #tabbrowser-tabs .tabbrowser-tab:hover:not([selected]) .tab-content {
     background: var(--tab-active-bg-color) !important;
     }
-
-    /* hide window controls */
-    .titlebar-buttonbox-container { display: none; }
-
-    /* remove titlebar spacers */
-    .titlebar-spacer { display: none !important; }
 
 
     /* disable tab shadow */
@@ -242,27 +239,49 @@ tab {
 
     /* --- AUTOHIDE NAVBAR ---------------------------------- */
 
-    /* hide navbar unless focused */
-#nav-bar {
-    min-height: 0 !important;
-    max-height: 0 !important;
-    height: 0 !important;
-    --moz-transform: scaleY(0) !important;
-    transform: scaleY(0) !important;
-    }
 
-    /* show on focus */
-#nav-bar:focus-within {
-    --moz-transform: scale(1) !important;
-    transform: scale(1) !important;
-    max-height: var(--urlbar-height-setting) !important;
+#navigator-toolbox{
+	background:transparent;
+}
 
-    height: var(--urlbar-height-setting) !important;
-    min-height: var(--urlbar-height-setting) !important;
-    }
+#navigator-toolbox > *{
+	background: var(--toolbar-bg-color) !important;
+}
 
-#navigator-toolbox:focus-within > .browser-toolbar {
-    transform: translateY(0);
-    opacity: 1;
-    }
+#navigator-toolbox {
+    position: relative;
+    height: 0px;
+	transition:.2s linear all;
+    overflow: hidden;
+	opacity:0;
+    margin-bottom: 0px;
+    z-index: -1;
+
+}
+
+#navigator-toolbox:hover,
+#navigator-toolbox:focus-within{
+    height: 512px;
+    margin-bottom: -132px;
+	overflow:extend;
+	opacity:1;
+}
+
+#content-deck{
+    position:relative;
+    z-index: 0;
+}
+
+#titlebar-buttonbox{
+	opacity:0;
+    height: 1px;
+    overflow: hidden;
+	transition:.2s linear all;
+}
+
+#titlebar-buttonbox:hover,
+#titlebar-buttonbox:focus-within{
+	opacity:1;
+    height: auto;
+}
 ''
