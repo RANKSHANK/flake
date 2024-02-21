@@ -48,8 +48,9 @@ pkgs: {
       neorg-telescope
       noice-nvim
       no-neck-pain-nvim
+      none-ls-nvim
       nui-nvim
-      nvim-base16
+      base16-nvim #TODO: nixpkgs#289539
       nvim-notify
       oil-nvim
       vim-repeat

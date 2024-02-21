@@ -12,8 +12,8 @@ set tabcontaineraware true
 set hintnames short
 unbind <S-l>
 unbind <S-h>
-bind j scrollline 20
-bind k scrollline -20
+bind j scrollline 10
+bind k scrollline -10
 bind b fillcmdline taball
 bind q fillcmdline tabclose
 

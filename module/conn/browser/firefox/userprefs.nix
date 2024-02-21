@@ -146,6 +146,6 @@ config: user: {
     "dom.enable_web_task_scheduling" = true;
     "layout.css.has-selector.enabled" = true;
     "dom.security.sanitizer.enabled" = true;
-    
+    "double-click on browser.sessionstore.resume_from_crash" = false;
 
 }

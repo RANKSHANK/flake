@@ -10,20 +10,6 @@
   plugins = import ./plugins.nix pkgs;
 
 in lib.mkModule "neovim" [ "shell" ] config {
-    nixpkgs.overlays = [
-      (
-        final: prev: {
-          neovim = {
-            buildInputs = lib.flatten [
-              prev.buildInputs
-              (builtins.attrValues {
-                inherit (pkgs) rg fzf;
-              })
-            ];
-          };
-        }
-      )
-    ];
 
     home-manager.users.${user} = {
       xdg.configFile.nvim = {

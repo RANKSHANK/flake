@@ -1,6 +1,8 @@
 return {
     "nvim-neorg/neorg",
     dir = require("lazy-nix-helper").get_plugin_path("neorg"),
+    lazy = true,
+    filetype = ".norg",
     dependencies = {
         { "nvim-lua/plenary.nvim", },
         {

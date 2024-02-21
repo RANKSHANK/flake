@@ -43,6 +43,10 @@ return {
             'rafamadriz/friendly-snippets',
             dir = require("lazy-nix-helper").get_plugin_path("freindly-snippets"),
         },
+        {
+            "nvimtools/none-ls.nvim",
+            dir = require("lazy-nix-helper").get_plugin_path("none-ls"),
+        },
 
     },
     opts = {
@@ -89,7 +93,9 @@ return {
             },
             mapping = cmp.mapping.preset.insert({
                 ["<C-N>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+                ["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
                 ["<C-P>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+                ["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
                 ["<C-b>"] = cmp.mapping.scroll_docs( -4),
                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
                 ["<C-Space>"] = cmp.mapping.complete(),
@@ -152,6 +158,14 @@ return {
             })
         end)
         lsp.setup()
+        local null_ls = require("null-ls")
+        null_ls.setup({
+            sources = {
+                null_ls.builtins.formatting.stylua,
+                null_ls.builtins.diagnostics.eslint,
+                null_ls.builtins.completion.spell,
+            },
+        })
         vim.diagnostic.config({
             update_in_insert = true,
 

@@ -44,7 +44,7 @@ return {
 	},
 	config = function()
 		require("telescope").setup({
-		defaults = vim.tbl_extend( "force", require("telescope.themes").get_cursor({
+		defaults = vim.tbl_extend( "force", require("telescope.themes").get_ivy({
             layout_config = {
                preview_cutoff = 1,
                width = function(_, max_columns, _)
