@@ -146,6 +146,15 @@ config: user: {
     "dom.enable_web_task_scheduling" = true;
     "layout.css.has-selector.enabled" = true;
     "dom.security.sanitizer.enabled" = true;
-    "double-click on browser.sessionstore.resume_from_crash" = false;
-
+    "double-click_on_browser.sessionstore.resume_from_crash" = false;
+    # Sessionstore is annoying
+    "browser.sessionstore.collect_session_storage" = false;
+    "browser.sessionstore.closedTabsFromClosedWindows" = false;
+    "browser.sessionstore.closedTabsFromAllWindows" = false;
+    "browser.sessionstore.restore_on_demand" = false;
+    "browser.sessionstore.persist_closed_tabs_between_sessions" = false;
+    "browser.sessionstore.platform_collection" = false;
+    "browser.sessionstore.restore_tabs_lazily" = false;
+    "browser.sessionstore.resume_from_crash" = false;
+    "browser.sessionstore.collect_zoom" = false;
 }

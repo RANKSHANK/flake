@@ -18,8 +18,8 @@
       devices = withoutSelf;
     };
   folders = {
-    "document" = genFolder "document" {};
-    "image" = genFolder "image" {};
+    "documents" = genFolder "documents" {};
+    "images" = genFolder "images" {};
     "misc" = genFolder "misc" {};
     "audio" = genFolder "audio" {};
     "video" = genFolder "video" {};

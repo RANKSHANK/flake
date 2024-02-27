@@ -1,4 +1,4 @@
-{pkgs, lib, config, inputs, ...}: lib.mkModule "theme" [ "system" ] config {
+{pkgs, lib, config, ...}: lib.mkModule "theme" [ "system" ] config {
   fonts.packages = [
     (pkgs.nerdfonts.override {
       fonts = [
@@ -24,11 +24,16 @@
       url = "https://images.alphacoders.com/695/69561.jpg";
       sha256 = "sha256-RKhIar3wMwo/5rWG5AdQbnOP4HX+C138Q5YeNY/acgY=";
     };
+    
 
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";
     opacity = {
-      desktop = 0.9;
-      applications = 0.95;
+      desktop = 1.0;
+      applications = 1.0;
       popups = 0.5;
       terminal = 0.9;
     };
@@ -41,7 +46,10 @@
       };
       monospace = font;
       serif = font;
-      sansSerif = font;
+      sansSerif = {
+        name = "Fira";
+        package = pkgs.fira;
+      };
       #emoji = font;
     };
     cursor = {

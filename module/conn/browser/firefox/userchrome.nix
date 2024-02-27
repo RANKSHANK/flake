@@ -238,50 +238,70 @@ tab {
     }
 
     /* --- AUTOHIDE NAVBAR ---------------------------------- */
+:root{
+  --uc-autohide-toolbox-delay: 500ms;
+  --uc-toolbox-rotation: 82deg;
+}
 
+:root[sizemode="maximized"]{
+  --uc-toolbox-rotation: 88.5deg;
+}
+
+@media  (-moz-platform: windows){
+  #navigator-toolbox:not(:-moz-lwtheme){ background-color: -moz-dialog !important; }
+}
+
+:root[sizemode="fullscreen"],
+#navigator-toolbox[inFullscreen]{ margin-top: 0 !important; }
 
 #navigator-toolbox{
-	background:transparent;
-}
-
-#navigator-toolbox > *{
-	background: var(--toolbar-bg-color) !important;
-}
-
-#navigator-toolbox {
-    position: relative;
-    height: 0px;
-	transition:.2s linear all;
-    overflow: hidden;
-	opacity:0;
-    margin-bottom: 0px;
-    z-index: -1;
-
+  position: fixed !important;
+  display: block;
+  background-color: var(--lwt-accent-color,black) !important;
+  transition: transform 82ms linear, opacity 82ms linear !important;
+  transition-delay: var(--uc-autohide-toolbox-delay) !important;
+  transform-origin: top;
+  transform: rotateX(var(--uc-toolbox-rotation));
+  opacity: 0;
+  line-height: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #navigator-toolbox:hover,
 #navigator-toolbox:focus-within{
-    height: 512px;
-    margin-bottom: -132px;
-	overflow:extend;
-	opacity:1;
+  transition-delay: 33ms !important;
+  transform: rotateX(0);
+  opacity: 1;
+}
+/* This ruleset is separate, because not having :has support breaks other selectors as well */
+#mainPopupSet:has(> #appMenu-popup:hover) ~ toolbox{
+  transition-delay: 33ms !important;
+  transform: rotateX(0);
+  opacity: 1;
 }
 
-#content-deck{
-    position:relative;
-    z-index: 0;
+#navigator-toolbox > *{ line-height: normal; pointer-events: auto }
+
+#navigator-toolbox,
+#navigator-toolbox > *{
+  width: 100vw;
+  -moz-appearance: none !important;
 }
 
-#titlebar-buttonbox{
-	opacity:0;
-    height: 1px;
-    overflow: hidden;
-	transition:.2s linear all;
+/* These two exist for oneliner compatibility */
+#nav-bar{ width: var(--uc-navigationbar-width,100vw) }
+#TabsToolbar{ width: calc(100vw - var(--uc-navigationbar-width,0px)) }
+
+/* Don't apply transform before window has been fully created */
+:root:not([sessionrestored]) #navigator-toolbox{ transform:none !important }
+
+:root[customizing] #navigator-toolbox{
+  position: relative !important;
+  transform: none !important;
+  opacity: 1 !important;
 }
 
-#titlebar-buttonbox:hover,
-#titlebar-buttonbox:focus-within{
-	opacity:1;
-    height: auto;
-}
+#navigator-toolbox[inFullscreen] > #PersonalToolbar,
+#PersonalToolbar[collapsed="true"]{ display: none }
 ''

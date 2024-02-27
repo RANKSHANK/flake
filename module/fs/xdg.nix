@@ -52,15 +52,15 @@
         enable = true;
         createDirectories = true;
         desktop = "$HOME/.cache/desktop";
-        documents = "$HOME/document";
+        documents = "$HOME/documents";
         download = "$HOME/tmp";
         music = "$HOME/audio";
-        pictures = "$HOME/image";
+        pictures = "$HOME/images";
         videos = "$HOME/video";
         templates = null;
         publicShare = null;
         extraConfig = {
-          XDG_PROJ_DIR = "$HOME/project";
+          XDG_PROJ_DIR = "$HOME/projects";
           XDG_MISC_DIR = "$HOME/misc";
         };
       };

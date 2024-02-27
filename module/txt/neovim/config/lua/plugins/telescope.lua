@@ -55,8 +55,6 @@ return {
                 end,
             },
         }), {
-			prompt_prefix = " ",
-			selection_caret = "󰜴 ",
 			mappings = {
 				i = {
 					["<c-t>"] = function(...)

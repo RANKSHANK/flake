@@ -1,10 +1,13 @@
 {
-  pkgs,
   config,
+  user,
   lib,
   ...
 }: lib.mkModule "btop" [ "shell" ] config {
-    environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) btop;
+    home-manager.users.${user}.programs.btop = {
+        enable = true;
+        settings = {
+            vim_keys = true;
+        };
     };
 }

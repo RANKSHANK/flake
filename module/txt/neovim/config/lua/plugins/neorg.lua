@@ -1,8 +1,7 @@
 return {
     "nvim-neorg/neorg",
     dir = require("lazy-nix-helper").get_plugin_path("neorg"),
-    lazy = true,
-    filetype = ".norg",
+    event = "VeryLazy",
     dependencies = {
         { "nvim-lua/plenary.nvim", },
         {
@@ -10,25 +9,24 @@ return {
             dir = require("lazy-nix-helper").get_plugin_path("neorg-telescope"),
         },
     },
-    config = function() require("neorg").setup({
-        load = {
-            ["core.defaults"] = {},
-            ["core.concealer"] = {},
-            ["core.dirman"] = {
-                config = {
-                    workspaces = {
-                        uni = "$XDG_DOCUMENTS_DIR/uni",
+    config = function()
+        local norg = require("neorg")
+        norg.setup({
+            load = {
+                ["core.defaults"] = {},
+                ["core.concealer"] = {},
+                ["core.dirman"] = {
+                    config = {
+                        workspaces = {
+                            notes = "$XDG_DOCUMENTS_DIR/notes",
+                        },
                     },
+                    ["core.integrations.telescope"] = {},
                 },
-            },
-            ["core.integrations.telescope"] = {},
-        },
-    }) end,
-    keys = {
-        {
-            "<leader>n",
-            "Telescope neorg find_backlinks",
-            "Telescope Neorg Backlinks",
-        },
-    },
+                ["core.ui.calendar"] = {},
+                ["core.summary"] = {},
+            }
+        })
+    end,
+    build = ":Neorg sync-parsers",
 }

@@ -20,7 +20,7 @@
         (lib.ternary (lib.safeIsString "exec" keybind) "exec, ${keybind.exec}" "")
       ])) (builtins.filter (attr: !builtins.hasAttr "combo" attr) config.keybinds)) ["L" "R"]);
 
-in lib.mkSubModule "hyprland" config {
+in lib.mkSubmodule "hyprland" config {
     home-manager.users.${user}.wayland.windowManager.hyprland.settings = {
       bindm = [
         "super, mouse:272, movewindow"

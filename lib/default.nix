@@ -53,8 +53,9 @@ in rec {
 
   ezTrace = val: builtins.trace val val;
 
-  filterModules = lib.filter (module: (builtins.match "^.*(mk(Sub)?Module).*$" (builtins.readFile module)) != null);
+  filterModules = lib.filter (module: (builtins.match "^.*(mk(Sub)?[Mm]odule).*$" (builtins.readFile module)) != null);
 
+# This currently doesn't work, need to disable greedy regex matching, not sure if possible
   filterDisabledModules = modules: enableSet: let
     findModulesLine = builtins.match "^.*(mkModule.*?][[:s:]]*config).*$";
     findComponent = builtins.match "^.+(\"([a-zA-z0-9_-]*)\").*$";
@@ -73,7 +74,7 @@ in rec {
     (map (moduleWithDecl: rec { # break the declaration into components
         inherit (moduleWithDecl) module;
         components = lib.flatten (recurseComponents (lib.head (ezTrace moduleWithDecl.moduleDecl)));
-        isSubModule = ((builtins.match "^.*(mkSubModule).*$" (lib.head moduleWithDecl.moduleDecl)) != null);
+        isSubmodule = ((builtins.match "^.*(mkSub[Mm]odule).*$" (lib.head moduleWithDecl.moduleDecl)) != null);
         moduleName = lib.tail (ezTrace components);
         moduleReqTags = lib.init components;
     }))
@@ -134,8 +135,8 @@ in rec {
 
  genNumStrs = num: str: builtins.genList (i: builtins.replaceStrings ["<num>"] [(toString i)] str) num;
 
-  # The same but marked for auto import
-  mkSubModule = mkIfEnabled;
+  # The same but marked for auto import TODO: does not split out options and imports properly
+  mkSubmodule = mkIfEnabled;
 
   mkModule = moduleName: enableTags: config: module: let
     filter = name: builtins.elem name [ "options" "imports" ];

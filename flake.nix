@@ -1,7 +1,6 @@
 {
   description =
     "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
-
   inputs = {
 
     disko.url = "github:nix-community/disko";
@@ -28,6 +27,11 @@
 
     nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixvim = {
+        url = "github:nix-community/nixvim";
+        inputs.nixpkgs.follows = "nix-unstable";
+    };
+
     nur.url = "github:nix-community/NUR";
 
     sops-nix= {
@@ -35,8 +39,8 @@
         inputs.nixpkgs.follows = "nix-unstable";
     };
 
-    stylix.url = "github:danth/stylix";
-    #"/home/rankshank/project/stylix/";
+    stylix.url = #"github:danth/stylix"; 
+    "/home/rankshank/projects/stylix/";
   };
 
   outputs = inputs@{ self, ... }:
@@ -49,7 +53,7 @@
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
         ({ user, ... }: {
-          config.home-manager = {
+          home-manager = {
             useUserPackages = true;
             useGlobalPkgs = true;
             users.${user}.home.stateVersion = "23.11";
@@ -59,6 +63,7 @@
         nur.nixosModules.nur
         sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
+        nixvim.nixosModules.nixvim
       ];
     in {
       nixosConfigurations = lib.genAttrs (lib.findTopLevelDirectories ./nixos)

@@ -129,11 +129,11 @@ in lib.mkModule "hyprland" [] config {
         };
 
         windowrulev2 = [
+          "bordersize 1, focus:1, fullscreen:0"
+          "noborder, focus:1, fullscreen:1"
           "noborder,onworkspace:1,floating:0,title:^.*(-\\sYouTube\\s—).*$"
           "noborder, floating:0, focused:1, initialClass:^.*(steam_app_\\d+)$"
           "bordercolor rgba(${colors.base0A}22) rgba(${colors.base0A}22) rgba(${colors.base0A}ff) rgba(${colors.base0A}44) rgba(${colors.base0A}22), focus:1"
-          "bordersize 1, focus:1, fullscreen:0"
-          "noborder, focus:1, fullscreen:1"
           "rounding 5, focus:1"
           "rounding 0, xwayland:1, floating:1, focus:1"
 

@@ -21,7 +21,11 @@ in lib.mkModule "neovim" [ "shell" ] config {
         plugins = builtins.attrValues plugins;
         enable = true;
         defaultEditor = true;
-        package = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
+        package = inputs.neovim-nightly.packages.${pkgs.system}.neovim.overrideAttrs (final: prev: {
+            buildInputs = prev.buildInputs ++ (builtins.attrValues {
+                inherit (pkgs) fd;
+            });
+        });
 
         extraLuaConfig = import ./init.nix lib config plugins;
       };

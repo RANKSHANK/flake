@@ -11,8 +11,12 @@ pkgs: {
   };
 
   inherit (pkgs.vimPlugins.nvim-treesitter) withAllGrammars;
-  inherit
-      (pkgs.vimPlugins)
+  inherit (pkgs.vimPlugins.nvim-treesitter-parsers)
+      markdown
+      markdown_inline
+      nix
+      norg;
+  inherit (pkgs.vimPlugins)
       lazy-nvim
       nvim-lspconfig
       lsp-zero-nvim

@@ -1,8 +1,11 @@
 return {
   "folke/todo-comments.nvim",
   dir = require("lazy-nix-helper").get_plugin_path("todo-comments"),
-  cmd = { "TodoTrouble", "TodoTelescope" },
-  event = { "BufReadPost", "BufNewFile" },
+  lazy = false,
+  config = function ()
+      require("todo-comments").setup({
+      })
+  end,
   keys = {
     { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
     { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },

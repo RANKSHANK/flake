@@ -32,6 +32,10 @@ return {
             dir = require("lazy-nix-helper").get_plugin_path("cmp-nvim-lua"),
         },
         {
+            "f3fora/cmp-spell",
+            dir = require("lazy-nix-helper").get_plugin_path("cmp-spell"),
+        },
+        {
             'hrsh7th/cmp-nvim-lsp-signature-help',
             dir = require("lazy-nix-helper").get_plugin_path("nvm_lsp_signature_help"),
         },
@@ -49,14 +53,6 @@ return {
         },
 
     },
-    opts = {
-        sources = {
-            { name = "path" },
-            { name = "nvim_lsp"},
-            { name = "buffer", keyword_length = 3},
-            { name = "luasnip", keyword_length = 2},
-        },
-    },
     config = function()
         local lsp = require("lsp-zero").preset({
             name = "minimal",
@@ -64,7 +60,6 @@ return {
             manage_nvim_cmp = true,
             suggest_lsp_servers = false,
         })
-
         local conf = require("lspconfig")
         conf.clangd.setup({});
         conf.bashls.setup({});
@@ -75,6 +70,22 @@ return {
         conf.rust_analyzer.setup({});
         local cmp = require("cmp")
         cmp.setup({
+            sources = cmp.config.sources({
+                { name = "path" },
+                { name = "nvim_lsp"},
+                {
+                    name = "buffer",
+                    keyword_length = 3,
+                },
+                {
+                    name = "luasnip",
+                    keyword_length = 2,
+                },
+                {
+                    name = "spell",
+                    keyword_length = 2,
+                },
+            }),
             completion = {
                 completeopt = "menu,menuone,noinsert",
             },
@@ -113,7 +124,7 @@ return {
             },
             experimental = {
                 ghost_text = {
-                    hl_group = "LspCodeLens",
+                    enable = true,
                 },
             },
         })
@@ -158,17 +169,8 @@ return {
             })
         end)
         lsp.setup()
-        local null_ls = require("null-ls")
-        null_ls.setup({
-            sources = {
-                null_ls.builtins.formatting.stylua,
-                null_ls.builtins.diagnostics.eslint,
-                null_ls.builtins.completion.spell,
-            },
-        })
         vim.diagnostic.config({
             update_in_insert = true,
-
             float = {
                 focusable = false,
                 style = "minimal",
