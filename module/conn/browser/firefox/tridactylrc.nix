@@ -14,8 +14,8 @@ unbind <S-l>
 unbind <S-h>
 bind j scrollline 10
 bind k scrollline -10
-bind b fillcmdline tab
 bind <S-b> fillcmdline taball
+bind b fillcmdline tab
 bind q fillcmdline tabclose
 
 autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")

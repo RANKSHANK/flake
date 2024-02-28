@@ -50,22 +50,35 @@ lib.mkSubmodule "nixvim" config {
                         };
                     };
                 };
-                servers = builtins.listToAttrs (map (name: {
-                    inherit name;
-                    value = {
-                        enable = true;
-                        # package = null;
-                    };
-                }) [
+                servers = let
+                    genServers = skipPkg: map (name: {
+                        inherit name;
+                        value = {
+                            enable = true;
+                            package = lib.mkIf skipPkg null;
+                        };
+                    });
+                in builtins.listToAttrs (lib.flatten [
+                (genServers false [
                     "bashls"
                     "cssls"
-                    "gdscript"
-                    "gopls"
                     "lua-ls"
                     "nil_ls"
-                    "rust-analyzer"
                     "yamlls"
-                ]);
+                ])
+                (genServers true [
+                    "gdscript"
+                    "gopls"
+                ])
+                { # Thanks for the spam
+                    name = "rust-analyzer";
+                    value = {
+                        enable = true;
+                        package = null;
+                        installRustc = false;
+                        installCargo = false;
+                    };
+                }]);
             };
         };
     };

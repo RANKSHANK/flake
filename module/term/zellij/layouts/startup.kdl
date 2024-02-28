@@ -1,7 +1,11 @@
 layout {
+    swap_floating_layout {
+        floating_panes max_panes=1 {
+            pane x="2%" y="2%" width="96%" height="96%"
+        }
+    }
     default_tab_template hide_floating_panes=true {
         pane
     }
-    tab 0 hide_floating_panes=true focus=true
-    tab 1 hide_floating_panes=true
+    tab name="1" hide_floating_panes=true focus=true
 }

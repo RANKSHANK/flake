@@ -50,6 +50,9 @@ lib.mkSubmodule "nixvim" config {
             leadmultispace = "╰╶╶╶";
             trail = "␣";
         };
+        fillchars = {
+            eob = " ";
+        };
         laststatus = 0;
         pumblend = 5;
         tabline = "";

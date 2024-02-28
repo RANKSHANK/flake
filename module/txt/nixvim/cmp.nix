@@ -9,28 +9,28 @@ lib.mkSubmodule "nixvim" config {
                 sources = [
                     {
                         name = "path";
-                        priority = 1;
+                        priority = 6;
                     }
-                    { 
+                    {
                         name = "nvim_lsp";
-                        priority = 2;
+                        priority = 5;
                     }
                     {
                         name = "luasnip";
-                        priority = 3;
+                        priority = 4;
                     }
                     {
                         name = "buffer";
-                        priority = 4;
+                        priority = 3;
                     }
                     {
                         name = "greek";
-                        priority = 4;
+                        priority = 2;
                     }
                     {
                         name = "spell";
                         keywordLength = 3;
-                        priority = 6;
+                        priority = 1;
                     }
                 ];
                 mapping = let
@@ -42,9 +42,7 @@ lib.mkSubmodule "nixvim" config {
                     "<Tab>" = select "next";
                     "<C-p>" = select "prev";
                     "<S-Tab>" = select "prev";
-                    "<C-j>" = scroll (-4); # needs parens for some reason
-                    "<C-f>" = scroll (-4); #TODO: investigate
-                    "<C-k>" = scroll 4;
+                    "<C-f>" = scroll (-4);
                     "<C-b>" = scroll 4;
                     "<C-e>" = "cmp.mapping.abort()";
                     "<C-c>" = confirm true;

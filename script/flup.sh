@@ -11,7 +11,7 @@ if [ ! -f "./.prev_locks/0.lock" ]; then
 fi
 pass=$(sudo nix flake update)
 if [[ $pass != 0 ]]; then
-    return 1
+    exit 1
 fi
 backup="$(cmp --silent ./flake.lock ./.prev_locks/0.lock; echo $?)"
 if [[ $backup -ne 0 ]]; then
@@ -31,4 +31,4 @@ sudo nixos-rebuild --upgrade-all switch --flake . "$@"  |& nom
 if command -v flatpak &> /dev/null; then
     sudo flatpak update -y
 fi
-nvd diff $prev /run/current-system
+nvd diff "$prev" /run/current-system

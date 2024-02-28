@@ -2,17 +2,20 @@
 
 lib.mkSubmodule "nixvim" config {
     programs.nixvim = {
+        extraConfigLuaPost = ''
+            require('lualine').setup({
+                sections = {},
+            })
+        '';
         plugins.lualine = {
             enable = true;
-            globalstatus = true;
-            disabledFiletypes = rec {
-                statusline = [
+            globalstatus = true; disabledFiletypes = rec { statusline = [
                     "oil"
                     "telescope"
                 ];
                 winbar = statusline;
             };
-            sections = {
+            winbar = {
                 lualine_a = [
                 {
                     name = "branch";
@@ -41,14 +44,10 @@ lib.mkSubmodule "nixvim" config {
                     };
                 }
                 ];
-                lualine_c = [
+                lualine_c = [ #TODO: Reimplement git diff. lualines is a bit lacking imo
                 {
-                    name = "diff";
-                    extraConfig = {
-                        symbols = config.icons.git;
-                    };
+                    name = "diagnostics";
                 }
-                    "diagnostic"
                 ];
             };
         };

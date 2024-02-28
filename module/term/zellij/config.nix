@@ -13,7 +13,20 @@ keybinds clear-defaults=true {
         bind "Alt j" { ScrollDown; }
         bind "Alt k" { ScrollUp; }
         bind "Alt k" { ScrollUp; }
-        ${builtins.concatStringsSep "\n" (lib.genNumStrs 10 ''bind "Alt <num>" { GoToTab <num>; }'')}
+        bind "Alt b" {
+            NewTab;
+            Run "zellij" "action" "launch-plugin" "zellij:session-manager" "-i" {
+                in_place true
+                close_on_exit true
+            }
+        }
+        ${builtins.concatStringsSep "\n        " (lib.genNumStrs 10 ''
+        bind "Alt <num>" {
+            Run "zellij" "action" "go-to-tab-name" "-c" "<num>" {
+                close_on_exit true
+                in_place true
+            }
+        }'')}
     }
 }
 ''

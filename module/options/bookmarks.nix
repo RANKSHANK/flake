@@ -1,8 +1,6 @@
-{
-  lib,
-  config,
-  ...
-}: lib.mkModule "bookmarks" [ "desktop" "connectivity" ] config {
+{ lib, config, ...}:
+
+lib.mkModule "bookmarks" [ "desktop" "connectivity" ] config {
   browsers = lib.mkIfEnabled "desktop" config {
     homepage = lib.mkDefault "https://search.brave.com";
     searchEngines = [
@@ -71,6 +69,11 @@
         name = "Crates.io";
         shortcut = "cr";
         url = "https://crates.io/search?q={}";
+      }
+      {
+        name = "Nix Issues";
+        shortcut = "ni";
+        url = "https://github.com/NixOS/nixpkgs/issues?q=is%3Aissue+is%3Aopen+{}";
       }
     ];
 

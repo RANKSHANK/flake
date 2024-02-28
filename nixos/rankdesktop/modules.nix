@@ -4,6 +4,7 @@
         disabledModules = [
             "qutebrowser"
             "neovim"
+            # "zellij"
         ];
 
         enabledModules = [

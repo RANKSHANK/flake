@@ -27,9 +27,9 @@
     
 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";
     opacity = {
       desktop = 1.0;
