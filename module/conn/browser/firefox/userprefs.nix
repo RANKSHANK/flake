@@ -1,5 +1,6 @@
 config: user: {
-    "browser.startup.homepage" = config.browsers.homepage;
+    "browser.tabs.closeWindowWithLastTab" = false;
+    "browser.startup.homepage" = "about:blank";
     "security.identityblock.show_extended_validation" = true;
     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
     "devtools.theme" = "dark";

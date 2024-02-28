@@ -13,13 +13,13 @@
     nix = {
       package = pkgs.nixVersions.unstable;
       settings = {
+        builders-use-substitutes = true;
         auto-optimise-store = true;
         warn-dirty = false;
         experimental-features = [
           "nix-command"
           "flakes"
           "auto-allocate-uids"
-          #"configurable-impure-env"
         ];
         substituters = [
           "https://cache.nixos.org/"

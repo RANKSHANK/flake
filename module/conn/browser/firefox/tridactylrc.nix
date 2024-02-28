@@ -6,7 +6,7 @@ ${builtins.concatStringsSep "\n" (lib.flatten [
 ])}
 
 colorscheme nix
-set newtab ${config.browsers.homepage}
+set newtab about:blank
 set allowautofocus false
 set tabcontaineraware true
 set hintnames short
@@ -22,5 +22,6 @@ autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www",
 autocmd DocLoad twitter.com urlmodify -t twitter.com nitter.net
 
 unfocus
+fillcmd line open
 
 ''

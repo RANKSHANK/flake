@@ -9,28 +9,34 @@ lib.mkSubmodule "nixvim" config {
                 sources = [
                     {
                         name = "path";
-                        priority = 6;
+                        priority = 1;
+                        groupIndex = 1;
                     }
                     {
                         name = "nvim_lsp";
-                        priority = 5;
+                        priority = 2;
+                        groupIndex = 1;
                     }
                     {
                         name = "luasnip";
-                        priority = 4;
+                        priority = 3;
+                        groupIndex = 1;
                     }
                     {
                         name = "buffer";
-                        priority = 3;
+                        priority = 4;
+                        groupIndex = 1;
                     }
                     {
                         name = "greek";
-                        priority = 2;
+                        priority = 1;
+                        groupIndex = 2;
                     }
                     {
                         name = "spell";
                         keywordLength = 3;
                         priority = 1;
+                        groupIndex = 3;
                     }
                 ];
                 mapping = let

@@ -3,6 +3,11 @@
     "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
   inputs = {
 
+    anyrun = {
+        url = "github:Kirottu/anyrun";
+        inputs.nixpkgs.follows = "nix-unstable";
+    };
+
     disko.url = "github:nix-community/disko";
 
     home-manager = {
@@ -19,7 +24,8 @@
 
     impermanence.url = "github:nix-community/Impermanence";
 
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    # nixvim has this anyways
+    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     nix-gaming.url = "github:fufexan/nix-gaming";
 
@@ -74,6 +80,9 @@
             system =
               lib.readFileOrDefault "${path}/architecture" "x86_64-linux";
           in lib.nixosSystem {
+            system.packages = [
+                inputs.anyrun.packages.${system}.anyrun
+            ];
             specialArgs = {
               inherit inputs lib;
               user = user;
