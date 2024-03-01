@@ -1,9 +1,6 @@
-{
-  user,
-  lib,
-  config,
-  ...
-}: lib.mkModule "wezterm" [ "desktop" ] config {
+{ user, lib, config, ... }:
+
+lib.mkModule "wezterm" [ "desktop" ] config {
     home-manager.users.${user} = {
       programs.wezterm = {
         enable = true;

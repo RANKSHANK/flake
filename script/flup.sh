@@ -9,10 +9,6 @@ fi
 if [ ! -f "./.prev_locks/0.lock" ]; then
     cp -rp "./flake.lock" "./.prev_locks/0.lock"
 fi
-pass=$(sudo nix flake update)
-if [[ $pass != 0 ]]; then
-    exit 1
-fi
 backup="$(cmp --silent ./flake.lock ./.prev_locks/0.lock; echo $?)"
 if [[ $backup -ne 0 ]]; then
     next="./.prev_locks/9.lock"
@@ -27,7 +23,7 @@ if [[ $backup -ne 0 ]]; then
 fi
 echo "rebuilding system"
 prev=$(readlink -f /run/current-system)
-sudo nixos-rebuild --upgrade-all switch --flake . "$@"  |& nom
+sudo nixos-rebuild switch --flake . "$@"  |& nom
 if command -v flatpak &> /dev/null; then
     sudo flatpak update -y
 fi

@@ -31,7 +31,7 @@
 
     nix-stable.url = "github:nixos/nixpkgs/nixos-23.11";
 
-    nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nixvim = {
         url = "github:nix-community/nixvim";

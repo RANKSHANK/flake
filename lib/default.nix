@@ -41,6 +41,11 @@ in rec {
       (strs: lib.last strs)
     ];
 
+    kebabCaseToCamelCase = str: lib.pipe str [
+        (lib.splitString "-")
+        (strs: lib.foldl (acc: str: acc + (if str != (builtins.head strs) then (lib.toUpper (builtins.substring 0 1 str)) + (builtins.substring 1 (builtins.stringLength str) str) else str)) "" strs)
+    ];
+
   readFileOrDefault = file: default: ternary (builtins.pathExists file) (lib.removeSuffix "\n" (builtins.readFile file)) default;
 
   findTopLevelDirectories = dir:
@@ -49,7 +54,9 @@ in rec {
         ternary (type == "directory") file []
     ) (builtins.readDir dir);
 
-  listNixFilesRecursively = dir: (builtins.filter (lib.hasSuffix ".nix") (lib.filesystem.listFilesRecursive dir));
+  listTargetFilesRecursively = extension: dir: (builtins.filter (lib.hasSuffix extension) (lib.filesystem.listFilesRecursive dir));
+
+  listNixFilesRecursively = listTargetFilesRecursively ".nix";
 
   ezTrace = val: builtins.trace val val;
 
@@ -80,8 +87,8 @@ in rec {
     }))
     (modulesWithTags: { # Run through the modules and gen a list of the enabled ones
         inherit modulesWithTags;
-        enabledModules = lib.filter 
-            (moduleName: ternary 
+        enabledModules = lib.filter
+            (moduleName: ternary
                 (safeIsList "disabledModules" enableSet)
                 (!builtins.elem moduleName moduleName)
                 (true))
@@ -95,10 +102,10 @@ in rec {
                             []
                         ) modulesWithTags)
                     [])
-                (ternary 
+                (ternary
                     (safeIsList "enabledModules" enableSet)
                     (enableSet.enabledModules)
-                    []) 
+                    [])
             ]);
     })
     (modulesWithEnables:  lib.flatten (map

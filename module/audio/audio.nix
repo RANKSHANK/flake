@@ -53,8 +53,8 @@
         inherit (pkgs) playerctl pulsemixer qpwgraph;
       };
       etc = {
-        "wireplumber/main.lua.d".source = ./wireplumber;
-        "pipewire/pipewire.d".source = ./pipewire.d;
+        # "wireplumber/main.lua.d".source = ./wireplumber;
+        # "pipewire/pipewire.d".source = ./pipewire.d;
       };
     };
 }

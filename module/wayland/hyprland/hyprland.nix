@@ -136,6 +136,10 @@ in lib.mkModule "hyprland" [] config {
           "bordercolor rgba(${colors.base0A}22) rgba(${colors.base0A}22) rgba(${colors.base0A}ff) rgba(${colors.base0A}44) rgba(${colors.base0A}22), focus:1"
           "rounding 5, focus:1"
           "rounding 0, xwayland:1, floating:1, focus:1"
+          "float, title:^.*(Picture-in-Picture).*$"
+          "pin, title:^.*(Picture-in-Picture).*$"
+          "size 30% 30%, title:^.*(Picture-in-Picture).*$"
+          "move 70% 70%, title:^.*(Picture-in-Picture).*$"
 
         ];
 
