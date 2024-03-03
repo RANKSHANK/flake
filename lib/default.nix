@@ -36,8 +36,8 @@ in rec {
   getModuleName = path:
     lib.pipe path [
       toString
-      (str: lib.removeSuffix ".nix")
-      (str: lib.splitString "/" path)
+      (str: lib.removeSuffix ".nix" str)
+      (str: lib.splitString "/" str)
       (strs: lib.last strs)
     ];
 

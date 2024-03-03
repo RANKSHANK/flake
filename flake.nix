@@ -45,7 +45,7 @@
         inputs.nixpkgs.follows = "nix-unstable";
     };
 
-    stylix.url = #"github:danth/stylix"; 
+    stylix.url = #"github:danth/stylix";
     "/home/rankshank/projects/stylix/";
   };
 
@@ -99,6 +99,16 @@
                 networking.hostName = host;
                 nixpkgs.hostPlatform = system;
                 system.stateVersion = "23.11";
+                programs.nano.enable = false;
+              })
+              ({ config, user, pkgs, ... }: let
+                swatches = (config.lib.stylix.getSwatches [ "wezterm" "terminal" ]);
+                swatch = swatches.tabActiveHovered;
+                txt = swatch.ol.asRgbDec;
+              in {
+                stylix.swatches.alacritty = {
+                  base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+                };
               })
             ];
           });

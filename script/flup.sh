@@ -3,6 +3,7 @@
 echo "adding untracked changes to git..."
 git add .
 echo "updating flake..."
+nix flake update
 if [ ! -d "./.prev_locks" ]; then
     mkdir ".prev_locks"
 fi

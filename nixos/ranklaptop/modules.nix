@@ -2,7 +2,8 @@
     config = {
 
         disabledModules = [
-            "qutebrowser"
+            "neovim"
+            "anyrun"
         ];
 
         enabledModules = [
