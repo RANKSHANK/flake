@@ -4,7 +4,7 @@
         disabledModules = [
             "qutebrowser"
             "neovim"
-            "rofi"
+            "anyrun"
         ];
 
         enabledModules = [

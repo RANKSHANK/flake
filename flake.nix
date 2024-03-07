@@ -101,14 +101,16 @@
                 system.stateVersion = "23.11";
                 programs.nano.enable = false;
               })
-              ({ config, user, pkgs, ... }: let
-                swatches = (config.lib.stylix.getSwatches [ "wezterm" "terminal" ]);
-                swatch = swatches.tabActiveHovered;
-                txt = swatch.ol.asRgbDec;
-              in {
-                stylix.swatches.alacritty = {
+              ({ config, user, pkgs, ... }: {
+                stylix.swatches.terminal = {
                   base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+                  override = {
+                    base00 = "000000";
+                    swatches.tab.active.hovered = ({ colors, mkSwatch, ... }: with colors; mkSwatch base09 base05 base01);
+                  };
                 };
+                environment.etc."test".text = builtins.trace (config.lib.stylix.getSwatches [ "terminal" ]).swatches.tab.active (config.lib.stylix.getSwatches [ "terminal" ]).swatches.tab.active.hovered.foreground.asHex;
+                environment.etc."test1".text = (config.lib.stylix.getSwatches [ "terminal" ]).colors.base00;
               })
             ];
           });

@@ -3,10 +3,11 @@
 lib.mkSubmodule "nixvim" config {
     programs.nixvim = {
         plugins = {
-            nvim-cmp = {
+            cmp = {
                 enable = true;
-                preselect = "None";
-                sources = [
+                settings = {
+                    preselect = "cmp.PreselectMode.None";
+                    sources = [
                     {
                         name = "path";
                         priority = 1;
@@ -38,23 +39,24 @@ lib.mkSubmodule "nixvim" config {
                         priority = 1;
                         groupIndex = 3;
                     }
-                ];
-                mapping = let
-                    select = str: "cmp.mapping.select_${str}_item({ behavior = cmp.SelectBehavior.Insert })";
+                    ];
+                    experimental.ghost_text.enable = true;
+                    mapping = let
+                        select = str: "cmp.mapping.select_${str}_item({ behavior = cmp.SelectBehavior.Insert })";
                     scroll = num: "cmp.mapping.scroll_docs(${toString num})";
                     confirm = bool: "cmp.mapping.confirm({ select = ${lib.ternary bool "true" "false"} })";
-                in {
-                    "<C-n>" = select "next";
-                    "<Tab>" = select "next";
-                    "<C-p>" = select "prev";
-                    "<S-Tab>" = select "prev";
-                    "<C-f>" = scroll (-4);
-                    "<C-b>" = scroll 4;
-                    "<C-e>" = "cmp.mapping.abort()";
-                    "<C-c>" = confirm true;
-                    "<CR>" = confirm false;
+                    in {
+                        "<C-n>" = select "next";
+                        "<Tab>" = select "next";
+                        "<C-p>" = select "prev";
+                        "<S-Tab>" = select "prev";
+                        "<C-f>" = scroll (-4);
+                        "<C-b>" = scroll 4;
+                        "<C-e>" = "cmp.mapping.abort()";
+                        "<C-c>" = confirm true;
+                        "<CR>" = confirm false;
+                    };
                 };
-                experimental.ghost_text.enable = true;
             };
         };
     };
