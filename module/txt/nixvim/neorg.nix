@@ -1,7 +1,20 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 lib.mkSubmodule "nixvim" config {
     programs.nixvim = {
+        extraPlugins = builtins.attrValues {
+            inherit (pkgs.vimPlugins) nabla-nvim;
+        };
+        keymaps = [
+        {
+            action = ''function()
+                require("nabla").popup({ border = "rounded", })
+                end'';
+            key = "<leader>m";
+            options.desc = "Hover Math";
+            lua = true;
+        }
+        ];
         plugins = {
             neorg = {
                 enable = true;
