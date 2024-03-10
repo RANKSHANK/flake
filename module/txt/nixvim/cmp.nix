@@ -6,7 +6,7 @@ lib.mkSubmodule "nixvim" config {
             cmp = {
                 enable = true;
                 settings = {
-                    preselect = "cmp.PreselectMode.None";
+                    preselect = "cmp.PreselectMode.Item";
                     sources = [
                     {
                         name = "path";

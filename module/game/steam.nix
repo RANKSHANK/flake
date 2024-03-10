@@ -18,7 +18,6 @@
 in lib.mkModule "steam" [ "desktop" "gaming" ] config {
 
   imports = [
-    inputs.nix-gaming.nixosModules.steamCompat
   ];
 
     environment.systemPackages = builtins.attrValues {

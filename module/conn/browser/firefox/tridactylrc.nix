@@ -6,7 +6,7 @@ ${builtins.concatStringsSep "\n" (lib.flatten [
 ])}
 
 colorscheme nix
-set newtab about:blank
+set newtab ${config.browsers.homepage}
 set allowautofocus false
 set tabcontaineraware true
 set hintnames short
