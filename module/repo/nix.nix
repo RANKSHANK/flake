@@ -12,6 +12,7 @@
 
     nix = {
       package = pkgs.nixVersions.unstable;
+      distributedBuilds = true;
       settings = {
         builders-use-substitutes = true;
         auto-optimise-store = true;

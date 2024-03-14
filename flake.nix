@@ -3,10 +3,7 @@
     "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
   inputs = {
 
-    anyrun = {
-        url = "github:Kirottu/anyrun";
-        inputs.nixpkgs.follows = "nix-unstable";
-    };
+    codeium.url = "github:Exafunction/codeium.nvim";
 
     disko.url = "github:nix-community/disko";
 

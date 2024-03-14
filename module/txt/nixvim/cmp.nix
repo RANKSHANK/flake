@@ -30,13 +30,13 @@ lib.mkSubmodule "nixvim" config {
                     }
                     {
                         name = "greek";
-                        priority = 1;
+                        priority = 6;
                         groupIndex = 2;
                     }
                     {
                         name = "spell";
                         keywordLength = 3;
-                        priority = 1;
+                        priority = 7;
                         groupIndex = 3;
                     }
                     ];
