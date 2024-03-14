@@ -24,7 +24,7 @@ if [[ $backup -ne 0 ]]; then
 fi
 echo "rebuilding system"
 prev=$(readlink -f /run/current-system)
-sudo nixos-rebuild switch --flake . "$@"  |& nom
+nixos-rebuild switch --flake . "$@"  |& nom
 if command -v flatpak &> /dev/null; then
     sudo flatpak update -y
 fi
