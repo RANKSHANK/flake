@@ -43,8 +43,8 @@ lib.mkSubmodule "nixvim" config {
                     experimental.ghost_text.enable = true;
                     mapping = let
                         select = str: "cmp.mapping.select_${str}_item({ behavior = cmp.SelectBehavior.Insert })";
-                    scroll = num: "cmp.mapping.scroll_docs(${toString num})";
-                    confirm = bool: "cmp.mapping.confirm({ select = ${lib.ternary bool "true" "false"} })";
+                        scroll = num: "cmp.mapping.scroll_docs(${toString num})";
+                        confirm = bool: "cmp.mapping.confirm({ select = ${lib.ternary bool "true" "false"} })";
                     in {
                         "<C-n>" = select "next";
                         "<Tab>" = select "next";

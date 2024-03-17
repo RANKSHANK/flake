@@ -3,8 +3,6 @@
     "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
   inputs = {
 
-    codeium.url = "github:Exafunction/codeium.nvim";
-
     disko.url = "github:nix-community/disko";
 
     home-manager = {
@@ -21,7 +19,6 @@
 
     impermanence.url = "github:nix-community/Impermanence";
 
-    # nixvim has this anyways
     # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     nix-gaming.url = "github:fufexan/nix-gaming";

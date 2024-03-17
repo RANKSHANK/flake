@@ -1,17 +1,19 @@
-{ config, lib, inputs, pkgs, ... }:
+{ config, lib, ... }:
 
 lib.mkSubmodule "nixvim" config {
     programs.nixvim = {
         plugins = {
-            codeium-nvim = {
+            codeium-vim = { # codeium.nvim isn't feature complete
                 enable = true;
-                package = inputs.codeium.packages.${pkgs.system}.vimPlugins.codeium-nvim;
+                keymaps = {
+                    accept = "<C-y>";
+                };
             };
-             cmp.settings.sources = [{
-                name = "codeium";
-                priority = 5;
-                groupIndex = 1;
-            }];
+            #  cmp.settings.sources = [{
+            #     name = "codeium";
+            #     priority = 5;
+            #     groupIndex = 1;
+            # }];
         };
     };
 }
