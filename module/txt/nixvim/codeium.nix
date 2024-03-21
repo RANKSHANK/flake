@@ -6,7 +6,7 @@ lib.mkSubmodule "nixvim" config {
             codeium-vim = { # codeium.nvim isn't feature complete
                 enable = true;
                 keymaps = {
-                    accept = "<C-y>";
+                    accept = "<C-space>";
                 };
             };
             #  cmp.settings.sources = [{

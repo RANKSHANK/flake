@@ -47,9 +47,9 @@ lib.mkSubmodule "nixvim" config {
                         confirm = bool: "cmp.mapping.confirm({ select = ${lib.ternary bool "true" "false"} })";
                     in {
                         "<C-n>" = select "next";
-                        "<Tab>" = select "next";
+                        # "<Tab>" = select "next";
                         "<C-p>" = select "prev";
-                        "<S-Tab>" = select "prev";
+                        # "<S-Tab>" = select "prev";
                         "<C-f>" = scroll (-4);
                         "<C-b>" = scroll 4;
                         "<C-e>" = "cmp.mapping.abort()";

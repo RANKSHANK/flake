@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   pkgs,
   lib,
@@ -35,7 +34,7 @@ in lib.mkModule "steam" [ "desktop" "gaming" ] config {
         dedicatedServer.openFirewall = false;
         gamescopeSession.enable = true;
         extraCompatPackages = builtins.attrValues {
-          inherit (inputs.nix-gaming.packages.${pkgs.system}) proton-ge;
+          inherit (pkgs) proton-ge-bin;
         };
       };
       gamemode.enable = true;

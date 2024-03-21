@@ -21,7 +21,7 @@
 
     # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
-    nix-gaming.url = "github:fufexan/nix-gaming";
+    # nix-gaming.url = "github:fufexan/nix-gaming";
 
     nix-stable.url = "github:nixos/nixpkgs/nixos-23.11";
 
