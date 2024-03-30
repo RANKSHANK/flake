@@ -42,7 +42,7 @@
     stylix.url =
     "github:danth/stylix";
     # "/home/rankshank/projects/stylix/";
-    # "/home/rankshank/projects/styprev/stylix/";
+    # "/home/rankshank/projects/styprev/";
   };
 
   outputs = inputs@{ self, ... }:

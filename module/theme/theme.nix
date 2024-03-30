@@ -13,8 +13,11 @@
     font = {
        # package = pkgs.fira-code;
        # name = "FiraCode";
-      package = pkgs.nerdfonts;
+      # package = pkgs.nerdfonts;
       name = "JetBrains Mono";
+      package = pkgs.jetbrains-mono;
+      # name = "Comic Mono";
+      # package = pkgs.comic-mono;
       # package = pkgs.monaspace;
       # name = "Monaspace Krypton";
     };
@@ -46,10 +49,13 @@
       };
       monospace = font;
       serif = font;
-      sansSerif = {
-        name = "Fira";
-        package = pkgs.fira;
-      };
+      sansSerif = font;
+      # {
+      #   name = "ComicRelief";
+      #   package = pkgs.comic-relief;
+      #   # name = "Cantarell";
+      #   # package = pkgs.cantarell-fonts;
+      # };
       #emoji = font;
     };
     cursor = {

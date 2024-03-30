@@ -3,7 +3,7 @@
 lib.mkSubmodule "nixvim" config {
     programs.nixvim = {
         plugins = {
-            comment-nvim = {
+            comment = {
                 enable = true;
             };
             todo-comments = {

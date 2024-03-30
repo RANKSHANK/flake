@@ -6,9 +6,12 @@ lib.mkSubmodule "nixvim" config {
 
         plugins.oil = {
             enable = true;
-            defaultFileExplorer = true;
-            columns = {
-                icon.enable = true;
+            settings = {
+                default_file_explorer = true;
+                columns = [
+                    "icon"
+                    "size"
+                ];
             };
         };
 

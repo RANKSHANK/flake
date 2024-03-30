@@ -20,7 +20,7 @@ lib.mkSubmodule "nixvim" config {
                     }
                     {
                         name = "luasnip";
-                        priority = 3;
+                        priority = 2;
                         groupIndex = 1;
                     }
                     {
@@ -29,15 +29,10 @@ lib.mkSubmodule "nixvim" config {
                         groupIndex = 1;
                     }
                     {
-                        name = "greek";
-                        priority = 6;
-                        groupIndex = 2;
-                    }
-                    {
                         name = "spell";
                         keywordLength = 3;
                         priority = 7;
-                        groupIndex = 3;
+                        groupIndex = 0;
                     }
                     ];
                     experimental.ghost_text.enable = true;

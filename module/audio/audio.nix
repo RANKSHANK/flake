@@ -4,7 +4,10 @@
   config,
   lib,
   ...
-}: lib.mkModule "audio" [] config {
+}: let
+    # TODO: find a builtin method
+    recursiveImport =  dir: map (file: pkgs.writeTextDir "/share/${dir}/${lib.last (lib.splitString "/" (toString file))}" (builtins.readFile file)) (lib.filesystem.listFilesRecursive ./${dir});
+in lib.mkModule "audio" [] config {
 
     keybinds = [
       {
@@ -46,15 +49,18 @@
       };
       pulse.enable = true;
       jack.enable = true;
+      configPackages = recursiveImport "pipewire";
+      wireplumber.configPackages = recursiveImport "wireplumber";
+
     };
 
     environment = {
       systemPackages = builtins.attrValues {
         inherit (pkgs) playerctl pulsemixer qpwgraph;
       };
-      etc = {
-        # "wireplumber/main.lua.d".source = ./wireplumber;
-        # "pipewire/pipewire.d".source = ./pipewire.d;
-      };
+      # etc = {
+      #   "wireplumber/main.lua.d".source = ./wireplumber;
+      #   "pipewire/pipewire.d".source = ./pipewire.d;
+      # };
     };
 }

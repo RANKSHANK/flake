@@ -8,10 +8,12 @@ lib.mkSubmodule "nixvim" config {
 
         plugins.gitsigns = {
             enable = true;
-            signs = {
-                add.text = diff;
-                change.text = diff;
-                delete.text = diff;
+            settings = {
+                signs = {
+                    add.text = diff;
+                    change.text = diff;
+                    delete.text = diff;
+                };
             };
         };
 
