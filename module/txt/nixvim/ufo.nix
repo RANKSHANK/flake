@@ -5,7 +5,7 @@ lib.mkSubmodule "nixvim" config {
         plugins.nvim-ufo = {
             enable = true;
         };
-        options = {
+        opts = {
             foldlevelstart = 99;
         };
     };

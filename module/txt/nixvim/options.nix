@@ -1,7 +1,7 @@
 { config, lib, user, ... }:
 
 lib.mkSubmodule "nixvim" config {
-    programs.nixvim.options = {
+    programs.nixvim.opts = {
         backup = false;
         clipboard = "unnamedplus";
         cmdheight = 2;
