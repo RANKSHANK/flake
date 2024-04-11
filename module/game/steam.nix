@@ -3,33 +3,22 @@
   pkgs,
   lib,
   ...
-}: let
-  steamOverlay = self: super: {
-    steam = super.steam.override {
-      extraPkgs = pkgs:
-        builtins.attrValues {
-          inherit (pkgs) keyutils libkrb5 libpng libpulseaudio libvorbis;
-          inherit (pkgs.stdenv.cc.cc) lib;
-          inherit (pkgs.xorg) libXcursor libXi libXinerama libXScrnSaver;
-        };
-    };
-  };
-in lib.mkModule "steam" [ "desktop" "gaming" ] config {
-
-  imports = [
-  ];
+}: lib.mkModule "steam" [ "desktop" "gaming" ] config {
 
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) steamcmd steam-run;
+      inherit (pkgs) steamcmd;
     };
-
-    nixpkgs.overlays = [
-      steamOverlay
-    ];
 
     programs = {
       steam = {
         enable = true;
+        package = pkgs.steam.override {
+            extraLibraries = pkgs: builtins.attrValues {
+                    inherit (pkgs) keyutils libkrb5 libpng libpulseaudio libvorbis;
+                    inherit (pkgs.stdenv.cc.cc) lib;
+                    inherit (pkgs.xorg) libXcursor libXi libXinerama libXScrnSaver;
+                };
+        };
         remotePlay.openFirewall = true;
         dedicatedServer.openFirewall = false;
         gamescopeSession.enable = true;

@@ -3,6 +3,7 @@
   lib,
   pkgs,
   user,
+  inputs,
   ...
 }:
 lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
@@ -41,6 +42,9 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
             };
         };
         profiles.${user} = {
+          extensions = builtins.attrValues {
+            inherit (config.nur.repos.rycee.firefox-addons) bypass-paywalls-clean;
+          };
           id = 0;
           isDefault = true;
           name = "${user}";

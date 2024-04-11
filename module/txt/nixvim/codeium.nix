@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-lib.mkSubmodule "nixvim" config {
+lib.mkModule "nixvim-codeium" [ "nixvim" "codeium" ] config {
     programs.nixvim = {
         plugins = {
             codeium-vim = { # codeium.nvim isn't feature complete

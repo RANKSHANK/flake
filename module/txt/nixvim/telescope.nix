@@ -8,54 +8,54 @@ lib.mkSubmodule "nixvim" config {
                 fzf-native.enable = true;
                 undo.enable = true;
             };
-            extraOptions = {
+            settings = {
                 prompt_prefix = config.icons."search";
                 selection_caret = "->";
             };
             keymaps = {
                 "<leader>b" = {
                     action = "buffers";
-                    desc = "Buffers";
+                    options.desc = "Buffers";
                 };
                 "<leader>sa" = {
                     action = "autocommands";
-                    desc = "AutoCmds";
+                    options.desc = "AutoCmds";
                 };
                 "<leader>sc" = {
                     action = "commands";
-                    desc = "Cmds";
+                    options.desc = "Cmds";
                 };
                 "<leader>sf" = {
                     action = "live_grep";
-                    desc = "Live Grep";
+                    options.desc = "Live Grep";
                 };
                 "<leader>sh" = {
                     action = "help_tags";
-                    desc = "Help";
+                    options.desc = "Help";
                 };
                 "<leader>sH" = {
                     action = "highlights";
-                    desc = "Highlight Groups";
+                    options.desc = "Highlight Groups";
                 };
                 "<leader>d" = {
                     action = "diagnostics";
-                    desc = "Diagnostics";
+                    options.desc = "Diagnostics";
                 };
                 "<leader>sk" = {
                     action = "keymaps";
-                    desc = "Keys";
+                    options.desc = "Keys";
                 };
                 "<leader>sm" = {
                     action = "marks";
-                    desc = "Marks";
+                    options.desc = "Marks";
                 };
                 "<leader><leader>" = {
                     action = "find_files";
-                    desc = "Files";
+                    options.desc = "Files";
                 };
                 "<leader>so" = {
                     action = "vim_options";
-                    desc = "Vim Options";
+                    options.desc = "Vim Options";
                 };
             };
         };
