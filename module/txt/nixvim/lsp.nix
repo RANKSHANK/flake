@@ -63,6 +63,7 @@ lib.mkSubmodule "nixvim" config {
                     "bashls"
                     "cssls"
                     "lua-ls"
+                    "pyright"
                     "nil_ls"
                     "yamlls"
                 ])

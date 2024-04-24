@@ -11,11 +11,11 @@
 
   stylix = let
     font = {
-       # package = pkgs.fira-code;
-       # name = "FiraCode";
+       package = pkgs.fira-code;
+       name = "FiraCode";
       # package = pkgs.nerdfonts;
-      name = "JetBrains Mono";
-      package = pkgs.jetbrains-mono;
+      # name = "JetBrains Mono";
+      # package = pkgs.jetbrains-mono;
       # name = "Comic Mono";
       # package = pkgs.comic-mono;
       # package = pkgs.monaspace;

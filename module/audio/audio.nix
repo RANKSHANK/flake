@@ -56,7 +56,7 @@ in lib.mkModule "audio" [] config {
 
     environment = {
       systemPackages = builtins.attrValues {
-        inherit (pkgs) playerctl pulsemixer qpwgraph;
+        inherit (pkgs) playerctl pulsemixer qpwgraph wineasio;
       };
       # etc = {
       #   "wireplumber/main.lua.d".source = ./wireplumber;

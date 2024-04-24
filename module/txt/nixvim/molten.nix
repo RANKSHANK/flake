@@ -3,7 +3,7 @@
 lib.mkSubmodule "nixvim" config {
     programs.nixvim = {
         plugins = {
-            magma-nvim = {
+            molten = {
                 enable = true;
             };
         };
