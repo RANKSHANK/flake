@@ -3,7 +3,7 @@
   config,
   user,
   ...
-}: lib.mkIfEnabled "hyprland" config {
+}: lib.mkSubmodule "hyprland" config {
     home-manager.users.${user}.wayland.windowManager.hyprland.settings.monitor = lib.flatten [
       (builtins.map (
         monitor:
