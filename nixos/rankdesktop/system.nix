@@ -68,9 +68,9 @@
 
     services = {
       printing.enable = true;
+      libinput.enable = true; # enables touchpad
       xserver = {
         #enable = true; # Doesn't need to be enabled to allow xkb in tty
-        libinput.enable = true; # enables touchpad
         xkb = {
           options = "caps:escape";
           layout = "us";

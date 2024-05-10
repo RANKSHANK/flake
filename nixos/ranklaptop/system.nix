@@ -73,8 +73,8 @@
 
     services = {
       printing.enable = true;
+      libinput.enable = true; # enables touchpad
       xserver = {
-        libinput.enable = true; # enables touchpad
         xkb = {
             options = "caps:escape";
             layout = "us";

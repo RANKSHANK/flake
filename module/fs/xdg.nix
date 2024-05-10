@@ -47,6 +47,7 @@
       };
     };
     home-manager.users.${user}.xdg = {
+      mimeApps.enable = true;
       enable = true;
       userDirs = {
         enable = true;

@@ -11,7 +11,7 @@
     };
 
     nix = {
-      package = pkgs.nixVersions.unstable;
+      package = pkgs.nixVersions.git;
       settings = {
         builders-use-substitutes = true;
         auto-optimise-store = true;
