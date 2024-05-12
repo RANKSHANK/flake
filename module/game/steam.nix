@@ -21,11 +21,17 @@
         };
         remotePlay.openFirewall = true;
         dedicatedServer.openFirewall = false;
-        gamescopeSession.enable = true;
+        gamescopeSession = {
+            enable = true;
+        };
         extraCompatPackages = builtins.attrValues {
           inherit (pkgs) proton-ge-bin;
         };
       };
+    gamescope = {
+        enable = true;
+        capSysNice = false;
+    };
       gamemode.enable = true;
     };
 

@@ -24,7 +24,7 @@
             "filesystem"
             "gaming"
             "graphics"
-            "math"
+            # "math"
             "office"
             "repo"
             "shell"

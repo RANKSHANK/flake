@@ -22,20 +22,20 @@ lib.mkSubmodule "nixvim" config {
         in lib.flatten [
             {
                 key = "<leader>a";
-                action = fn "harpoon:list():append()";
-                lua = true;
-                options.desc = "Harpoon Add";
+                action.__raw = fn "harpoon:list():append()";
+                # lua = true;
+                options.desc = "Harpoon Append";
             }
             {
                 key = "<leader>h";
-                action = fn "harpoon.ui:toggle_quick_menu(harpoon:list())";
-                lua = true;
+                action.__raw = fn "harpoon.ui:toggle_quick_menu(harpoon:list())";
+                # lua = true;
                 options.desc = "Harpoon Menu";
             }
             (builtins.genList (i: {
                 key = "<leader>${toString i}";
-                action = fn "harpoon:list():select(${toString i})";
-                lua = true;
+                action.__raw = fn "harpoon:list():select(${toString i})";
+                # lua = true;
             }) 10)
         ];
     };

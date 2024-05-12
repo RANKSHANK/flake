@@ -11,7 +11,7 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
         enable = true;
         package = pkgs.wrapFirefox pkgs.firefox.unwrapped {
           nativeMessagingHosts = builtins.attrValues {
-            inherit (pkgs) tridactyl-native;
+            # inherit (pkgs) tridactyl-native;
           };
           extraPolicies = {
             DirectDownloadDirectory = "$XDG_DOWNLOAD_DIR";
@@ -35,9 +35,9 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
                 latest = str: "https://addons.mozilla.org/firefox/downloads/latest/${str}/latest.xpi";
           in
             builtins.mapAttrs (name: attrs: attrs // {installation_mode = "force_installed";}) {
-              "tridactyl.vim@cmcaine.co.uk" = {
-                install_url = latest "tridactyl-vim";
-              };
+              # "tridactyl.vim@cmcaine.co.uk" = {
+              #   install_url = latest "tridactyl-vim";
+              # };
             };
         };
         profiles.${user} = {
@@ -81,7 +81,7 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
 
       home.sessionVariables = {
         MOZ_ENABLE_WAYLAND = 1;
-        # MOZ_ACCELERATED = 1;
+        MOZ_ACCELERATED = 1;
         MOZ_WEBRENDER = 1;
       };
   };

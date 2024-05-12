@@ -13,7 +13,9 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     hyprland-plugins = {
-        url = "github:hyprwm/hyprland-plugins";
+        url =
+            # "github:hyprwm/hyprland-plugins";
+            "git+https://github.com/hyprwm/hyprland-plugins?submodules=1";
         inputs.hyprland.follows = "hyprland";
     };
 
@@ -23,13 +25,13 @@
 
     # nix-gaming.url = "github:fufexan/nix-gaming";
 
-    nix-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    nix-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
     nix-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nixvim = {
         url = "github:nix-community/nixvim";
-        inputs.nixpkgs.follows = "nix-unstable";
+        # inputs.nixpkgs.follows = "nix-unstable";
     };
 
     nur.url = "github:nix-community/NUR";
@@ -59,6 +61,7 @@
             useUserPackages = true;
             useGlobalPkgs = true;
             users.${user}.home.stateVersion = "23.11";
+            backupFileExtension = "bak";
           };
         })
         impermanence.nixosModules.impermanence

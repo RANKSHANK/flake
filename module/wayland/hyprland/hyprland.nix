@@ -16,7 +16,8 @@ in lib.mkModule "hyprland" [] config {
       settings = rec {
         # Skip the login screen because luks
         initial_session = {
-          command = "Hyprland";
+
+          command = "dbus-launch --sh-syntax --exit-with-session Hyprland";
           user = "${user}";
         };
         default_session = initial_session;
@@ -25,8 +26,7 @@ in lib.mkModule "hyprland" [] config {
 
     environment = {
       variables = {
-        XDG_CURRENT_DESKTOP = "Hyprland";
-        XDG_SESSION_TYPE = "wayland";
+        XDG_CURRENT_DESKTOP = "hyprland";
         WLR_BACKEND = "vulkan";
         LIBVA_DRIVER_NAME = lib.mkIfEnabled "nvidia-gpu" config "nvidia";
         __GL_GSYNC_ALLOWED = "1";
@@ -37,13 +37,20 @@ in lib.mkModule "hyprland" [] config {
         NIXOS_OZONE_WL = "1";
         MOZ_ENABLE_WAYLAND = "1";
         QT_QPA_PLATFORM = "wayland";
+        SDL_VIDEODRIVER = "wayland";
+        XDG_SESSION_TYPE = "wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         GDK__BACKEND = lib.mkIfEnabled "nvidia-gpu" config "nvidia-drm";
         WLR_NO_HARDWARE_CURSORS = "1";
       };
 
       systemPackages = builtins.attrValues {
-        inherit (pkgs) swaylock swayidle wlr-randr;
+        inherit (pkgs)
+            swaylock
+            swayidle
+            wlr-randr
+            ;
+        xdg-desktop-portal-hyprland = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland; 
       };
     };
 
@@ -52,9 +59,25 @@ in lib.mkModule "hyprland" [] config {
         auth include login
       '';
     };
+    programs = {
+        xwayland.enable = true;
+        hyprland = {
+            enable = true;
+            package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+        };
+    };
 
     home-manager.users.${user}.wayland.windowManager.hyprland = {
       enable = true;
+      xwayland.enable = true;
+
+      systemd = {
+          variables = [ "--all" ];
+          extraCommands = [
+            "systemctl --user stop graphical-session.target"
+            "systemctl --user start hyprland-session.target"
+          ];
+      };
 
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
 
@@ -96,7 +119,7 @@ in lib.mkModule "hyprland" [] config {
           kb_options = [
             "caps:escape"
           ];
-          follow_mouse = 1;
+          follow_mouse = 2;
           mouse_refocus = false;
           repeat_delay = 250;
           numlock_by_default = true;
@@ -119,6 +142,10 @@ in lib.mkModule "hyprland" [] config {
           pseudotile = true;
           force_split = 2;
           no_gaps_when_only = 2;
+        };
+
+        debug = {
+            disable_logs = true;
         };
 
         misc = {
@@ -148,4 +175,5 @@ in lib.mkModule "hyprland" [] config {
         ];
       };
     };
+
 }

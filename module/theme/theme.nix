@@ -1,4 +1,4 @@
-{pkgs, lib, config, ...}: lib.mkModule "theme" [ "system" ] config {
+{pkgs, lib, config, user, ...}: lib.mkModule "theme" [ "system" ] config {
   fonts.packages = [
     (pkgs.nerdfonts.override {
       fonts = [
@@ -22,6 +22,7 @@
       # name = "Monaspace Krypton";
     };
   in {
+    enable = true;
     polarity = "dark";
     image = pkgs.fetchurl {
       url = "https://images.alphacoders.com/695/69561.jpg";
@@ -43,7 +44,7 @@
     fonts = {
       sizes = {
         desktop = 16;
-        applications = 16;
+        applications = 10;
         popups = 16;
         terminal = 16;
       };
@@ -59,8 +60,15 @@
       #emoji = font;
     };
     cursor = {
-      package = pkgs.beauty-line-icon-theme;
+      package = pkgs.phinger-cursors;
       size = 16;
+      name = "phinger-cursors-dark";
+    };
+  };
+  home-manager.users.${user} = {
+    gtk.iconTheme = { 
+      package = pkgs.beauty-line-icon-theme;
+      # size = 16;
       name = "BeautyLine";
     };
   };

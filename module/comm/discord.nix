@@ -15,6 +15,7 @@ in lib.mkModule "discord" [ "communication" ] config {
 
     environment.systemPackages = [
       discord
+      pkgs.vesktop
       (lib.mkIf (builtins.all (req: lib.isEnabled req config) ["wayland" "hardware.nvidia"]) (
         lib.patchDesktopEntry pkgs discord "discord"
         ["^Exec=Discord"]

@@ -1,5 +1,5 @@
 config: user: lib: ''
-jsb Object.keys(tri.config.get("searchurls")).reduce((prev, u) => prev.catch(()=>{}).then(_ => tri.excmds.setnull("searchurls." + u)), Promise.resolve()) 
+jsb Object.keys(tri.config.get("searchurls")).reduce((prev, u) => prev.catch(()=>{}).then(_ => tri.excmds.setnull("searchurls." + u)), Promise.resolve())
 
 ${builtins.concatStringsSep "\n" (lib.flatten [
 (map (attrs: "set searchurls.${attrs.shortcut} ${builtins.replaceStrings [ "{}" ] [ "%s" ] attrs.url}") config.browsers.searchEngines)

@@ -64,7 +64,7 @@ lib.mkSubmodule "nixvim" config {
                     "cssls"
                     "lua-ls"
                     "pyright"
-                    "nil_ls"
+                    "nil-ls"
                     "yamlls"
                 ])
                 (genServers true [
