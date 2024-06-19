@@ -103,6 +103,38 @@
             ];
           });
 
+      nixPMConfigurations = lib.genAttrs (lib.findTopLevelDirectories ./nixpm)
+        (host:
+          let
+            path = ./nixpm/${host};
+            user = lib.readFileOrDefault "${path}/user" "rankshank";
+            system =
+              lib.readFileOrDefault "${path}/architecture" "x86_64-linux";
+          in lib.nixosSystem {
+            system.packages = [
+                inputs.anyrun.packages.${system}.anyrun
+            ];
+            specialArgs = {
+              inherit inputs lib;
+              user = user;
+              modulesPath = "${nixpkgs}/nixos/modules";
+            };
+            modules = lib.flatten [
+              nixosModules
+              (import (lib.ternary (host == "iso")
+                "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+                "${nixpkgs}/nixos/modules/module-list.nix"))
+              (lib.listNixFilesRecursively path)
+              (lib.filterModules (lib.listNixFilesRecursively ./module))
+              ({ lib, ... }: {
+                networking.hostName = host;
+                nixpkgs.hostPlatform = system;
+                system.stateVersion = "23.11";
+                programs.nano.enable = false;
+              })
+            ];
+          });
+
       devShells = let shells = lib.listNixFilesRecursively ./shell;
       in lib.listToAttrs (map (system:
         let pkgs = import nixpkgs { inherit system; };
