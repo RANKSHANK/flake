@@ -2,11 +2,15 @@
 
 lib.mkSubmodule "nixvim" config {
     programs.nixvim = {
-        plugins = { 
+        plugins = {
             treesitter = {
                 enable = true;
-                indent = true;
                 nixvimInjections = true;
+                settings = {
+                    indent = {
+                        enable = true;
+                    };
+                };
             };
 
             treesitter-context = {

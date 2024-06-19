@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ lib, pkgs, user, config, ...}: {
   config = {
     monitors = {
       one = {
@@ -22,6 +22,13 @@
       };
     };
 
+    home-manager.users.${user}.wayland.windowManager.hyprland.settings.device = lib.mkIfEnabled "hyprland" config [{
+            name = "tablet-monitor-pen";
+            transform = 0;
+            output = "HDMI-A-2";
+        }];
+
+
     hardware = {
       enableAllFirmware = true;
       nvidia = {
@@ -30,9 +37,9 @@
           nvidiaBusId = "PCI:1:0:0";
         };
       };
-      opengl = {
+      graphics = {
         enable = true;
-        driSupport32Bit = true;
+        # enable32Bit = true;
         extraPackages = builtins.attrValues {
           inherit (pkgs) vaapiVdpau libvdpau-va-gl;
         };

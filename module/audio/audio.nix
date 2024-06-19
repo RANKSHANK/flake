@@ -35,8 +35,6 @@ in lib.mkModule "audio" [] config {
       };
     };
 
-    sound.enable = false; # alsa
-
     hardware.pulseaudio.enable = false;
 
     security.rtkit.enable = true;

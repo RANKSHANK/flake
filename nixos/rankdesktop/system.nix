@@ -9,6 +9,9 @@
     hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
 
     boot = {
+      binfmt.emulatedSystems = [
+        "armv7l-linux"
+      ];
       supportedFilesystems = [
         "btrfs"
       ];
@@ -63,6 +66,8 @@
         "wheel"
         "video"
         "adbusers"
+        "tty"
+        "dialout"
       ];
       hashedPasswordFile = "/persist/hash/rankshank";
     };

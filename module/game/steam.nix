@@ -14,16 +14,43 @@
         enable = true;
         package = pkgs.steam.override {
             extraLibraries = pkgs: builtins.attrValues {
-                    inherit (pkgs) keyutils libkrb5 libpng libpulseaudio libvorbis;
-                    inherit (pkgs.stdenv.cc.cc) lib;
-                    inherit (pkgs.xorg) libXcursor libXi libXinerama libXScrnSaver;
+                    inherit (pkgs)
+                        at-spi2-atk
+                        fmodex
+                        glxinfo
+                        gtk3
+                        gtk3-x11
+                        harfbuzz
+                        icu
+                        inetutils
+                        keyutils
+                        libgdiplus
+                        libkrb5
+                        libpng
+                        libpulseaudio
+                        libthai
+                        libunwind
+                        libvorbis
+                        mono5
+                        pango
+                        strace
+                        zlib
+                        ;
+                    inherit (pkgs.stdenv.cc.cc)
+                        lib;
+                    inherit (pkgs.xorg)
+                        libXcursor
+                        libXi
+                        libXinerama
+                        libXScrnSaver;
                 };
         };
         remotePlay.openFirewall = true;
-        dedicatedServer.openFirewall = false;
-        gamescopeSession = {
-            enable = true;
-        };
+        dedicatedServer.openFirewall = true;
+        localNetworkGameTransfers.openFirewall = true;
+        # gamescopeSession = {
+        #     enable = true;
+        # };
         extraCompatPackages = builtins.attrValues {
           inherit (pkgs) proton-ge-bin;
         };

@@ -2,6 +2,7 @@
   lib,
   config,
   user,
+  pkgs,
   ...
 }: let
   smush = builtins.concatStringsSep "";
@@ -21,6 +22,7 @@
       ])) (builtins.filter (attr: !builtins.hasAttr "combo" attr) config.keybinds)) ["L" "R"]);
 
 in lib.mkSubmodule "hyprland" config {
+
     home-manager.users.${user}.wayland.windowManager.hyprland.settings = {
       bindm = [
         "super, mouse:272, movewindow"
@@ -54,12 +56,13 @@ in lib.mkSubmodule "hyprland" config {
         ", XF86AudioPrev, exec, playerctl previous"
         ", XF86AudioNext, exec, playerctl next"
       ];
-      bindl = lib.flatten [
-        ", code:202, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0"
+      bindil = lib.flatten [
+        ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0"
       ];
-      bindr = lib.flatten [
-        ", code:202, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
+      bindirl = lib.flatten [
+        ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
         genBindr
       ];
     };
+
 }

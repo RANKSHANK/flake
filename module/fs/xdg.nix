@@ -38,11 +38,11 @@
     xdg = {
       portal = {
         enable = true;
-        extraPortals = builtins.attrValues {
-          inherit (pkgs) 
-            xdg-desktop-portal
-            xdg-desktop-portal-gtk;
-        };
+        # extraPortals = builtins.attrValues {
+        #   inherit (pkgs) 
+        #     # xdg-desktop-portal
+        #     xdg-desktop-portal-gtk;
+        # };
         config = {
           common.default = lib.mkDefault "*";
         };

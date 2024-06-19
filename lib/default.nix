@@ -25,6 +25,8 @@ in rec {
 
   safeIsFloat = safeIsType "float";
 
+  safeLast = target: nul: ternary (safeIsList target && lib.count target) (lib.last target) nul;
+
   hasAny = targetList: sourceList: builtins.any (targ: builtins.elem targ sourceList) targetList;
 
   hasAll = targetList: sourceList: builtins.all (targ: builtins.elem targ sourceList) targetList;

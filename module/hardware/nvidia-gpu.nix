@@ -27,7 +27,7 @@
           sync.enable = false;
         };
       };
-      opengl = {
+      graphics = {
         extraPackages = builtins.attrValues {
           inherit (pkgs) nvidia-vaapi-driver;
         };

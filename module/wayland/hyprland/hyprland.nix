@@ -9,6 +9,7 @@
   opacity = config.stylix.opacity.desktop;
   colors = config.lib.stylix.colors;
 in lib.mkModule "hyprland" [] config {
+    # stylix.targets.hyprpaper.enable = false;
     xdg.portal.config.common.default = lib.mkForce "xdg-desktop-portal-hyprland";
 
     services.greetd = {

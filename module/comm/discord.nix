@@ -2,6 +2,8 @@
   pkgs,
   lib,
   config,
+  user,
+  inputs,
   ...
 }: let
   inherit (pkgs) discord;
@@ -10,7 +12,17 @@
       withOpenASAR = true;
     };
   };
+   # arRPC = inputs.arrpc.packages.${pkgs.system}.arrpc;
 in lib.mkModule "discord" [ "communication" ] config {
+
+    # imports = [
+    #     inputs.arrpc.homeManagerModules.default
+    # ];
+    #
+    # home-manager.users.${user} = {
+    #     services.arrpc.enable = lib.mkForce true;
+    # };
+
     nixpkgs.overlays = [discordOverlay];
 
     environment.systemPackages = [
@@ -21,10 +33,27 @@ in lib.mkModule "discord" [ "communication" ] config {
       #   ["^Exec=Discord"]
       #   ["Exec=nvidia-offload Discord --enable-features=UseOzonePlatform --ozone-platform=wayland"]
       # ))
+      pkgs.arrpc
     ];
+
 
     nixpkgs.config.allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
         "discord"
       ];
+
+    systemd.user.services.arRPC = {
+        description = "Discord Rich Presence Server";
+        partOf = ["graphical-session.target"];
+        after = ["graphical-session.target"];
+        wantedBy = ["graphical-session.target"];
+        startLimitIntervalSec = 500;
+        startLimitBurst = 5;
+
+        serviceConfig = {
+            ExecStart = "${lib.getExe pkgs.arrpc}";
+            Restart = "always";
+            RestartSec ="5s";
+        };
+    };
 }

@@ -77,6 +77,7 @@ config: user: {
     "network.IDN_show_punycode" = true;
     "dom.security.https_first" = true;
     "dom.security.https_only_mode_error_page_user_suggestions" = true;
+    "dom.private-attribution.submission.enabled" = false;
     "signon.autofillForms" = false;
     "signon.rememberSignons" = false;
     "signon.formlessCapture.enabled" = false;
