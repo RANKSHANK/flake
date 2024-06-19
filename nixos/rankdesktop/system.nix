@@ -62,6 +62,7 @@
       extraGroups = [
         "wheel"
         "video"
+        "adbusers"
       ];
       hashedPasswordFile = "/persist/hash/rankshank";
     };

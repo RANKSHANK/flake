@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 lib.mkSubmodule "nixvim" config {
     programs.nixvim = {
@@ -60,7 +60,6 @@ lib.mkSubmodule "nixvim" config {
                     });
                 in builtins.listToAttrs (lib.flatten [
                 (genServers false [
-                    "bashls"
                     "cssls"
                     "lua-ls"
                     "pyright"
@@ -71,15 +70,24 @@ lib.mkSubmodule "nixvim" config {
                     "gdscript"
                     "gopls"
                 ])
+                [{
+                    name = "bashls";
+                    value = {
+                        enable = true; #TODO: Enable asap
+                        # package = inputs.nix-stable.legacyPackages.${pkgs.system}.nodePackages_latest.bash-language-server;
+                        # package = pkgs.nodePackages_latest.bash-language-server;
+                        # package = lib.mkForce {};
+                    };
+                }
                 { # Thanks for the spam
                     name = "rust-analyzer";
                     value = {
-                        enable = true;
+                        enable = false; #TODO: Nixvim also broke this
                         package = null;
                         installRustc = false;
                         installCargo = false;
                     };
-                }]);
+                }]]);
             };
         };
     };

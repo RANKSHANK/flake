@@ -4,6 +4,11 @@
   lib,
   ...
 }: lib.mkModule "nix" [ "repo" ] config {
+
+    programs.nix-ld = {
+        enable = true;
+    };
+
     nixpkgs = {
       config = {
         allowUnfree = true; #Drivers

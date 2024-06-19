@@ -14,13 +14,13 @@ in lib.mkModule "discord" [ "communication" ] config {
     nixpkgs.overlays = [discordOverlay];
 
     environment.systemPackages = [
-      discord
+      # discord
       pkgs.vesktop
-      (lib.mkIf (builtins.all (req: lib.isEnabled req config) ["wayland" "hardware.nvidia"]) (
-        lib.patchDesktopEntry pkgs discord "discord"
-        ["^Exec=Discord"]
-        ["Exec=nvidia-offload Discord --enable-features=UseOzonePlatform --ozone-platform=wayland"]
-      ))
+      # (lib.mkIf (builtins.all (req: lib.isEnabled req config) ["wayland" "hardware.nvidia"]) (
+      #   lib.patchDesktopEntry pkgs discord "discord"
+      #   ["^Exec=Discord"]
+      #   ["Exec=nvidia-offload Discord --enable-features=UseOzonePlatform --ozone-platform=wayland"]
+      # ))
     ];
 
     nixpkgs.config.allowUnfreePredicate = pkg:

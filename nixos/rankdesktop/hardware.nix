@@ -8,15 +8,17 @@
         refreshRate = 144;
       };
       two = {
-        connection = "DVI-I-1";
-        horizontal = 1920;
-        vertical = 1080;
-      };
-      three = {
         connection = "HDMI-A-2";
         horizontal = 1920;
         vertical = 1080;
         xPos = 1;
+      };
+      three = {
+        connection = "DVI-I-1";
+        horizontal = 1280;
+        vertical = 1024;
+        refreshRate = 60;
+        xPos = -1;
       };
     };
 

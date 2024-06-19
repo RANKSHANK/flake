@@ -31,7 +31,7 @@
 
     nixvim = {
         url = "github:nix-community/nixvim";
-        # inputs.nixpkgs.follows = "nix-unstable";
+        inputs.nixpkgs.follows = "nix-unstable";
     };
 
     nur.url = "github:nix-community/NUR";
@@ -100,38 +100,6 @@
                 system.stateVersion = "23.11";
                 programs.nano.enable = false;
               })
-              # ({ pkgs, ... }: {
-              #   stylix.swatches = builtins.trace "loaded" {
-              #       hyprland.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
-              #       fish.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-              #       vim.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-              #       rofi.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";
-              #       terminal.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-              #   };
-              # })
-              # ({ config, user, pkgs, ... }: {
-              #   stylix = {
-              #     # swatches.terminal = {
-              #     #   base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
-              #     #   override = {
-              #     #     base00 = "000000";
-              #     #     swatches.tab.active.hovered = ({ colors, mkSwatch, ... }: with colors; mkSwatch base09 base05 base01);
-              #     #   };
-              #     # };
-              #     schemeOverrides = {
-              #       kitty = {
-              #         scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";
-              #         override = {
-              #           base08 = "dadbad";
-              #           # red = { mkColor, ... }: mkColor "dadbad";
-              #         };
-              #       };
-              #     };
-              #   };
-              #   # environment.etc."test".text = builtins.trace (config.lib.stylix.getSwatches [ "terminal" ]).swatches.tab.active (config.lib.stylix.getSwatches [ "terminal" ]).swatches.tab.active.hovered.foreground.asHex;
-              #   # environment.etc."test1".text = (config.lib.stylix.getPalette [ "terminal" ]).colors.base00;
-              #   environment.etc."test2".text = (config.stylix.palettes.kitty.scheme.base08);
-              # })
             ];
           });
 

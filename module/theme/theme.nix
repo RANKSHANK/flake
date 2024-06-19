@@ -9,6 +9,7 @@
     })
   ];
 
+
   stylix = let
     font = {
        package = pkgs.fira-code;
@@ -24,11 +25,12 @@
   in {
     enable = true;
     polarity = "dark";
-    image = pkgs.fetchurl {
-      url = "https://images.alphacoders.com/695/69561.jpg";
-      sha256 = "sha256-RKhIar3wMwo/5rWG5AdQbnOP4HX+C138Q5YeNY/acgY=";
-    };
-
+    image = 
+    # pkgs.fetchurl {
+    #   url = "https://images.alphacoders.com/695/69561.jpg";
+    #   sha256 = "sha256-RKhIar3wMwo/5rWG5AdQbnOP4HX+C138Q5YeNY/acgY=";
+    # };
+    config.lib.stylix.pixel "base00";
 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";

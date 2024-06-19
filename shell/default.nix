@@ -5,7 +5,7 @@ in
   pkgs.mkShell {
     packages = builtins.attrValues {
       inherit (pkgs) age nil sops nvd nix-output-monitor lua-language-server;
-      inherit (pkgs.nodePackages) bash-language-server;
+      # inherit (pkgs.nodePackages_latest) bash-language-server;
       inherit flup flop;
     };
   }
