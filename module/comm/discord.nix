@@ -13,7 +13,7 @@
     };
   };
    # arRPC = inputs.arrpc.packages.${pkgs.system}.arrpc;
-in lib.mkModule "discord" [ "communication" ] config {
+in lib.mkModule "discord" [ "desktop" "communication" ] config {
 
     # imports = [
     #     inputs.arrpc.homeManagerModules.default

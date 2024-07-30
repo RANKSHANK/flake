@@ -5,6 +5,8 @@
 
     disko.url = "github:nix-community/disko";
 
+    flatpak.url = "github:GermanBread/declarative-flatpak/dev";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nix-unstable";
@@ -64,6 +66,7 @@
             backupFileExtension = "bak";
           };
         })
+        flatpak.nixosModules.default
         impermanence.nixosModules.impermanence
         nur.nixosModules.nur
         sops-nix.nixosModules.sops

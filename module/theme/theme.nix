@@ -63,8 +63,10 @@
     };
     cursor = {
       package = pkgs.phinger-cursors;
+      # package = pkgs.material-cursors;
       size = 16;
       name = "phinger-cursors-dark";
+      # name = "material-dark";
     };
   };
   home-manager.users.${user} = {

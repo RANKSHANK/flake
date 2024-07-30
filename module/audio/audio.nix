@@ -48,13 +48,23 @@ in lib.mkModule "audio" [] config {
       pulse.enable = true;
       jack.enable = true;
       configPackages = recursiveImport "pipewire";
-      wireplumber.configPackages = recursiveImport "wireplumber";
+      wireplumber = {
+          enable = true;
+          configPackages = recursiveImport "wireplumber";
+          extraConfig = {
+            "10-disable-camera" = {
+              "wireplumber.profiles" = {
+                main."monitor.libcamera" = "disabled";
+              };
+            };
+        };
+      };
 
     };
 
     environment = {
       systemPackages = builtins.attrValues {
-        inherit (pkgs) playerctl pulsemixer qpwgraph wineasio;
+        inherit (pkgs) playerctl pulsemixer qpwgraph;
       };
       # etc = {
       #   "wireplumber/main.lua.d".source = ./wireplumber;

@@ -5,6 +5,7 @@
             "qutebrowser"
             "neovim"
             "anyrun"
+            # "nixvim"
         ];
 
         enabledModules = [

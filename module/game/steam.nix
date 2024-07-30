@@ -33,7 +33,9 @@
                         libvorbis
                         mono5
                         pango
+                        protontricks
                         strace
+                        winetricks
                         zlib
                         ;
                     inherit (pkgs.stdenv.cc.cc)

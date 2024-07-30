@@ -28,7 +28,8 @@ in lib.mkModule "hyprland" [] config {
     environment = {
       variables = {
         XDG_CURRENT_DESKTOP = "hyprland";
-        WLR_BACKEND = "vulkan";
+        # WLR_BACKEND = "vulkan";
+        NVD_BACKEND = "direct";
         LIBVA_DRIVER_NAME = lib.mkIfEnabled "nvidia-gpu" config "nvidia";
         __GL_GSYNC_ALLOWED = "1";
         __GL_VRR_ALLOWED = "0";
@@ -37,19 +38,20 @@ in lib.mkModule "hyprland" [] config {
       sessionVariables = {
         NIXOS_OZONE_WL = "1";
         MOZ_ENABLE_WAYLAND = "1";
-        QT_QPA_PLATFORM = "wayland";
+        QT_QPA_PLATFORM = "wayland;xcb";
         SDL_VIDEODRIVER = "wayland";
         XDG_SESSION_TYPE = "wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         GDK__BACKEND = lib.mkIfEnabled "nvidia-gpu" config "nvidia-drm";
-        WLR_NO_HARDWARE_CURSORS = "1";
+        # GBM_BACKEND = lib.mkIfEnabled "nvidia-gpu" config "nvidia-drm";
+        # WLR_NO_HARDWARE_CURSORS = "1";
       };
 
       systemPackages = builtins.attrValues {
         inherit (pkgs)
             swaylock
             swayidle
-            wlr-randr
+            # wlr-randr
             ;
         xdg-desktop-portal-hyprland = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland; 
       };
@@ -83,11 +85,22 @@ in lib.mkModule "hyprland" [] config {
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
 
       settings = {
+        exec-once = [
+            "exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+        ];
         general = {
           border_size = 3;
           gaps_in = 3;
           gaps_out = 3;
           layout = "dwindle";
+        };
+        render = {
+            explicit_sync = false;
+        };
+
+        cursor = {
+            no_hardware_cursors = true;
+            allow_dumb_copy = true;
         };
 
         decoration = {
