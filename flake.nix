@@ -23,25 +23,15 @@
 
     impermanence.url = "github:nix-community/Impermanence";
 
-    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-
-    # nix-gaming.url = "github:fufexan/nix-gaming";
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     nix-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
-    nix-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nix-staging.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nixvim = {
-        url = "github:nix-community/nixvim";
-        # inputs.nixpkgs.follows = "nix-unstable";
-    };
+    nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nur.url = "github:nix-community/NUR";
-
-    sops-nix= {
-        url = "github:Mic92/sops-nix";
-        inputs.nixpkgs.follows = "nix-unstable";
-    };
 
     stylix.url =
     "github:danth/stylix";
@@ -69,9 +59,7 @@
         flatpak.nixosModules.default
         impermanence.nixosModules.impermanence
         nur.nixosModules.nur
-        sops-nix.nixosModules.sops
         stylix.nixosModules.stylix
-        nixvim.nixosModules.nixvim
       ];
     in {
       nixosConfigurations = lib.genAttrs (lib.findTopLevelDirectories ./nixos)

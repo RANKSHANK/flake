@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   config,
   lib,
@@ -16,7 +17,7 @@
     };
 
     nix = {
-      package = pkgs.nixVersions.git;
+      package = inputs.nix-unstable.legacyPackages.${pkgs.system}.nixVersions.git;
       settings = {
         builders-use-substitutes = true;
         auto-optimise-store = true;

@@ -10,7 +10,6 @@
             "hyprland"
             "impermanence"
             "nvidia-gpu"
-            "sops"
             "theme"
         ];
 

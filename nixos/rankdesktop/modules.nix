@@ -3,16 +3,17 @@
 
         disabledModules = [
             "qutebrowser"
-            "neovim"
+#            "neovim"
             "anyrun"
-            # "nixvim"
+            "thunderbird"
+            "dwarf-fortress"
+            "nixvim"
         ];
 
         enabledModules = [
             "hyprland"
             "impermanence"
             "nvidia-gpu"
-            "sops"
             "theme"
         ];
 

@@ -22,7 +22,7 @@
                         gtk3-x11
                         harfbuzz
                         icu
-                        inetutils
+                        # inetutils
                         keyutils
                         libgdiplus
                         libkrb5
@@ -33,9 +33,9 @@
                         libvorbis
                         mono5
                         pango
-                        protontricks
+                        # protontricks
                         strace
-                        winetricks
+                        # winetricks
                         zlib
                         ;
                     inherit (pkgs.stdenv.cc.cc)
