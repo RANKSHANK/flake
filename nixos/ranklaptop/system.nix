@@ -41,7 +41,7 @@
           reusePassphrases = true;
         };
       };
-      kernelPackages = pkgs.linuxPackages_zen;
+      kernelPackages = pkgs.linuxPackages_xanmod_latest;
       kernelModules = [
         "kvm-intel"
       ];
@@ -72,7 +72,7 @@
     };
 
     services = {
-      printing.enable = true;
+      printing.enable = false;
       libinput.enable = true; # enables touchpad
       xserver = {
         xkb = {

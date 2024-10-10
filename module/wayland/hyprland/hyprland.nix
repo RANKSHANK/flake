@@ -88,7 +88,10 @@ in lib.mkModule "hyprland" [] config {
 
             settings = {
                 exec-once = [
-                    "exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+                    "sleep 1; killall -e xdg-desktop-portal-hyprland; killall -e xdg-desktop-portal-wlr; killall xdg-desktop-portal; /usr/lib/xdg-desktop-portal-hyprland &; sleep 2; \usr\lib\xdg-desktop-portal"
+                    "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+                    "pw-loopback"
+                    
                 ];
                 general = {
                     border_size = 3;
@@ -165,9 +168,10 @@ in lib.mkModule "hyprland" [] config {
                 };
 
                 misc = {
-                    vrr = 2;
+                    vrr = 1;
                     disable_hyprland_logo = true;
                     disable_splash_rendering = true;
+                    disable_xdg_env_checks = true;
                     animate_mouse_windowdragging = true;
                 };
 
@@ -186,9 +190,8 @@ in lib.mkModule "hyprland" [] config {
 
                 ];
 
-                exec = [
-                    "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
-                ];
+                exec = config.exec;
+
             };
         };
     };

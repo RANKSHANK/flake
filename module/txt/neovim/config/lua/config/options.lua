@@ -41,12 +41,12 @@ local options = {
 	whichwrap = "bs<>[]hl",
 	wrap = true,
 	writebackup = true,
-	list = true,
-	listchars = {
-		tab = "╰╶",
-		leadmultispace = "╰╶╶╶",
-		trail = "␣",
-	},
+	-- list = true,
+	-- listchars = {
+	-- 	tab = "╰╶",
+	-- 	leadmultispace = "╰╶╶╶",
+	-- 	trail = "␣",
+	-- },
     laststatus = 0,
     pumblend = 5,
     tabline = "",
@@ -58,10 +58,10 @@ end
 vim.opt.iskeyword:append("-")
 vim.opt.formatoptions:remove({ "c", "r", "o" })
 
-vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+-- vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+-- vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+-- vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+-- vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
 
 vim.cmd([[
 	hi link LspUnderlineError DiagnosticError

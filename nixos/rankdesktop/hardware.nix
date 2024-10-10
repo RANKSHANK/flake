@@ -1,19 +1,19 @@
 { lib, pkgs, user, config, ...}: {
   config = {
     monitors = {
-      one = {
+      a = {
         connection = "DP-3";
         horizontal = 1920;
         vertical = 1080;
         refreshRate = 144;
       };
-      two = {
+      b = {
         connection = "HDMI-A-2";
         horizontal = 1920;
         vertical = 1080;
         xPos = 1;
       };
-      three = {
+      c = {
         connection = "DVI-I-1";
         horizontal = 1280;
         vertical = 1024;

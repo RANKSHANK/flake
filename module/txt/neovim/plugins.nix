@@ -5,8 +5,8 @@ pkgs: {
       src = pkgs.fetchFromGitHub {
           owner = "b-src";
           repo = "lazy-nix-helper.nvim";
-          rev = "63b20ed";
-          sha256 = "sha256-TBDZGj0NXkWvJZJ5ngEqbhovf6RPm9N+Rmphz92CS3Q=";
+          rev = "cb1c0c4";
+          sha256 = "sha256-HwrO32Sj1FUWfnOZQYQ4yVgf/TQZPw0Nl+df/j0Jhbc=";
       };
   };
 
@@ -15,7 +15,7 @@ pkgs: {
       markdown
       markdown_inline
       nix
-      norg;
+      python;
   inherit (pkgs.vimPlugins)
       lazy-nvim
       nvim-lspconfig
@@ -41,6 +41,7 @@ pkgs: {
       fidget-nvim
       flit-nvim
       harpoon2
+      indent-blankline-nvim
       kanagawa-nvim
       vim-illuminate
       leap-nvim
@@ -48,8 +49,6 @@ pkgs: {
       lualine-nvim
       nvim-navic
       neodev-nvim
-      neorg
-      neorg-telescope
       noice-nvim
       no-neck-pain-nvim
       none-ls-nvim

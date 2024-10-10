@@ -3,7 +3,12 @@
   pkgs,
   lib,
   ...
-}: lib.mkModule "steam" [ "desktop" "gaming" ] config {
+}: let
+    steam-desktop-patcher = lib.patchDesktopEntry pkgs pkgs.steam "steam"
+        ["^Exec=steam"]
+        ["Exec=PULSE_LATENCY_MS=50 mangohud steam"];
+
+in lib.mkModule "steam" [ "desktop" "gaming" ] config {
 
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) steamcmd;
@@ -14,6 +19,7 @@
         enable = true;
         package = pkgs.steam.override {
             extraLibraries = pkgs: builtins.attrValues {
+                    inherit steam-desktop-patcher;
                     inherit (pkgs)
                         at-spi2-atk
                         fmodex
@@ -33,9 +39,9 @@
                         libvorbis
                         mono5
                         pango
-                        # protontricks
+                        protontricks
                         strace
-                        # winetricks
+                        winetricks
                         zlib
                         ;
                     inherit (pkgs.stdenv.cc.cc)
@@ -50,9 +56,9 @@
         remotePlay.openFirewall = true;
         dedicatedServer.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
-        # gamescopeSession = {
-        #     enable = true;
-        # };
+        gamescopeSession = {
+            enable = true;
+        };
         extraCompatPackages = builtins.attrValues {
           inherit (pkgs) proton-ge-bin;
         };

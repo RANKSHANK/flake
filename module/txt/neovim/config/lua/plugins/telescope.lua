@@ -43,6 +43,8 @@ return {
 	opts = {
 	},
 	config = function()
+		require("telescope").load_extension("undo")
+		require("telescope").load_extension("fzf")
 		require("telescope").setup({
 		defaults = vim.tbl_extend( "force", require("telescope.themes").get_ivy({
             layout_config = {
@@ -98,7 +100,5 @@ return {
                 },
 			},
 		})
-		require("telescope").load_extension("undo")
-		require("telescope").load_extension("fzf")
 	end,
 }

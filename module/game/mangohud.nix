@@ -26,6 +26,7 @@ in lib.mkModule "mangohud" [ "desktop" "gaming" ] config {
           # battery_color = colors.base04;
           # io_color = colors.base0A;
           #graphs = "gpu_load,cpu_load,gpu_core_clock,gpu_mem_clock,vram,ram,cpu_temp,gpu_temp";
+          toggle_hud = "Shift_L+F5";
         };
       };
       xdg.configFile."MangoHud/MangoHud.conf".text = ''

@@ -27,6 +27,7 @@
             "gaming"
             "graphics"
             # "math"
+            "media"
             "office"
             "repo"
             "shell"

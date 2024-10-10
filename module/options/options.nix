@@ -46,6 +46,11 @@ in lib.mkModule "options" [ "system" ] config {
         };
     };
 
+    exec = mkOption {
+        default = [];
+        type = lib.types.listOf lib.types.str;
+    };
+
     monitors = mkOption {
       default = {};
       type = lib.types.attrs;

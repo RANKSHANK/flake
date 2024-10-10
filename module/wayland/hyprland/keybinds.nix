@@ -55,12 +55,13 @@ in lib.mkSubmodule "hyprland" config {
         ", XF86AudioStop, exec, playerctl stop"
         ", XF86AudioPrev, exec, playerctl previous"
         ", XF86AudioNext, exec, playerctl next"
+        ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
       ];
-      bindil = lib.flatten [
-        ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0"
-      ];
+      # bindil = lib.flatten [
+      #   ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0"
+      # ];
       bindirl = lib.flatten [
-        ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
+        # ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
         genBindr
       ];
     };

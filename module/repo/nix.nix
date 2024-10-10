@@ -17,7 +17,7 @@
     };
 
     nix = {
-      package = inputs.nix-unstable.legacyPackages.${pkgs.system}.nixVersions.git;
+      package = inputs.nixpkgs.legacyPackages.${pkgs.system}.nixVersions.git;
       settings = {
         builders-use-substitutes = true;
         auto-optimise-store = true;

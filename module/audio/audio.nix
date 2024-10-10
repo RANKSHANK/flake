@@ -4,10 +4,11 @@
   config,
   lib,
   ...
-}: let
-    # TODO: find a builtin method
-    recursiveImport =  dir: map (file: pkgs.writeTextDir "/share/${dir}/${lib.last (lib.splitString "/" (toString file))}" (builtins.readFile file)) (lib.filesystem.listFilesRecursive ./${dir});
-in lib.mkModule "audio" [] config {
+}: lib.mkModule "audio" [] config {
+
+    exec = [
+        "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
+    ];
 
     keybinds = [
       {
@@ -29,9 +30,9 @@ in lib.mkModule "audio" [] config {
     home-manager.users.${user} = {
       services = {
           playerctld.enable = true;
-          easyeffects = {
-            enable = true;
-          };
+          # easyeffects = {
+          #   enable = true;
+          # };
       };
     };
 
@@ -47,10 +48,33 @@ in lib.mkModule "audio" [] config {
       };
       pulse.enable = true;
       jack.enable = true;
-      configPackages = recursiveImport "pipewire";
+      lowLatency = {
+        enable = true;
+      };
+      extraConfig.pipewire = {
+        pipewire-pulse = {
+            "92-low-latency" = {
+                context.modules = [
+                {
+                    name = "libpipewire-module-protocol-pulse";
+                    args = {
+                        pulse.min.req = "32/48000";
+                        pulse.default.req = "32/48000";
+                        pulse.max.req = "32/48000";
+                        pulse.min.quantum = "32/48000";
+                        pulse.max.quantum = "32/48000";
+                    };
+                }
+                ];
+                stream.properties = {
+                    node.latency = "32/48000";
+                    resample.quality = 1;
+                };
+            };
+        };
+      };
       wireplumber = {
           enable = true;
-          configPackages = recursiveImport "wireplumber";
           extraConfig = {
             "10-disable-camera" = {
               "wireplumber.profiles" = {
@@ -58,6 +82,7 @@ in lib.mkModule "audio" [] config {
               };
             };
         };
+        extraScripts = {};
       };
 
     };
@@ -66,9 +91,5 @@ in lib.mkModule "audio" [] config {
       systemPackages = builtins.attrValues {
         inherit (pkgs) playerctl pulsemixer qpwgraph;
       };
-      # etc = {
-      #   "wireplumber/main.lua.d".source = ./wireplumber;
-      #   "pipewire/pipewire.d".source = ./pipewire.d;
-      # };
     };
 }

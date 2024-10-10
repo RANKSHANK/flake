@@ -117,7 +117,6 @@ in rec {
             []
         )
         modulesWithEnables.modulesWithTags))
-        ezTrace
   ];
 
   patchDesktopEntry = pkgs: pkg: appName: from: to: let

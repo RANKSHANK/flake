@@ -3,13 +3,19 @@
     "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
   inputs = {
 
+    nix-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+
+    nix-staging.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     disko.url = "github:nix-community/disko";
 
     flatpak.url = "github:GermanBread/declarative-flatpak/dev";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nix-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
@@ -23,29 +29,33 @@
 
     impermanence.url = "github:nix-community/Impermanence";
 
+    lix = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
-    nix-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-
-    nix-staging.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    nix-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-gaming.url = "github:fufexan/nix-gaming";
 
     nur.url = "github:nix-community/NUR";
 
     stylix.url =
-    "github:danth/stylix";
+    "github:danth/stylix/ed91a20c84a80a525780dcb5ea3387dddf6cd2de";
+    # "github:danth/stylix";
     # "/home/rankshank/projects/stylix/";
     # "/home/rankshank/projects/styprev/";
   };
 
   outputs = inputs@{ self, ... }:
     let
-      nixpkgs = inputs.nix-unstable;
+    inherit (inputs) nixpkgs;
 
       lib = nixpkgs.lib.extend (_: final: import ./lib { lib = final; });
 
       nixosModules = with inputs; [
+        lix.nixosModules.default
+        nix-gaming.nixosModules.pipewireLowLatency
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
         ({ user, ... }: {

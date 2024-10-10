@@ -12,30 +12,27 @@
     fi
   '';
 in lib.mkModule "cliphist" [ "desktop" "wayland" ] config {
-    # shared.compositorInit = [
-    #   "wl-paste --type text --watch cliphist store"
-    #   "wl-paste --type image --watch cliphist store"
-    # ];
-    # TODO: service
-    # sharedeybinds = [
-    #   "L-v=clip-menu"
-    # ];
 
-    keybinds = lib.mkIfEnabled "rofi" config [
-      {
-        name = "Cliphist";
-        mods = ["super"];
-        combo = ["v"];
-        exec = "clip-menu";
-      }
-    ];
+    # keybinds = lib.mkIfEnabled "rofi" config [
+    #   {
+    #     name = "Cliphist";
+    #     mods = ["super"];
+    #     combo = ["v"];
+    #     exec = "clip-menu";
+    #   }
+    # ];
 
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) cliphist wl-clipboard;
-      clip-menu = lib.mkIfEnabled "rofi" config clip-menu;
+      # clip-menu = lib.mkIfEnabled "rofi" config clip-menu;
     };
 
     home-manager.users.${user} = {
-      services.cliphist.enable = true;
+      services.cliphist = {
+        enable = true;
+        extraOptions = [
+            "-max-items=1"
+        ];
+    };
   };
 }

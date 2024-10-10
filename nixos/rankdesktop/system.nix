@@ -45,7 +45,7 @@
           reusePassphrases = true;
         };
       };
-      kernelPackages = pkgs.linuxPackages_zen;
+      kernelPackages = pkgs.linuxPackages_xanmod_latest;
       kernelModules = [
         "kvm-intel"
       ];
@@ -73,7 +73,7 @@
     };
 
     services = {
-      printing.enable = true;
+      printing.enable = false; #CUPS Vuln
       libinput.enable = true; # enables touchpad
       xserver = {
         #enable = true; # Doesn't need to be enabled to allow xkb in tty
