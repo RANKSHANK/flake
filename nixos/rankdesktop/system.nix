@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   pkgs,
   user,
   ...
@@ -46,6 +47,7 @@
         };
       };
       kernelPackages = pkgs.linuxPackages_xanmod_latest;
+
       kernelModules = [
         "kvm-intel"
       ];

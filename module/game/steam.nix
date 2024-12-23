@@ -19,7 +19,6 @@ in lib.mkModule "steam" [ "desktop" "gaming" ] config {
         enable = true;
         package = pkgs.steam.override {
             extraLibraries = pkgs: builtins.attrValues {
-                    inherit steam-desktop-patcher;
                     inherit (pkgs)
                         at-spi2-atk
                         fmodex
@@ -39,9 +38,9 @@ in lib.mkModule "steam" [ "desktop" "gaming" ] config {
                         libvorbis
                         mono5
                         pango
-                        protontricks
+                        # protontricks
                         strace
-                        winetricks
+                        # winetricks
                         zlib
                         ;
                     inherit (pkgs.stdenv.cc.cc)
@@ -66,6 +65,7 @@ in lib.mkModule "steam" [ "desktop" "gaming" ] config {
     gamescope = {
         enable = true;
         capSysNice = false;
+        args = [ "--rt" "--expose-wayland" ];
     };
       gamemode.enable = true;
     };

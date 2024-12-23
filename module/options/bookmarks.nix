@@ -1,9 +1,17 @@
 { lib, config, ...}:
 
 lib.mkModule "bookmarks" [ "desktop" "connectivity" ] config {
-  browsers = lib.mkIfEnabled "desktop" config {
-    homepage = lib.mkDefault "https://search.brave.com";
+  browsers = let 
+    searxng-url = "http://${config.services.searx.settings.server.bind_address}:${toString config.services.searx.settings.server.port}";
+  in lib.mkIfEnabled "desktop" config {
+    homepage = lib.mkDefault searxng-url;
     searchEngines = [
+      {
+        name = "SearXNG";
+        shortcut = "sx";
+        url = searxng-url + "/search?q={}";
+        icon = "https://github.com/searxng/searxng/blob/master/src/brand/searxng-wordmark.svg";
+      }
       {
         name = "Brave";
         shortcut = "br";
@@ -38,7 +46,7 @@ lib.mkModule "bookmarks" [ "desktop" "connectivity" ] config {
       {
         name = "Home-Manager Options";
         shortcut = "ho";
-        url = "https://mipmip.github.io/home-manager-option-search/?query={}";
+        url = "https://home-manager-options.extranix.com/?query={}&release=master";
       }
       {
         name = "Nix Discourse";
@@ -48,7 +56,7 @@ lib.mkModule "bookmarks" [ "desktop" "connectivity" ] config {
       {
         name = "Nix Wiki";
         shortcut = "nw";
-        url = "https://nixos.wiki/index.php?search={}";
+        url = "https://wiki.nixos.org/w/index.php?search={}";
       }
       {
         name = "Nix Options";

@@ -1,0 +1,87 @@
+:root[uidensity="compact"]{ --uc-navbar-transform: -25px }
+
+#navigator-toolbox > div{ display: contents; }
+:root[sessionrestored] :where(#nav-bar,#PersonalToolbar,#tab-notification-deck,.global-notificationbox){
+  transform: translateY(var(--uc-navbar-transform))
+}
+:root:is([customizing],[chromehidden*="toolbar"]) :where(#nav-bar,#PersonalToolbar,#tab-notification-deck,.global-notificationbox){
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+#nav-bar:not([customizing]){
+  opacity: 0;
+  transition:  transform var(--hide-duration) ease var(--hide-delay), opacity var(--hide-duration) ease var(--hide-delay) !important;
+  position: relative;
+  z-index: 2;
+}
+#titlebar{ position: relative; z-index: 3 }
+
+#navigator-toolbox,
+#sidebar-box,
+#sidebar-main,
+#sidebar-splitter,
+#tabbrowser-tabbox{
+  z-index: auto !important;
+}
+
+#navigator-toolbox:focus-within > .browser-toolbar{
+  transform: translateY(0);
+  opacity: 1;
+  transition-duration: var(--hide-duration), var(--hide-duration) !important;
+  transition-delay: 0s !important;
+}
+
+#titlebar:hover ~ .browser-toolbar,
+.browser-titlebar:hover ~ :is(#nav-bar,#PersonalToolbar),
+
+#nav-bar:hover,
+
+#nav-bar:hover + #PersonalToolbar{
+  transform: translateY(0);
+  opacity: 1;
+  transition-duration: var(--hide-duration), var(--hide-duration) !important;
+  transition-delay: 0s !important;
+}
+
+:root[sessionrestored] #urlbar[popover]{
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--hide-duration) ease var(--hide-delay), opacity var(--hide-duration) ease var(--hide-delay);
+  transform: translateY(var(--uc-navbar-transform));
+}
+
+#mainPopupSet:has(> [panelopen]:not(#ask-chat-shortcuts,#tab-preview-panel)) ~ toolbox #urlbar[popover],
+.browser-titlebar:is(:hover,:focus-within) ~ #nav-bar #urlbar[popover],
+
+#nav-bar:is(:hover,:focus-within) #urlbar[popover],
+
+#urlbar-container > #urlbar[popover]:is([focused],[open]){
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0ms;
+  transform: translateY(0);
+}
+
+#urlbar-container > #urlbar[popover]:is([focused],[open]){
+ transition-duration: 100ms;
+}
+
+#mainPopupSet:has(> [panelopen]:not(#ask-chat-shortcuts,#tab-preview-panel)) ~ #navigator-toolbox > .browser-toolbar{
+  transition-delay: 33ms !important;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#nav-bar.browser-titlebar{
+  background: inherit;
+}
+
+#toolbar-menubar:not([autohide="true"]) ~ #nav-bar.browser-titlebar{
+  background-position-y: -28px; /* best guess, could vary */
+  border-top: none !important;
+}
+
+#PersonalToolbar{ transition: transform var(--hide-duration) ease var(--hide-delay) !important; position: relative; z-index: 1 }
+
+:root[sessionrestored]:not([inFullscreen],[chromehidden~="toolbar"]) > body > #browser{ margin-top: var(--uc-navbar-transform); }

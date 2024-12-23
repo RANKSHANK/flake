@@ -3,6 +3,10 @@
     "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
   inputs = {
 
+    satisfactory-mod-pr = {
+       url = "github:TomaSajt/nixpkgs?&ref=refs/heads/satisfactorymodmanager";
+    };
+
     nix-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
     nix-staging.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -18,7 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland"; #?&ref=refs/heads/main&rev=94140e886ea8c4ac34478d290c212f0f5454ab2e";
 
     hyprland-plugins = {
         url =
@@ -40,11 +44,12 @@
 
     nur.url = "github:nix-community/NUR";
 
-    stylix.url =
-    "github:danth/stylix/ed91a20c84a80a525780dcb5ea3387dddf6cd2de";
-    # "github:danth/stylix";
-    # "/home/rankshank/projects/stylix/";
-    # "/home/rankshank/projects/styprev/";
+    stylix = {
+        url =
+        "github:danth/stylix";
+        # "/home/rankshank/projects/stylix/";
+        # "/home/rankshank/projects/styprev/";
+    };
   };
 
   outputs = inputs@{ self, ... }:
@@ -54,7 +59,7 @@
       lib = nixpkgs.lib.extend (_: final: import ./lib { lib = final; });
 
       nixosModules = with inputs; [
-        lix.nixosModules.default
+        # lix.nixosModules.default
         nix-gaming.nixosModules.pipewireLowLatency
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
@@ -66,9 +71,9 @@
             backupFileExtension = "bak";
           };
         })
-        flatpak.nixosModules.default
+        flatpak.nixosModules.declarative-flatpak
         impermanence.nixosModules.impermanence
-        nur.nixosModules.nur
+        nur.modules.nixos.default
         stylix.nixosModules.stylix
       ];
     in {

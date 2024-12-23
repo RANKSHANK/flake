@@ -18,6 +18,8 @@
 
     nix = {
       package = inputs.nixpkgs.legacyPackages.${pkgs.system}.nixVersions.git;
+      registry = lib.mapAttrs (_: v: {flake = v;}) (lib.filterAttrs (_: v: lib.isType "flake" v) inputs);
+
       settings = {
         builders-use-substitutes = true;
         auto-optimise-store = true;

@@ -1,0 +1,136 @@
+@media screen and (min-width:1325px)
+{:root #nav-bar{margin-top: calc(var(--tab-height) * -1px - var(--tab-border) * 1px)!important; 
+  height: calc(var(--tab-height) * 1px + var(--tab-border) * 1px)} 
+  #TabsToolbar{margin-left: calc(1325px / 100 * var(--navbar-width)) !important} 
+  #nav-bar{margin-right: calc(100vw - calc(1325px / 100 * var(--navbar-width))) !important; vertical-align: center !important} 
+  #urlbar-container{min-width: 0px !important;  flex: auto !important} toolbarspring{display: none !important}
+
+}
+
+@media screen and (min-width:950px) and (max-width:1324px)
+{:root #nav-bar{margin-top: calc(var(--tab-height) * -1px - var(--tab-border) * 1px) !important; 
+  height: calc(var(--tab-height) * 1px + var(--tab-border) * 1px)} 
+  #TabsToolbar{margin-left: calc(var(--navbar-width) * 1vw) !important} 
+  #nav-bar{margin-right: calc(100vw - calc(var(--navbar-width) * 1vw)) !important; vertical-align: center !important} 
+  #urlbar-container{min-width: 0px !important;  flex: auto !important} toolbarspring{display: none !important} 
+  #TabsToolbar, #nav-bar{transition: margin-top .25s !important}
+
+}
+
+@media screen and (max-width:949px)
+{:root #nav-bar{padding: 0 5px 0 5px!important; height: calc(var(--navbar-height-mini) * 1px) !important} toolbarspring{display: none !important;}
+ #TabsToolbar, #nav-bar{transition: margin-top .25s !important}}
+ #nav-bar, #PersonalToolbar{background-color: #0000 !important;background-image: none !important; box-shadow: none !important} 
+ #nav-bar{margin-left: 3px;} .tab-background, .tab-stack { min-height: calc(var(--tab-height) * 1px) !important
+
+}
+
+#customizableui-special-spring1, #customizableui-special-spring2 { display: none; }
+
+#PanelUI-button {
+  -moz-box-ordinal-group: 0 !important;
+  order: -2 !important;
+  margin: 2px !important;
+  display: flex !important;
+}
+
+.titlebar-buttonbox-container {
+  display: flex !important;
+  margin-right: 12px !important;
+}
+
+#back-button,
+#forward-button
+{
+  display: none !important;
+}
+
+#unified-extensions-button {
+  order: -3 !important;
+  display: flex !important;
+}
+
+#identity-box.extensionPage #identity-icon-label {
+  visibility: none !important;
+}
+
+#alltabs-button {
+  display: none !important;
+}
+
+
+#reload-button,
+#identity-permission-box,
+#star-button-box,
+#identity-icon-box,
+#picture-in-picture-button,
+#tracking-protection-icon-container,
+#reader-mode-button,
+#translations-button
+{
+  display: none !important;
+}
+
+#urlbar .search-one-offs {
+  display: none !important;
+}
+
+#urlbar-background {
+  background: --var(--urlbar-bg-focused) !important;
+  border: none !important;
+  outline: block !important;
+  transition: .15s !important;
+}
+
+#urlbar:not(:hover):not([breakout][breakout-extend]) > #urlbar-background {
+    box-shadow: none !important;
+    background: --var(--urlbar-bg-unfocused) !important;
+}
+
+#navigator-toolbox {
+    border: none !important
+}
+
+#navigator-toolbox-background:-moz-window-inactive {
+  filter: contrast(90%)
+}
+
+#fullscreen-warning {
+  border: none !important;
+  background: -moz-Dialog !important;
+}
+
+.tabbrowser-tab:not(:hover) .tab-close-button {
+    opacity: 0% !important;
+    transition: 0.3s !important;
+    display: -moz-box !important;
+}
+.tab-close-button[selected]:not(:hover) {
+    opacity: 45% !important;
+    transition: 0.3s !important;
+    display: -moz-box !important;
+}
+.tabbrowser-tab:hover .tab-close-button {
+    opacity: 50%;
+    transition: 0.3s !important;
+    background: none !important;
+    cursor: pointer;
+    display: -moz-box !important;
+}
+.tab-close-button:hover {
+    opacity: 100% !important;
+    transition: 0.3s !important;
+    background: none !important;
+    cursor: pointer;
+    display: -moz-box !important;
+}
+.tab-close-button[selected]:hover {
+    opacity: 100% !important;
+    transition: 0.3s !important;
+    background: none !important;
+    cursor: pointer;
+    display: -moz-box !important;
+}
+#nav-bar .titlebar-buttonbox{display: none !important
+}
+#customizableui-special-spring1, #customizableui-special-spring2 { display: none; }

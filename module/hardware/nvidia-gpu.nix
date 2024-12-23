@@ -28,6 +28,7 @@
         };
       };
       graphics = {
+        enable32Bit = lib.mkForce true;
         extraPackages = builtins.attrValues {
           inherit (pkgs) nvidia-vaapi-driver;
         };

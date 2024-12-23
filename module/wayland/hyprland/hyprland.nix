@@ -89,8 +89,8 @@ in lib.mkModule "hyprland" [] config {
             settings = {
                 exec-once = [
                     "sleep 1; killall -e xdg-desktop-portal-hyprland; killall -e xdg-desktop-portal-wlr; killall xdg-desktop-portal; /usr/lib/xdg-desktop-portal-hyprland &; sleep 2; \usr\lib\xdg-desktop-portal"
-                    "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-                    "pw-loopback"
+                    # "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+                    # "pw-loopback"
                     
                 ];
                 general = {
@@ -105,7 +105,7 @@ in lib.mkModule "hyprland" [] config {
 
                 cursor = {
                     no_hardware_cursors = true;
-                    allow_dumb_copy = true;
+                    use_cpu_buffer = true;
                 };
 
                 decoration = {
@@ -113,7 +113,7 @@ in lib.mkModule "hyprland" [] config {
                     active_opacity = opacity;
                     inactive_opacity = opacity;
                     fullscreen_opacity = opacity;
-                    drop_shadow = true;
+                    # drop_shadow = true;
                     blur = {
                         enabled = true;
                     };
@@ -160,7 +160,6 @@ in lib.mkModule "hyprland" [] config {
                 dwindle = {
                     pseudotile = true;
                     force_split = 2;
-                    no_gaps_when_only = 2;
                 };
 
                 debug = {

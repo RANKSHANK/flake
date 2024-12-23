@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  inputs,
   user,
   ...
 }: let
@@ -23,13 +24,14 @@ in lib.mkModule "cliphist" [ "desktop" "wayland" ] config {
     # ];
 
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) cliphist wl-clipboard;
+      inherit (pkgs) wl-clipboard;
       # clip-menu = lib.mkIfEnabled "rofi" config clip-menu;
     };
 
     home-manager.users.${user} = {
       services.cliphist = {
         enable = true;
+        package = inputs.nix-stable.legacyPackages.${pkgs.system}.cliphist;
         extraOptions = [
             "-max-items=1"
         ];

@@ -7,7 +7,8 @@
             "anyrun"
             "thunderbird"
             "dwarf-fortress"
-            "nixvim"
+            # "lutris"
+            # "nixvim"
         ];
 
         enabledModules = [
@@ -34,6 +35,7 @@
             "sync"
             "video"
             "virtualization"
+            "vpn"
             "wayland"
             "xdg"
         ];

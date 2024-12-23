@@ -1,21 +1,11 @@
 {pkgs, lib, config, user, ...}: lib.mkModule "theme" [ "system" ] config {
-  fonts.packages = [
-    (pkgs.nerdfonts.override {
-      fonts = [
-        "JetBrainsMono"
-        "FiraCode"
-        "Monaspace"
-      ];
-    })
-  ];
-
 
   stylix = let
     font = {
-       package = pkgs.fira-code;
-       name = "FiraCode";
-      # package = pkgs.nerdfonts;
-      # name = "JetBrains Mono";
+       # package = pkgs.nerd-fonts.fira-code;
+       # name = "FiraCode";
+      package = pkgs.nerd-fonts.jetbrains-mono;
+      name = "JetBrains Mono";
       # package = pkgs.jetbrains-mono;
       # name = "Comic Mono";
       # package = pkgs.comic-mono;
@@ -34,8 +24,8 @@
 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";
     opacity = {

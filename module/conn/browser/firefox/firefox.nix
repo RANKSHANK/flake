@@ -40,9 +40,36 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
               # };
             };
         };
-        profiles.${user} = {
+        profiles.${user} = let
+            inherit (config.stylix) fonts;
+            inherit (config.lib.stylix) colors;
+            genCSS = dir: lib.concatStrings (lib.flatten [
+                '':root {
+                    --hide-delay: 300ms;
+                    --hide-duration: 32ms;
+                    --tab-active-bg-color: #${colors.base02};
+                    --tab-inactive-bg-color: #${colors.base00};
+                    --tab-active-fg-fallback-color: #${colors.base05};
+                    --tab-inactive-fg-fallback-color: #${colors.base05};
+                    --urlbar-bg-focused: #${colors.base04};
+                    --urlbar-fg-focused: #${colors.base06};
+                    --urlbar-bg-unfocused: #${colors.base00};
+                    --urlbar-fg-unfocused: #${colors.base05};
+                    --toolbar-bgcolor: #${colors.base00} !important;
+                    --urlbar-font: '${fonts.monospace.name}';
+                    --tab-border-radius: 15px !important;
+                    --tab-border: 8;
+                    --tab-height: 25;
+                    --tab-font: '${fonts.monospace.name}';
+                    --navbar-width: 40; 
+                    --navbar-height-mini: calc(var(--tab-height) + var(--tab-border));
+                    --navbar-hide-distance: calc(var(--tab-height) * 2);
+                }''
+                (map (builtins.readFile) (lib.listTargetFilesRecursively ".css" dir))
+          ]);
+        in {
           extensions = builtins.attrValues {
-            # inherit (config.nur.repos.rycee.firefox-addons) bypass-paywalls-clean;
+            # inherit (pkgs.nur.repos.rycee.firefox-addons) bypass-paywalls-clean;
           };
           id = 0;
           isDefault = true;
@@ -69,9 +96,10 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
             default = "${(lib.head config.browsers.searchEngines).name}";
             order = map (attrs: attrs.name) config.browsers.searchEngines;
           };
-          extraConfig = ''
-          '';
-          userChrome = import ./userchrome.nix config lib;
+          # extraConfig = ''
+          # '';
+          userContent = genCSS ./usercontent;
+          userChrome = genCSS ./userchrome;
         };
       };
 

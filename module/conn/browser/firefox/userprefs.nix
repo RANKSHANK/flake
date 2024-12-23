@@ -1,6 +1,5 @@
 config: user: {
     "browser.tabs.closeWindowWithLastTab" = false;
-    # "browser.startup.homepage" = "about:newtab";
     "browser.startup.homepage" = config.browsers.homepage;
     "security.identityblock.show_extended_validation" = true;
     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;

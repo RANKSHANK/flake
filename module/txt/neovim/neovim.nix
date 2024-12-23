@@ -12,6 +12,8 @@
 in lib.mkModule "neovim" [ "shell" ] config {
 
     home-manager.users.${user} = {
+      stylix.targets.neovim.enable = false;
+      stylix.targets.vim.enable = false;
       xdg.configFile.nvim = {
         source = ./config;
         recursive = true;
