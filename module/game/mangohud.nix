@@ -6,7 +6,7 @@
 }: let
   font = config.stylix.fonts.monospace;
   colors = config.lib.stylix.colors;
-in lib.mkModule "mangohud" [ "desktop" "gaming" ] config {
+in lib.mkModule "mangohud" [ "desktop" "gaming" ] {
     home-manager.users.${user} = {
       programs.mangohud = {
         enable = true;

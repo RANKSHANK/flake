@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 
-lib.mkModule "bitwarden" [ "desktop" ] config {
+lib.mkModule "bitwarden" [ "desktop" ] {
     environment.systemPackages = builtins.attrValues {
         # inherit (pkgs) bitwarden;
     };

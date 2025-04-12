@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 
-lib.mkModule "avahi" [ "connectivity" ] config {
+lib.mkModule "avahi" [ "connectivity" ] {
     services = {
 
         avahi = {

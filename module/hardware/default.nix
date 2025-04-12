@@ -1,0 +1,7 @@
+{ ... }:
+
+{
+    imports = [
+        ./nvidia-gpu.nix
+    ];
+}

@@ -4,7 +4,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "xdg" [] config {
+}: lib.mkModule "xdg" [] {
     systemd = {
       timers.user-tmp-clean = {
         wantedBy = ["timers.target"];

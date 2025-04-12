@@ -4,7 +4,7 @@
   pkgs,
   user,
   ...
-}: lib.mkModule "rofi" [ "desktop" "wayland" ] config {
+}: lib.mkModule "rofi" [ "desktop" "wayland" ] {
     keybinds = [
       {
         name = "Rofi App Menu";

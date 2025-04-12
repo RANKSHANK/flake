@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  inputs,
   user,
   ...
 }: let
@@ -12,29 +11,25 @@
         cliphist list | rofi -dmenu | cliphist decode | wl-copy
     fi
   '';
-in lib.mkModule "cliphist" [ "desktop" "wayland" ] config {
-
-    # keybinds = lib.mkIfEnabled "rofi" config [
-    #   {
-    #     name = "Cliphist";
-    #     mods = ["super"];
-    #     combo = ["v"];
-    #     exec = "clip-menu";
-    #   }
-    # ];
+in lib.mkModule "cliphist" [ "desktop" "wayland" ] {
 
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) wl-clipboard;
-      # clip-menu = lib.mkIfEnabled "rofi" config clip-menu;
     };
 
     home-manager.users.${user} = {
       services.cliphist = {
         enable = true;
-        package = inputs.nix-stable.legacyPackages.${pkgs.system}.cliphist;
+        # package = pkgs-stable.legacyPackages.${pkgs.system}.cliphist;
         extraOptions = [
             "-max-items=1"
         ];
+
     };
+
+    wayland.windowManager.hyprland.settings.exec-once = [
+        "wl-paste --type text --watch cliphist store"
+        "wl-paste --type image --watch cliphist store"
+    ];
   };
 }

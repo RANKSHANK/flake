@@ -4,7 +4,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "virtmanager" [ "virtualization" ] config {
+}: lib.mkModule "virtmanager" [ "virtualization" ] {
     virtualisation.libvirtd.enable = true;
 
     programs.dconf.enable = true;

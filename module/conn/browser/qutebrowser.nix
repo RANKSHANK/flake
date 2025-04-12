@@ -4,7 +4,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "qutebrowser" [ "desktop" "connectivity" ] config {
+}: lib.mkModule "qutebrowser" [ "desktop" "connectivity" ] {
     home-manager.users.${user} = {
       programs.qutebrowser = {
         enable = true;

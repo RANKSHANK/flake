@@ -5,13 +5,13 @@
   user,
   ...
 }:
-lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
+lib.mkModule "firefox" [ "connectivity" "desktop" ] {
     home-manager.users.${user} = {
       programs.firefox = {
         enable = true;
         package = pkgs.wrapFirefox pkgs.firefox.unwrapped {
           nativeMessagingHosts = builtins.attrValues {
-            # inherit (pkgs) tridactyl-native;
+            inherit (pkgs) tridactyl-native;
           };
           extraPolicies = {
             DirectDownloadDirectory = "$XDG_DOWNLOAD_DIR";
@@ -35,9 +35,9 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
                 latest = str: "https://addons.mozilla.org/firefox/downloads/latest/${str}/latest.xpi";
           in
             builtins.mapAttrs (name: attrs: attrs // {installation_mode = "force_installed";}) {
-              # "tridactyl.vim@cmcaine.co.uk" = {
-              #   install_url = latest "tridactyl-vim";
-              # };
+              "tridactyl.vim@cmcaine.co.uk" = {
+                install_url = latest "tridactyl-vim";
+              };
             };
         };
         profiles.${user} = let
@@ -64,12 +64,31 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] config {
                     --navbar-width: 40; 
                     --navbar-height-mini: calc(var(--tab-height) + var(--tab-border));
                     --navbar-hide-distance: calc(var(--tab-height) * 2);
+                    --base00: #${colors.base00}
+                    --base01: #${colors.base01}
+                    --base02: #${colors.base02}
+                    --base03: #${colors.base03}
+                    --base04: #${colors.base04}
+                    --base05: #${colors.base05}
+                    --base06: #${colors.base06}
+                    --base07: #${colors.base07}
+                    --base08: #${colors.base08}
+                    --base09: #${colors.base09}
+                    --base0A: #${colors.base0A}
+                    --base0B: #${colors.base0B}
+                    --base0C: #${colors.base0C}
+                    --base0D: #${colors.base0D}
+                    --base0E: #${colors.base0E}
+                    --base0F: #${colors.base0F}
                 }''
                 (map (builtins.readFile) (lib.listTargetFilesRecursively ".css" dir))
           ]);
         in {
-          extensions = builtins.attrValues {
-            # inherit (pkgs.nur.repos.rycee.firefox-addons) bypass-paywalls-clean;
+          extensions.packages = builtins.attrValues {
+              inherit (pkgs.nur.repos.rycee.firefox-addons) 
+                # bypass-paywalls-clean
+                tridactyl
+              ;
           };
           id = 0;
           isDefault = true;

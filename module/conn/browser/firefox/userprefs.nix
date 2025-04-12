@@ -159,4 +159,9 @@ config: user: {
     "browser.sessionstore.restore_tabs_lazily" = false;
     "browser.sessionstore.resume_from_crash" = false;
     "browser.sessionstore.collect_zoom" = false;
+    "browser.download.alwaysOpenPanel" = false;
+    "browser.tabs.loadBookmarksInTabs" = false;
+    "browser.display.os-zoom-behavior" = 2;
+    "sidebar.verticalTabs" = false;
+    "sidebar.revamp" = false;
 }

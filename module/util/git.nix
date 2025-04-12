@@ -3,7 +3,7 @@
   lib,
   pkgs,
   ...
-}: lib.mkModule "git" [ "shell" ] config {
+}: lib.mkModule "git" [ "shell" ] {
     programs = {
       git.enable = true;
     };

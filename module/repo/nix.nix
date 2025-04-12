@@ -4,7 +4,11 @@
   config,
   lib,
   ...
-}: lib.mkModule "nix" [ "repo" ] config {
+}: lib.mkModule "nix" [ "repo" ] {
+
+    imports = [
+        inputs.nur.modules.nixos.default
+    ];
 
     programs.nix-ld = {
         enable = true;
@@ -17,7 +21,7 @@
     };
 
     nix = {
-      package = inputs.nixpkgs.legacyPackages.${pkgs.system}.nixVersions.git;
+      # package = inputs.nixpkgs.legacyPackages.${pkgs.system}.git;
       registry = lib.mapAttrs (_: v: {flake = v;}) (lib.filterAttrs (_: v: lib.isType "flake" v) inputs);
 
       settings = {

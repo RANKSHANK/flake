@@ -31,14 +31,8 @@
     exit 1
   '';
 in {
-  config = lib.mkIfEnabled "script.default" config {
     environment.systemPackages = [
       track
       open_term
     ];
-
-    # shared.keybinds = [
-    #   "L-t=open_term"
-    # ];
-  };
 }

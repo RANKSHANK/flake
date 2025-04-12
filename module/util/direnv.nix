@@ -3,7 +3,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "direnv" [ "shell" ] config {
+}: lib.mkModule "direnv" [ "shell" ] {
     home-manager.users.${user} = {
       programs.direnv = {
         enable = true;

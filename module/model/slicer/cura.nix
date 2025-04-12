@@ -1,10 +1,9 @@
-{ inputs, lib, config, pkgs, ... }:
+{ lib, config, pkgs-stable, ... }:
 
-lib.mkModule "cura" [ "desktop" "cad" ] config {
+lib.mkModule "cura" [ "desktop" "cad" ] {
 
     environment.systemPackages = builtins.attrValues {
-        # inherit (pkgs) cura;
-        inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) cura;
+        inherit (pkgs-stable) cura;
 
     };
 

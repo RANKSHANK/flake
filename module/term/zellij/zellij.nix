@@ -1,6 +1,6 @@
 { user, config, lib, ... }:
 
-lib.mkModule "zellij" [ "shell" ] config {
+lib.mkModule "zellij" [ "shell" ] {
     home-manager.users.${user} = {
       programs.zellij = {
         enable = true;
@@ -12,7 +12,7 @@ lib.mkModule "zellij" [ "shell" ] config {
       };
       home.sessionVariables = {
         # ZELLIJ_AUTO_ATTACH = "true";
-        ZELLIJ_AUTO_EXIT = "true";
+        ZELLIJ_AUTO_EXIT = lib.mkForce "true";
       };
       xdg.configFile."zellij/layouts" = {
         source = ./layouts;

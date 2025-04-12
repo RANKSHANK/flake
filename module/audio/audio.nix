@@ -1,11 +1,10 @@
 {
   pkgs,
   user,
-  config,
   lib,
   ...
-}: lib.mkModule "audio" [] config {
-
+}: lib.mkModule "audio" [] {
+    
     exec = [
         "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
     ];
@@ -36,55 +35,57 @@
       };
     };
 
-    hardware.pulseaudio.enable = false;
 
     security.rtkit.enable = true;
 
-    services.pipewire = {
-      enable = true;
-      alsa = {
-        enable = true;
-        # support32Bit = true;
-      };
-      pulse.enable = true;
-      jack.enable = true;
-      lowLatency = {
-        enable = true;
-      };
-      extraConfig.pipewire = {
-        pipewire-pulse = {
-        #     "92-low-latency" = {
-        #         context.modules = [
-        #         {
-        #             name = "libpipewire-module-protocol-pulse";
-        #             args = {
-        #                 pulse.min.req = "32/48000";
-        #                 pulse.default.req = "32/48000";
-        #                 pulse.max.req = "32/48000";
-        #                 pulse.min.quantum = "32/48000";
-        #                 pulse.max.quantum = "32/48000";
-        #             };
-        #         }
-        #         ];
-        #         stream.properties = {
-        #             node.latency = "32/48000";
-        #             resample.quality = 1;
-        #         };
-        #     };
-        };
-      };
-      wireplumber = {
+    services = {
+        pulseaudio.enable = false;
+        pipewire = {
           enable = true;
-          extraConfig = {
-            "10-disable-camera" = {
-              "wireplumber.profiles" = {
-                main."monitor.libcamera" = "disabled";
-              };
+          alsa = {
+            enable = true;
+            # support32Bit = true;
+          };
+          pulse.enable = true;
+          jack.enable = true;
+          lowLatency = {
+            enable = true;
+          };
+          extraConfig.pipewire = {
+            pipewire-pulse = {
+            #     "92-low-latency" = {
+            #         context.modules = [
+            #         {
+            #             name = "libpipewire-module-protocol-pulse";
+            #             args = {
+            #                 pulse.min.req = "32/48000";
+            #                 pulse.default.req = "32/48000";
+            #                 pulse.max.req = "32/48000";
+            #                 pulse.min.quantum = "32/48000";
+            #                 pulse.max.quantum = "32/48000";
+            #             };
+            #         }
+            #         ];
+            #         stream.properties = {
+            #             node.latency = "32/48000";
+            #             resample.quality = 1;
+            #         };
+            #     };
             };
-        };
-        extraScripts = {};
-      };
+          };
+          wireplumber = {
+              enable = true;
+              extraConfig = {
+                "10-disable-camera" = {
+                  "wireplumber.profiles" = {
+                    main."monitor.libcamera" = "disabled";
+                  };
+                };
+            };
+            extraScripts = {};
+          };
 
+        };
     };
 
     environment = {

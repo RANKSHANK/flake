@@ -8,8 +8,9 @@
   devices = {
     rankdesktop = { id = "CWHD2SX-3EMIPMJ-RMO5HAR-5YPRJ6E-E26PXGS-FATQ555-A5GSLVE-NL4DGAT"; };
     ranklaptop = { id = "4KYMEMZ-KDF2KQM-CJNJODW-SP34WEL-YRRG2WI-MMSEX2D-SYFUNQW-3SKMUQJ"; };
-    rankcell = { id = "YBUWEPL-XCHUED2-53HRUTU-GHFN34W-XYZX2AJ-CSWBQSW-QCTJS5W-FLKB2QV"; };
+    rankcell = { id = "MQ2VK4N-AKT2PMJ-NE52CVW-E3NCRPF-IV2H5WG-B5Y5NP7-2763MNY-CXWJXQE"; };
   };
+  kindle = { id = "R5GXT4H-SUJANUT-7MX7Z4T-XCKRMD5-6RETM3O-WYXKEZE-5F73SGW-BNIVNAB"; };
   withoutSelf = builtins.filter (device: device != config.networking.hostName) (builtins.attrNames devices);
   genFolder = name: opts:
     opts
@@ -24,7 +25,7 @@
     "audio" = genFolder "audio" {};
     "video" = genFolder "video" {};
   };
-in lib.mkModule "syncthing" [ "connectivity" "sync" ] config {
+in lib.mkModule "syncthing" [ "connectivity" "sync" ] {
     services.syncthing = {
       enable = true;
       user = "rankshank";
@@ -35,7 +36,7 @@ in lib.mkModule "syncthing" [ "connectivity" "sync" ] config {
       overrideFolders = true;
       settings = {
         inherit folders;
-        inherit devices;
+        devices = devices // { inherit kindle; };
         options = {
           urAccepted = -1;
         };

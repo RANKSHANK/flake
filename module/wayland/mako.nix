@@ -4,7 +4,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "mako" [ "desktop" "wayland" ] config {
+}: lib.mkModule "mako" [ "desktop" "wayland" ] {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) mako libnotify;
     };

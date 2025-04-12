@@ -1,17 +1,18 @@
 { lib, config, ... }:
 
-lib.mkModule "searxng" [ "connectivity" ] config {
+lib.mkModule "searxng" [ "server" ] {
 
 
     services.searx = {
         enable = true;
         redisCreateLocally  = true;
-        # runInUwsgi = true;
-        # uwsgiConfig = {
-        #     socket = "/run/searx/searx.sock";
-        #     http = ":8888";
-        #     cmhod-socket = "660";
-        # };
+        runInUwsgi = true;
+        uwsgiConfig = {
+            socket = "/run/searx/searx.sock";
+            http = ":8888";
+            chmod-socket = "660";
+            disable-logging = true;
+        };
         settings = {
 
             server = {
@@ -46,6 +47,7 @@ lib.mkModule "searxng" [ "connectivity" ] config {
                     # "http" = "http://127.0.0.1:8118";
                     # "https" = "http://127.0.0.1:8118";
                 };
+                request_timeout = 5.0;
             };
 
             enabled_plugins = [
@@ -64,7 +66,7 @@ lib.mkModule "searxng" [ "connectivity" ] config {
                 # request_timeout = lib.mkDefault 10.0;
             } // value) {
                 "duckduckgo".disabled = true;
-                "brave".disabled = true;
+                "brave".disabled = false;
                 "bing".disabled = false;
                 "mojeek".disabled = true;
                 "mwmbl" = {
@@ -102,7 +104,7 @@ lib.mkModule "searxng" [ "connectivity" ] config {
                 "lingva".disabled = true;
                 "bing images".disabled = false;
                 "brave.images".disabled = true;
-                "duckduckgo images".disabled = true;
+                "duckduckgo images".disabled = false;
                 "google images".disabled = false;
                 "qwant images".disabled = true;
                 "1x".disabled = true;

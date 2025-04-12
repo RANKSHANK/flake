@@ -12,7 +12,7 @@
   #     withOpenASAR = true;
   #   };
   # };
-in lib.mkModule "discord" [ "desktop" "communication" ] config {
+in lib.mkModule "discord" [ "desktop" "communication" ] {
 
     # imports = [
     #     inputs.arrpc.homeManagerModules.default

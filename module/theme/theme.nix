@@ -1,4 +1,4 @@
-{pkgs, lib, config, user, ...}: lib.mkModule "theme" [ "system" ] config {
+{ pkgs, lib, config, user ? null, ...}: {
 
   stylix = let
     font = {
@@ -60,8 +60,9 @@
       # name = "material-dark";
     };
   };
-  home-manager.users.${user} = {
-    gtk.iconTheme = { 
+
+  home-manager.users = lib.mkIf (user != null) {
+    ${user}.gtk.iconTheme = { 
       package = pkgs.beauty-line-icon-theme;
       # size = 16;
       name = "BeautyLine";

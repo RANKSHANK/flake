@@ -8,7 +8,7 @@
         ["^Exec=steam"]
         ["Exec=PULSE_LATENCY_MS=50 mangohud steam"];
 
-in lib.mkModule "steam" [ "desktop" "gaming" ] config {
+in lib.mkModule "steam" [ "desktop" "gaming" ] {
 
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) steamcmd;
@@ -36,7 +36,7 @@ in lib.mkModule "steam" [ "desktop" "gaming" ] config {
                         libthai
                         libunwind
                         libvorbis
-                        mono5
+                        # mono5
                         pango
                         # protontricks
                         strace

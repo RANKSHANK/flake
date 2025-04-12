@@ -1,8 +1,12 @@
 {
+  inputs,
   config,
   lib,
   ...
-}: lib.mkModule "flatpak" [ "repo" "desktop" ] config {
+}: lib.mkModule "flatpak" [ "repo" "desktop" ] {
+    imports = [
+        inputs.flatpak.nixosModules.declarative-flatpak
+    ];
     xdg.portal.enable = true;
     services.flatpak = {
       enableModule = false;

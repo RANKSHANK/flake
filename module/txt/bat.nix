@@ -3,7 +3,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "bat" [ "shell" ] config {
+}: lib.mkModule "bat" [ "shell" ] {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) bat;
     };

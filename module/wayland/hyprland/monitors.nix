@@ -3,7 +3,7 @@
   config,
   user,
   ...
-}: lib.mkSubmodule "hyprland" config {
+}: {
     home-manager.users.${user}.wayland.windowManager.hyprland.settings.monitor = let
         sortedMonitors = (builtins.sort (first: second: (lib.ternary (lib.safeIsInt "xPos" first) first.xPos 0) < (lib.ternary (lib.safeIsInt "xPos" second) second.xPos 0)) (builtins.attrValues config.monitors));
 

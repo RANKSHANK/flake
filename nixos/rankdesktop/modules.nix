@@ -1,43 +1,41 @@
-{...}: {
-    config = {
-
-        disabledModules = [
-            "qutebrowser"
+{
+    disabledModules = [
+        "qutebrowser"
 #            "neovim"
-            "anyrun"
-            "thunderbird"
-            "dwarf-fortress"
-            # "lutris"
-            # "nixvim"
-        ];
+        "thunderbird"
+        "dwarf-fortress"
+        "lutris"
+        # "nixvim"
+    ];
 
-        enabledModules = [
-            "hyprland"
-            "impermanence"
-            "nvidia-gpu"
-            "theme"
-        ];
+    enabledModules = [
+        "disko"
+        "hyprland"
+        "impermanence"
+        "nvidia-gpu"
+        "sops"
+        "theme"
+    ];
 
-        enabledTags = [
-            "audio"
-            "communication"
-            "connectivity"
-            "cad"
-            "desktop"
-            "filesystem"
-            "gaming"
-            "graphics"
-            # "math"
-            "media"
-            "office"
-            "repo"
-            "shell"
-            "sync"
-            "video"
-            "virtualization"
-            "vpn"
-            "wayland"
-            "xdg"
-        ];
-    };
+    enabledTags = [
+        "audio"
+        "communication"
+        "connectivity"
+        "cad"
+        "desktop"
+        "filesystem"
+        "gaming"
+        "graphics"
+        # "math"
+        "media"
+        "office"
+        "repo"
+        "shell"
+        "sync"
+        "video"
+        "virtualization"
+        "vpn"
+        "wayland"
+        "xdg"
+    ];
 }

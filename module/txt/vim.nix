@@ -3,7 +3,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "vim" [ "shell" ] config {
+}: lib.mkModule "vim" [ "shell" ] {
     home-manager.users.${user} = {
       programs.vim = {
         enable = true;

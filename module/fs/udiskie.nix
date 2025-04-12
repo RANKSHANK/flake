@@ -3,7 +3,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "udiskie" [] config {
+}: lib.mkModule "udiskie" [] {
     home-manager.users.${user} = {
       services.udiskie = {
         enable = true;

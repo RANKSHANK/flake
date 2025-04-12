@@ -3,7 +3,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "zathura" [ "desktop" "office" ] config {
+}: lib.mkModule "zathura" [ "desktop" "office" ] {
     home-manager.users.${user} = {
       programs.zathura = {
         enable = true;

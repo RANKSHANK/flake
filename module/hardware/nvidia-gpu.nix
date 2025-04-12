@@ -3,7 +3,7 @@
   config,
   pkgs,
   ...
-}: lib.mkModule "nvidia-gpu" [] config {
+}: lib.mkModule "nvidia-gpu" [] {
     boot = {
       kernelModules = ["nvidia"];
       kernelParams = [

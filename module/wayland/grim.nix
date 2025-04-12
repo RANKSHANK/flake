@@ -15,7 +15,7 @@
           notify-send "$title" "$body"
       fi
     '';
-in lib.mkModule "grim" [ "desktop" "wayland" ] config {
+in lib.mkModule "grim" [ "desktop" "wayland" ] {
     keybinds = [
       {
         name = "Screen Capture";
@@ -25,8 +25,4 @@ in lib.mkModule "grim" [ "desktop" "wayland" ] config {
       }
     ];
 
-    environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) grim slurp swappy;
-      inherit snip;
-    };
 }

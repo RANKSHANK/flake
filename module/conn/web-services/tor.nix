@@ -1,10 +1,7 @@
 { config, lib, pkgs, ... }:
 
-lib.mkModule "tor" [ "connectivity" ] config {
+lib.mkModule "tor" [ "connectivity" ] {
 
-    environment.systemPackages = lib.ternary (lib.isEnabled "desktop" config) (builtins.attrValues {
-        inherit (pkgs) tor-browser;
-    }) [];
     services = {
         tor = {
             enable = true;

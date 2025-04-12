@@ -3,7 +3,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "swww" [ "desktop" "wayland" ] config {
+}: lib.mkModule "swww" [ "desktop" "wayland" ] {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) swww;
     };

@@ -1,0 +1,8 @@
+{ ... }:
+
+{
+    imports = [
+        ./firefox
+        ./qutebrowser.nix
+    ];
+}

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-[[ "$UID" -eq 0 ]] || exec sudo bash "$0" "$@"
 echo "adding untracked changes to git..."
 git add .
+[[ "$UID" -eq 0 ]] || exec sudo bash "$0" "$@"
 echo "updating flake..."
 nix flake update
 if [ ! -d "./.prev_locks" ]; then

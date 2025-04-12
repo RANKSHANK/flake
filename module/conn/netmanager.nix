@@ -3,7 +3,7 @@
   config,
   user,
   ...
-}: lib.mkModule "netmanager" [ "connectivity" ] config {
+}: lib.mkModule "netmanager" [ "connectivity" ] {
     networking = {
       networkmanager = {
         enable = true;

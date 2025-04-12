@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-lib.mkModule "spyder" [ "math" "desktop" ] config {
+lib.mkModule "spyder" [ "math" "desktop" ] {
     environment.systemPackages = builtins.attrValues {
         inherit (pkgs) spyder;
     };

@@ -1,6 +1,6 @@
 {lib, config, ...}: let
   inherit (lib) mkOption;
-in lib.mkModule "options" [ "system" ] config {
+in {
   options = {
     enabledModules = mkOption {
       default = [];

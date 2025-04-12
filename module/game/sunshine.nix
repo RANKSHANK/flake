@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-lib.mkModule "sunshine" [ "desktop" "gaming" "stream-host" ] config {
+lib.mkModule "sunshine" [ "desktop" "gaming" "stream-host" ] {
 
     boot.kernelModules = [ "uinput" ];
 

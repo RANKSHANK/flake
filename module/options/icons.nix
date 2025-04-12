@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-lib.mkModule "icons" [ "system" ] config {
+{
     options = {
         icons = lib.mkOption {
             default = {

@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 
-lib.mkModule "localsend" [ "connectivity" "sync" "desktop" ] config {
+lib.mkModule "localsend" [ "connectivity" "sync" "desktop" ] {
     environment.systemPackages = builtins.attrValues {
         inherit (pkgs) localsend;
     };

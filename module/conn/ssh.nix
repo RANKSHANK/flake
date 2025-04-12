@@ -1,10 +1,10 @@
 { lib, config, ... }:
 
-lib.mkModule "ssh" [ "connectivity" ] config {
+lib.mkModule "ssh" [ "connectivity" ] {
     programs = {
         mtr.enable = true;
         ssh = {
-            startAgent = true;
+            # startAgent = true;
             agentTimeout = "5m";
             extraConfig = "AddKeysToAgent yes";
         };
@@ -18,7 +18,7 @@ lib.mkModule "ssh" [ "connectivity" ] config {
             KbdInteractiveAuthentication = false;
         };
     };
-    nix = lib.mkIfEnabled "nix" config {
+    nix = lib.mkIf config.modules.nix.enabled {
       distributedBuilds = true;
       buildMachines = [
       ];

@@ -21,7 +21,7 @@
         (lib.ternary (lib.safeIsString "exec" keybind) "exec, ${keybind.exec}" "")
       ])) (builtins.filter (attr: !builtins.hasAttr "combo" attr) config.keybinds)) ["L" "R"]);
 
-in lib.mkSubmodule "hyprland" config {
+in {
 
     home-manager.users.${user}.wayland.windowManager.hyprland.settings = {
       bindm = [

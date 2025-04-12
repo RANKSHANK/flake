@@ -1,10 +1,9 @@
-{ inputs, lib, config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
-lib.mkModule "prusa" [ "desktop" "cad" ] config {
+lib.mkModule "prusa" [ "desktop" "cad" ] {
 
     environment.systemPackages = builtins.attrValues {
         inherit (pkgs) prusa-slicer;
-        # inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) prusa-slicer;
     };
 
 }

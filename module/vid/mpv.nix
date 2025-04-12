@@ -4,7 +4,7 @@
   pkgs,
   user,
   ...
-}: lib.mkModule "video" [ "desktop" "media" ] config {
+}: lib.mkModule "video" [ "desktop" "media" ] {
     home-manager.users.${user} = {
       programs.mpv = {
         enable = true;

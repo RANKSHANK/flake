@@ -1,8 +1,7 @@
 {
   lib,
-  config,
   ...
-}: lib.mkModule "bluetooth" [ "connectivity" ] config {
+}: lib.mkModule "bluetooth" [ "connectivity" ] {
     services.blueman.enable = true;
 
     hardware.bluetooth = {

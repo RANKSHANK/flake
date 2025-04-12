@@ -1,11 +1,11 @@
 {
-  description =
-    "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
+  description = "If it looks like I don't know what I'm doing, it's probably because I don't, if it does, you're probably mistaken.";
+
   inputs = {
 
-    satisfactory-mod-pr = {
-       url = "github:TomaSajt/nixpkgs?&ref=refs/heads/satisfactorymodmanager";
-    };
+    satisfactory-mod-pr.url = "github:TomaSajt/nixpkgs?&ref=refs/heads/satisfactorymodmanager";
+
+    hoarder-pr.url = "github:three/nixpkgs/?&ref=refs/heads/add-hoarder-app-pr";
 
     nix-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
@@ -22,21 +22,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland"; #?&ref=refs/heads/main&rev=94140e886ea8c4ac34478d290c212f0f5454ab2e";
+    hyprland = {
+        url = "github:hyprwm/Hyprland";
+        # inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland-plugins = {
-        url =
-            # "github:hyprwm/hyprland-plugins";
-            "git+https://github.com/hyprwm/hyprland-plugins?submodules=1";
+        url = "github:hyprwm/hyprland-plugins";
         inputs.hyprland.follows = "hyprland";
     };
 
     impermanence.url = "github:nix-community/Impermanence";
-
-    lix = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
@@ -44,63 +40,94 @@
 
     nur.url = "github:nix-community/NUR";
 
+    nvf = {
+        url = "github:notashelf/nvf";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    spicetify = {
+        url = "github:Gerg-L/spicetify-nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
         url =
         "github:danth/stylix";
         # "/home/rankshank/projects/stylix/";
-        # "/home/rankshank/projects/styprev/";
+        inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # oil-nvim = {
+    #     url = "https://github.com/stevearc/oil.nvim";
+    #     flake = false;
+    # };
+
   };
 
-  outputs = inputs@{ self, ... }:
-    let
-    inherit (inputs) nixpkgs;
+  outputs = inputs@{ self, ... }: let
+
+      inherit (inputs) nixpkgs;
 
       lib = nixpkgs.lib.extend (_: final: import ./lib { lib = final; });
-
-      nixosModules = with inputs; [
-        # lix.nixosModules.default
-        nix-gaming.nixosModules.pipewireLowLatency
-        disko.nixosModules.disko
-        home-manager.nixosModules.home-manager
-        ({ user, ... }: {
-          home-manager = {
-            useUserPackages = true;
-            useGlobalPkgs = true;
-            users.${user}.home.stateVersion = "23.11";
-            backupFileExtension = "bak";
-          };
-        })
-        flatpak.nixosModules.declarative-flatpak
-        impermanence.nixosModules.impermanence
-        nur.modules.nixos.default
-        stylix.nixosModules.stylix
+      
+      supportedSystems = [
+        "x86_64-linux"
+        "armv7-linux"
       ];
+
+      eachSys = lib.genAttrs supportedSystems;
+
     in {
+ 
+      packages = let 
+        names = lib.findTopLevelDirectories ./package;
+      in eachSys (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        packaged = (builtins.foldl' (acc: name: 
+          acc // { ${name} = (import ./package/${name}/${name}.nix {
+                inherit pkgs inputs lib;
+              }); 
+            }
+          ) {} names);
+      in packaged // { default = packaged.nvf; });
+
       nixosConfigurations = lib.genAttrs (lib.findTopLevelDirectories ./nixos)
         (host:
           let
             path = ./nixos/${host};
             user = lib.readFileOrDefault "${path}/user" "rankshank";
-            system =
-              lib.readFileOrDefault "${path}/architecture" "x86_64-linux";
+            system = lib.readFileOrDefault "${path}/architecture" "x86_64-linux";
+            lib = nixpkgs.lib.extend (_: final: import ./lib { lib = final; enables = import ./nixos/${host}/modules.nix; });
           in lib.nixosSystem {
-            system.packages = [
-                inputs.anyrun.packages.${system}.anyrun
-            ];
             specialArgs = {
               inherit inputs lib;
+              pkgs-stable = inputs.nix-stable.legacyPackages.${system};
+              pkgs-staging = inputs.nix-staging.legacyPackages.${system};
               user = user;
               modulesPath = "${nixpkgs}/nixos/modules";
             };
             modules = lib.flatten [
-              nixosModules
+              (with inputs; [
+                home-manager.nixosModules.home-manager
+                stylix.nixosModules.stylix
+                nix-gaming.nixosModules.pipewireLowLatency
+                disko.nixosModules.disko
+                spicetify.nixosModules.default
+              ])
+              ({ user, ... }: {
+                home-manager = {
+                  useUserPackages = true;
+                  useGlobalPkgs = true;
+                  users.${user}.home.stateVersion = "23.11";
+                  backupFileExtension = "bak";
+                };
+              })
               (import (lib.ternary (host == "iso")
                 "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
                 "${nixpkgs}/nixos/modules/module-list.nix"))
               (lib.listNixFilesRecursively path)
-              (lib.filterModules (lib.listNixFilesRecursively ./module))
-              ({ lib, ... }: {
+              ./module
+              ({ ... }: {
                 networking.hostName = host;
                 nixpkgs.hostPlatform = system;
                 system.stateVersion = "23.11";
@@ -109,41 +136,11 @@
             ];
           });
 
-      nixPMConfigurations = lib.genAttrs (lib.findTopLevelDirectories ./nixpm)
-        (host:
-          let
-            path = ./nixpm/${host};
-            user = lib.readFileOrDefault "${path}/user" "rankshank";
-            system =
-              lib.readFileOrDefault "${path}/architecture" "x86_64-linux";
-          in lib.nixosSystem {
-            system.packages = [
-                inputs.anyrun.packages.${system}.anyrun
-            ];
-            specialArgs = {
-              inherit inputs lib;
-              user = user;
-              modulesPath = "${nixpkgs}/nixos/modules";
-            };
-            modules = lib.flatten [
-              nixosModules
-              (import (lib.ternary (host == "iso")
-                "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-                "${nixpkgs}/nixos/modules/module-list.nix"))
-              (lib.listNixFilesRecursively path)
-              (lib.filterModules (lib.listNixFilesRecursively ./module))
-              ({ lib, ... }: {
-                networking.hostName = host;
-                nixpkgs.hostPlatform = system;
-                system.stateVersion = "23.11";
-                programs.nano.enable = false;
-              })
-            ];
-          });
-
-      devShells = let shells = lib.listNixFilesRecursively ./shell;
+      devShells = let
+        shells = lib.listNixFilesRecursively ./shell;
       in lib.listToAttrs (map (system:
-        let pkgs = import nixpkgs { inherit system; };
+        let 
+            pkgs = import nixpkgs { inherit system; };
         in {
           name = system;
           value = lib.listToAttrs (map (shell: {
@@ -153,8 +150,9 @@
               (lib.splitString "/")
               (lib.last)
             ];
-            value = import shell { inherit pkgs lib; };
+            value = import shell { inherit inputs pkgs lib; };
           }) shells);
-        }) [ "x86_64-linux" "armv7-linux" ]);
+        }) supportedSystems);
+
     };
 }

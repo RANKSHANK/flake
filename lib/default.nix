@@ -1,4 +1,4 @@
-{lib, ...}: let
+{lib, enables ? { disabledModules = []; enabledModules = []; enabledTags = []; }, ...}: let
   inherit lib;
 in rec {
 
@@ -62,63 +62,6 @@ in rec {
 
   ezTrace = val: builtins.trace val val;
 
-  filterModules = lib.filter (module: (builtins.match "^.*(mk(Sub)?[Mm]odule).*$" (builtins.readFile module)) != null);
-
-# This currently doesn't work, need to disable greedy regex matching, not sure if possible
-  filterDisabledModules = modules: enableSet: let
-    findModulesLine = builtins.match "^.*(mkModule.*?][[:s:]]*config).*$";
-    findComponent = builtins.match "^.+(\"([a-zA-z0-9_-]*)\").*$";
-    recurseComponents = modulesLine: lib.pipe modulesLine [
-        (findComponent)
-        (components: ternary (components != null && builtins.length components == 2) [
-            (recurseComponents ((builtins.replaceStrings [(lib.head components)] [""] modulesLine)))
-            (lib.last components)] [])
-    ];
-  in lib.pipe modules [
-    (map (module: { # Check for modules by their module declaration lines
-        inherit module;
-        moduleDecl = findModulesLine (builtins.readFile module);
-    }))
-    (lib.filter (module: module.moduleDecl != null)) # Remove files w/out declarations
-    (map (moduleWithDecl: rec { # break the declaration into components
-        inherit (moduleWithDecl) module;
-        components = lib.flatten (recurseComponents (lib.head (ezTrace moduleWithDecl.moduleDecl)));
-        isSubmodule = ((builtins.match "^.*(mkSub[Mm]odule).*$" (lib.head moduleWithDecl.moduleDecl)) != null);
-        moduleName = lib.tail (ezTrace components);
-        moduleReqTags = lib.init components;
-    }))
-    (modulesWithTags: { # Run through the modules and gen a list of the enabled ones
-        inherit modulesWithTags;
-        enabledModules = lib.filter
-            (moduleName: ternary
-                (safeIsList "disabledModules" enableSet)
-                (!builtins.elem moduleName moduleName)
-                (true))
-            (lib.flatten [
-                (ternary
-                    (safeIsList "enabledTags" enableSet)
-                    (map
-                        (moduleWithTags: ternary 
-                            (moduleWithTags.moduleReqTags != [] && (hasAll (moduleWithTags.moduleReqTags) enableSet.enabledTags))
-                            (moduleWithTags.moduleName)
-                            []
-                        ) modulesWithTags)
-                    [])
-                (ternary
-                    (safeIsList "enabledModules" enableSet)
-                    (enableSet.enabledModules)
-                    [])
-            ]);
-    })
-    (modulesWithEnables:  lib.flatten (map
-        (module: ternary
-            (builtins.elem (ezTrace module.moduleName) modulesWithEnables.enabledModules)
-            (module.module)
-            []
-        )
-        modulesWithEnables.modulesWithTags))
-  ];
-
   patchDesktopEntry = pkgs: pkg: appName: from: to: let
     zipped = lib.zipLists from to;
     sed-args = builtins.map ({
@@ -137,26 +80,86 @@ in rec {
 
   walkString = string: splitter: lib.foldl' (acc: str: builtins.concatLists [acc [(ternary (builtins.length acc > 0) "${lib.last acc}.${str}" str)]]) [] (lib.splitString splitter string);
 
-  mkIfEnabled = str: config: set: lib.mkIf (isEnabled str config) set;
+  mkIfEnabled = moduleName: requiredTags: set: lib.mkIf (isEnabled moduleName requiredTags) set;
 
-  isEnabled = moduleName: config: !(builtins.elem moduleName config.disabledModules) && (builtins.elem moduleName config.enabledModules || builtins.elem moduleName config.enabledTags || (ternary (builtins.hasAttr moduleName config.modules) (ternary (lib.count config.modules.${moduleName}.requiredTags == 0) false (builtins.all (tag: builtins.elem tag config.enabledTags) config.modules.${moduleName}.requiredTags))) false);
+  isEnabled = moduleName: requiredTags: !(builtins.elem moduleName enables.disabledModules) && (builtins.elem moduleName enables.enabledModules || builtins.elem moduleName enables.enabledTags || (ternary (requiredTags == []) false (builtins.all (tag: builtins.elem tag enables.enabledTags) requiredTags)));
 
  genNumStrs = num: str: builtins.genList (i: builtins.replaceStrings ["<num>"] [(toString i)] str) num;
 
-  # The same but marked for auto import TODO: does not split out options and imports properly
-  mkSubmodule = mkIfEnabled;
-
-  mkModule = moduleName: enableTags: config: module: let
+  mkModule = moduleName: requiredTags: module: let
     filter = name: builtins.elem name [ "options" "imports" ];
+    mkOpt = set: { 
+        options.modules.${moduleName}.enabled = lib.mkOption {
+            description = "Enable flag module";
+            default = set;
+        };
+   };
   in builtins.seq # Don't support top level configs as that may lead to issues with top level mkIf
     (lib.throwIf (builtins.hasAttr "config" module) "lib.mkModule for ${moduleName} has unsupported top level config = {...};")
-    {
-        options.modules.${moduleName}.requiredTags = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
-            default = enableTags;
-            description = "Tags required for auto enabling ${moduleName}";
-        };
-        config = mkIfEnabled moduleName config (lib.filterAttrs (name: _: !(filter name)) module);
-    } // (lib.filterAttrs (name: _: filter name) module);
+    (ternary (isEnabled moduleName requiredTags) ({
+        config = (lib.filterAttrs (name: _: !(filter name)) module);
+    } // mkOpt true) (mkOpt false)
+    ) // (lib.filterAttrs (name: _: filter name) module);
 
+  hexToInt = hex: let 
+      codes = {
+          "#" = 0;
+          "x" = 0;
+          "X" = 0;
+          "0" = 0;
+          "1" = 1;
+          "2" = 2;
+          "3" = 3;
+          "4" = 4;
+          "5" = 5;
+          "6" = 6;
+          "7" = 7;
+          "8" = 8;
+          "9" = 9;
+          "a" = 10;
+          "b" = 11;
+          "c" = 12;
+          "d" = 13;
+          "e" = 14;
+          "f" = 15;
+          "A" = 10;
+          "B" = 11;
+          "C" = 12;
+          "D" = 13;
+          "E" = 14;
+          "F" = 15;
+      };
+  in
+    lib.foldl' (acc: char: acc * 16 + codes.${char}) 0 (lib.stringToCharacters hex);
+        
+
+  hexToRgb = hex: {
+    r = (hexToInt (builtins.substring 0 2 hex));
+    g = (hexToInt (builtins.substring 2 2 hex));
+    b = (hexToInt (builtins.substring 4 2 hex));
+  };
+
+  rgbToHsl = rgb: let
+    r = rgb.r / 255.0;
+    g = rgb.g / 255.0;
+    b = rgb.b / 255.0;
+    maxVal = lib.max r (lib.max g b);
+    minVal = lib.min r (lib.min g b);
+    delta = maxVal - minVal;
+    average = (maxVal + minVal) / 2.0;
+  in ternary (delta == 0.0) {
+    hue = 0.0;
+    saturation = 0.0;
+    luminance = builtins.floor average;
+  } {
+    saturation = builtins.floor (delta / (ternary (average > 0.5) ((2.0 - maxVal - minVal)) (maxVal + minVal)) * 100.0);
+    luminance = builtins.floor (average * 100.0);
+    hue = builtins.floor (
+    ternary (maxVal == r) ((g - b) / delta + (ternary (g < b) 6.0 0.0)) (
+    ternary (maxVal == g) ((b - r) / delta + 2.0)
+    ((r - g) / delta + 4.0)) * 60.0);
+  };
+
+  _file = ./default.nix;
+  
 }

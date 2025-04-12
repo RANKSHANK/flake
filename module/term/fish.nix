@@ -4,7 +4,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "fish" [ "shell" ] config {
+}: lib.mkModule "fish" [ "shell" ] {
     users.defaultUserShell = pkgs.fish;
 
     programs.fish.enable = true;

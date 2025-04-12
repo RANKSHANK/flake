@@ -1,6 +1,6 @@
 { lib, config, pkgs, user, ... }:
 
-lib.mkModule "thunderbird" [ "desktop" "communication" ] config {
+lib.mkModule "thunderbird" [ "desktop" "communication" ] {
     environment.systemPackages = builtins.attrValues {
         inherit (pkgs) thunderbird;
     };

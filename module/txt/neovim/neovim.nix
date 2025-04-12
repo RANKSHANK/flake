@@ -9,7 +9,7 @@
 
   plugins = import ./plugins.nix pkgs;
 
-in lib.mkModule "neovim" [ "shell" ] config {
+in lib.mkModule "neovim" [ "shell" ] {
 
     home-manager.users.${user} = {
       stylix.targets.neovim.enable = false;

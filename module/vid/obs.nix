@@ -1,6 +1,7 @@
 { lib, config, pkgs, ... }:
 
-lib.mkModule "obs" [ "desktop" "video" ] config {
+lib.mkModule "obs" [ "desktop" "video" ] {
+    
     environment.systemPackages = builtins.attrValues {
         obs-studio = let 
             optionals = lib.ternary (lib.isEnabled "wayland" config) [pkgs.obs-studio-plugins.wlrobs] [];

@@ -1,6 +1,6 @@
 { config, lib, user, ... }:
 
-lib.mkModule "alacritty" [ "desktop" ] config {
+lib.mkModule "alacritty" [ "desktop" ] {
 
     # keybinds = [
     #   {

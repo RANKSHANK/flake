@@ -3,7 +3,7 @@
   config,
   lib,
   ...
-}: lib.mkModule "libreoffice" [ "desktop" "office" ] config {
+}: lib.mkModule "libreoffice" [ "desktop" "office" ] {
     environment = {
       systemPackages = builtins.attrValues {
         inherit (pkgs) hunspell libreoffice-qt;
