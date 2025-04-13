@@ -8,5 +8,6 @@
         ./kitty.nix
         ./starship.nix
         ./wezterm.nix
+        ./zellij
     ];
 }
