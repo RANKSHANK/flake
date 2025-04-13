@@ -12,15 +12,27 @@ lib.mkModule "changedetection-io" [ "server" ] {
         } )
     ];
 
-    services.changedetection-io = {
-        enable = true;
-        # webDriverSupport = true;
-        playwrightSupport = true;
-    
+    services = {
+
+        changedetection-io = {
+            enable = true;
+            # webDriverSupport = true;
+            playwrightSupport = true;
+        
+        };
+
+        nginx.virtualHosts."home.${config.nginx.base-url}" = "${config.services.changedetection-io.listenAddress}:${config.services.changedetection-io.port}";
     };
+
+
+    users.users.changedetection-io.extraGroups = [
+        config.services.nginx.user
+    ];
 
     systemd.services.changedetection-io = {
         after = lib.mkForce [ "network-online.target" ];
         wants = lib.mkForce [ "network-online.target" ];
     };
+
+    
 }

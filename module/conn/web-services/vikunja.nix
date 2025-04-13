@@ -4,22 +4,30 @@
 
 lib.mkModule "vikunja" [ "server" ] {
 
-    services.vikunja = {
-        enable = true;
-        package = pkgs-stable.vikunja;
-        frontendScheme = "http";
-        frontendHostname = "localhost";
-        settings = {
-            service = {
-                enableuserdeletion = false;
+    services = {
+        vikunja = {
+            enable = true;
+            package = pkgs-stable.vikunja;
+            frontendScheme = "http";
+            frontendHostname = "localhost";
+            settings = {
+                service = {
+                    enableuserdeletion = false;
+                };
             };
         };
+        nginx.virtualHosts."vikunja.${config.nginx.base-url}" = "${config.services.vikunja.frontendHostname}:${toString config.services.vikunja.port}";
     };
 
     users = {
-        users.vikunja = {
-            isSystemUser = true;
-            group = "vikunja";
+        users = { 
+            vikunja = {
+                isSystemUser = true;
+                group = "vikunja";
+                extraGroups = [
+                    config.services.nginx.user
+                ];
+            };
         };
         groups.vikunja = {};
     };

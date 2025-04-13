@@ -2,46 +2,50 @@
 
 lib.mkModule "glance" [ "server" ] {
 
-    services.glance = {
-        enable = true;
-        settings = {
-            branding = {
-                hide-footer = true;
-                logo-text = "󱄅";
-            };
-            theme = with config.lib.stylix.colors; let
-                conv = hex: lib.pipe hex [
-                    (hx: lib.rgbToHsl (lib.hexToRgb hx))
-                    (hsl: "${toString hsl.hue} ${toString hsl.saturation} ${toString hsl.luminance}")
-                ];
-            in {
-                light = config.stylix.polarity == "light";
-                background-color = conv base00;
-                primary-color = conv base05;
-                positive-color = conv base0B;
-                negative-color = conv base08;
-                contrast-multiplier = 1.2;
-                text-saturation-multiplier = 1.2;
+    services = {
+        glance = {
+            enable = true;
+            settings = {
 
-                custom-css-file = pkgs.writeText "glance-webfont" ''
-@import "https://www.nerdfonts.com/assets/css/webfont.css"
-                '';
+                branding = {
+                    hide-footer = true;
+                    logo-text = "󱄅";
+                };
 
-            };
-            pages = let
-                widgets = builtins.foldl' (attr: file:
-                    attr // { ${lib.getModuleName file} = import file { inherit config lib pkgs widgets; }; }
-                ) {} (lib.listNixFilesRecursively ./widgets);
-            in map (attr: removeAttrs attr [ "prio" ]) (builtins.sort (l: r: l.prio < r.prio) (map (page: 
-                (import page {
-                    inherit config lib pkgs widgets;
-                } // { name = lib.head (lib.splitString "." (lib.getModuleName page)); })
-            ) (lib.ternary (builtins.pathExists ./pages) (lib.listNixFilesRecursively ./pages) [])));
+                theme = with config.lib.stylix.colors; let
+                    conv = hex: lib.pipe hex [
+                        (hx: lib.rgbToHsl (lib.hexToRgb hx))
+                        (hsl: "${toString hsl.hue} ${toString hsl.saturation} ${toString hsl.luminance}")
+                    ];
+                in {
+                    light = config.stylix.polarity == "light";
+                    background-color = conv base00;
+                    primary-color = conv base05;
+                    positive-color = conv base0B;
+                    negative-color = conv base08;
+                    contrast-multiplier = 1.2;
+                    text-saturation-multiplier = 1.2;
+                    custom-css-file = pkgs.writeText "glance-webfont" ''@import "https://www.nerdfonts.com/assets/css/webfont.css"'';
+                };
+
+                pages = let
+                    widgets = builtins.foldl' (attr: file:
+                        attr // { ${lib.getModuleName file} = import file { inherit config lib pkgs widgets; }; }
+                    ) {} (lib.listNixFilesRecursively ./widgets);
+                in map (attr: removeAttrs attr [ "prio" ]) (builtins.sort (l: r: l.prio < r.prio) (map (page: 
+                    (import page {
+                        inherit config lib pkgs widgets;
+                    } // { name = lib.head (lib.splitString "." (lib.getModuleName page)); })
+                ) (lib.ternary (builtins.pathExists ./pages) (lib.ternary config.decrypted (lib.listNixFilesRecursively ./pages) []) [])));
+                };
+
         };
+
+        nginx.virtualHosts."glance.${config.nginx.base-url}" = "${config.services.glance.settings.server.host}:${config.services.glance.settings.server.port}";
 
     };
 
-    systemd.services = lib.mkIf config.modules.changedetection-io.enabled {
+    systemd.services = lib.mkIf config.services.changedetection-io.enable {
 
         glance = {
             after = lib.mkForce [ "glance-env.service" ];

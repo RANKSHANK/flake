@@ -11,7 +11,7 @@ lib.mkModule "radicale" [ "connectivity" "server" ] {
                 hosts = [
                     "0.0.0.0:${port}"
                     "[::]:${port}"
-                    (lib.mkIf config.modules.tailscale.enabled "100.0.0.0:${port}")
+                    (lib.mkIf config.modules.tailscale.enable "100.0.0.0:${port}")
                 ];
             };
         };

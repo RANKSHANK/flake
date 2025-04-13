@@ -89,7 +89,7 @@ in rec {
   mkModule = moduleName: requiredTags: module: let
     filter = name: builtins.elem name [ "options" "imports" ];
     mkOpt = set: { 
-        options.modules.${moduleName}.enabled = lib.mkOption {
+        options.modules.${moduleName}.enable = lib.mkOption {
             description = "Enable flag module";
             default = set;
         };

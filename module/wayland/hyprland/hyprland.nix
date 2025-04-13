@@ -35,7 +35,7 @@ in lib.mkModule "hyprland" [] {
         XDG_CURRENT_DESKTOP = "hyprland";
         # WLR_BACKEND = "vulkan";
         NVD_BACKEND = "direct";
-        LIBVA_DRIVER_NAME = lib.mkIf config.modules.nvidia-gpu.enabled "nvidia";
+        LIBVA_DRIVER_NAME = lib.mkIf config.modules.nvidia-gpu.enable "nvidia";
         __GL_GSYNC_ALLOWED = "1";
         __GL_VRR_ALLOWED = "0";
       };
@@ -47,7 +47,7 @@ in lib.mkModule "hyprland" [] {
         SDL_VIDEODRIVER = "wayland";
         XDG_SESSION_TYPE = "wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-        GDK__BACKEND = lib.mkIf config.modules.nvidia-gpu.enabled "nvidia-drm";
+        GDK__BACKEND = lib.mkIf config.modules.nvidia-gpu.enable "nvidia-drm";
         # GBM_BACKEND = lib.mkIfEnabled "nvidia-gpu" config "nvidia-drm";
         # WLR_NO_HARDWARE_CURSORS = "1";
       };

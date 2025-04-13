@@ -15,7 +15,7 @@ lib.mkModule "ghostty" [ "desktop" ] {
             enable = true;
             installVimSyntax = true;
             clearDefaultKeybinds = true;
-            enableFishIntegration = config.modules.fish.enabled;
+            enableFishIntegration = config.modules.fish.enable;
             settings = {
                 window-decoration = false;
                 confirm-close-surface = false;
