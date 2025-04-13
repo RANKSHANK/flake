@@ -2,6 +2,11 @@
   inherit (lib) mkOption;
 in {
   options = {
+    decrypted = mkOption {
+        default = false;
+        type = lib.types.bool;
+        description = "Decryption flag"; 
+    };
     enabledModules = mkOption {
       default = [];
       type = lib.types.listOf lib.types.str;
@@ -57,5 +62,11 @@ in {
       description = "Sets representing monitor information";
     };
 
+  };
+
+  config = {
+    decrypted = let 
+        file = ../../${builtins.replaceStrings [ "#SALT#" "\n" ]  [ "" "" ] (builtins.readFile ../../.crypted.crypt.txt)};
+    in builtins.isPath file && builtins.pathExists file;
   };
 }

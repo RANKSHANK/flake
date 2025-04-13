@@ -7,7 +7,7 @@
         ./netmanager.nix
         ./protonvpn.nix
         ./radicale.nix
-        ./ssh.nix
+        ./ssh
         ./tailscale.nix
         ./web-services
     ];
