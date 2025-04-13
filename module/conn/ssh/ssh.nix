@@ -35,8 +35,8 @@ in lib.mkModule "ssh" [ "connectivity" ] {
 
     users.users.${user}.openssh.authorizedKeys.keys = lib.mkIf config.decrypted keys.client;
 
-    nix = lib.mkIf (config.decrypted) {
-      distributedBuilds = true;
-      buildMachines = keys.builder;
-    };
+    # nix = lib.mkIf (config.decrypted) {
+    #   distributedBuilds = true;
+    #   buildMachines = keys.builder;
+    # };
 }
