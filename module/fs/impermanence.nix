@@ -20,6 +20,7 @@
             "/var/lib/nixos"
             "/var/lib/systemd/coredump"
             "/var/log"
+            (lib.mkIf config.modules.tailscale.enable "/var/lib/tailscale")
           ];
           files = lib.flatten [
             "/etc/machine-id"
