@@ -147,7 +147,12 @@ lib.mkModule "searxng" [ "server" ] {
 
         };
 
-    nginx.virtualHosts."searx.${config.nginx.base-url}" = "${config.services.searx.settings.server.bind_address}:${toString config.services.searx.settings.server.port}";
+        nginx.virtualHosts."searx.${config.nginx.base-url}" = {
+            listen = [{
+                addr = config.services.searx.settings.server.bind_address;
+                port = config.services.searx.settings.server.port;
+            }];
+        };
     };
 
     users.users.searx.extraGroups = [

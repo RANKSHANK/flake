@@ -16,7 +16,12 @@ lib.mkModule "vikunja" [ "server" ] {
                 };
             };
         };
-        nginx.virtualHosts."vikunja.${config.nginx.base-url}" = "${config.services.vikunja.frontendHostname}:${toString config.services.vikunja.port}";
+        nginx.virtualHosts."vikunja.${config.nginx.base-url}" = {
+            listen = [{
+                addr = config.services.vikunja.frontendHostname;
+                port = config.services.vikunja.port;
+            }];
+        };
     };
 
     users = {

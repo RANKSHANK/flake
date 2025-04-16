@@ -21,7 +21,12 @@ lib.mkModule "changedetection-io" [ "server" ] {
         
         };
 
-        nginx.virtualHosts."home.${config.nginx.base-url}" = "${config.services.changedetection-io.listenAddress}:${config.services.changedetection-io.port}";
+        nginx.virtualHosts."home.${config.nginx.base-url}" = {
+            listen = [{
+                addr = config.services.changedetection-io.listenAddress;
+                port = config.services.changedetection-io.port;
+            }];
+        };
     };
 
 

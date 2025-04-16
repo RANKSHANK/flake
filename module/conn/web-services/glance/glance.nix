@@ -41,7 +41,12 @@ lib.mkModule "glance" [ "server" ] {
 
         };
 
-        nginx.virtualHosts."glance.${config.nginx.base-url}" = "${config.services.glance.settings.server.host}:${config.services.glance.settings.server.port}";
+        nginx.virtualHosts."glance.${config.nginx.base-url}" = {
+            listen = [{
+                addr = config.services.glance.settings.server.host;
+                port = config.services.glance.settings.server.port;
+            }];
+        };
 
     };
 
