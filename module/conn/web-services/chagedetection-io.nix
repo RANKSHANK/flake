@@ -13,22 +13,15 @@ lib.mkModule "changedetection-io" [ "server" ] {
     ];
 
     services = {
-
         changedetection-io = {
             enable = true;
             # webDriverSupport = true;
             playwrightSupport = true;
         
         };
-
-        nginx.virtualHosts."home.${config.nginx.base-url}" = {
-            listen = [{
-                addr = config.services.changedetection-io.listenAddress;
-                port = config.services.changedetection-io.port;
-            }];
-        };
     };
 
+    webservices."changedetection-io" = "${config.services.changedetection-io.listenAddress}.${toString config.services.changedetection-io.port}";
 
     users.users.changedetection-io.extraGroups = [
         config.services.nginx.user

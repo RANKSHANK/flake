@@ -3,6 +3,7 @@
 {
     imports = [
         ./avahi.nix
+        ./caddy.nix
         ./chagedetection-io.nix
         ./glance
         ./nginx.nix

@@ -1,4 +1,4 @@
 .direnv
-result/*
+result/
 secrets.yaml
 .prev_locks/*

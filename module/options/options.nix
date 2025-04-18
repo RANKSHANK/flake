@@ -1,7 +1,9 @@
 {lib, config, ...}: let
   inherit (lib) mkOption;
 in {
+
   options = {
+
     decrypted = mkOption {
         default = false;
         type = lib.types.bool;
@@ -62,11 +64,26 @@ in {
       description = "Sets representing monitor information";
     };
 
+    webservices = mkOption {
+        default = {}; 
+        type = lib.types.attrsOf lib.types.str;
+        description = "Attrs of web services for reverse proxying";
+    };
+
+    base-url = mkOption {
+        type = lib.types.str; 
+        description = "Base URL for the server";
+    };
+
   };
 
   config = {
     decrypted = let 
         file = ../../${builtins.replaceStrings [ "#SALT#" "\n" ]  [ "" "" ] (builtins.readFile ../../.crypted.crypt.txt)};
     in builtins.isPath file && builtins.pathExists file;
+
+    base-url = lib.mkDefault config.networking.hostName;
   };
+
+
 }

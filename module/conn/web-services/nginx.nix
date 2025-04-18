@@ -1,6 +1,6 @@
 { lib, config, ... }:
 
-lib.mkModule "nginx" [ "server" "connectivity" ] {
+lib.mkModule "nginx" [] {
     services.nginx = {
         enable = true;
         virtualHosts.${config.nginx.base-url} = {
@@ -18,15 +18,6 @@ lib.mkModule "nginx" [ "server" "connectivity" ] {
                     '';
                 };
             };
-        };
-    };
-
-    nginx.base-url = lib.mkDefault config.networking.hostName;
-
-    options.nginx = {
-        base-url = lib.mkOption {
-            type = lib.types.str; 
-            description = "Base URL for the server";
         };
     };
 }

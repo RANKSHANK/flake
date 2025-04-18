@@ -50,6 +50,8 @@ lib.mkModule "glance" [ "server" ] {
 
     };
 
+    webservices."glance" = "${config.services.glance.settings.server.host}.${toString config.services.glance.settings.server.port}";
+
     systemd.services = lib.mkIf config.services.changedetection-io.enable {
 
         glance = {
