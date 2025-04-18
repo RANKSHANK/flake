@@ -3,11 +3,11 @@
 lib.mkModule "caddy" [ "server" ] {
     services.caddy = {
         enable = true;
-        virtualHosts = (lib.mapAttrs' (name: val: lib.nameValuePair 
-            ("${config.base-url}.${name}") 
+        virtualHosts = (lib.mapAttrs' (subdomain: redir: lib.nameValuePair 
+            ("${config.url-head}.${subdomain}.${config.url-tail}") 
             {
                 extraConfig = ''
-                    reverse_proxy ${val}
+                    reverse_proxy ${redir}
                 '';
             }
         ) config.webservices);

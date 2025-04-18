@@ -70,19 +70,27 @@ in {
         description = "Attrs of web services for reverse proxying";
     };
 
-    base-url = mkOption {
+    url-head = mkOption {
         type = lib.types.str; 
-        description = "Base URL for the server";
+        description = "Beginning of the URL for the server";
+    };
+
+    url-tail = mkOption {
+        type = lib.types.str; 
+        description = "Ending of the URL for the server";
     };
 
   };
 
   config = {
+
     decrypted = let 
         file = ../../${builtins.replaceStrings [ "#SALT#" "\n" ]  [ "" "" ] (builtins.readFile ../../.crypted.crypt.txt)};
     in builtins.isPath file && builtins.pathExists file;
 
-    base-url = lib.mkDefault config.networking.hostName;
+    url-head = lib.mkDefault config.networking.hostName;
+
+    url-tail = lib.mkDefault (lib.ternary config.decrypted (builtins.readFile ./domain.crypt.txt) "local");
   };
 
 
