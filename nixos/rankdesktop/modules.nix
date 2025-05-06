@@ -1,6 +1,7 @@
 {
     disabledModules = [
         "qutebrowser"
+        "protonvpn"
 #            "neovim"
         "thunderbird"
         "dwarf-fortress"

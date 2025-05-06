@@ -5,11 +5,10 @@
   ...
 }: lib.mkModule "flatpak" [ "repo" "desktop" ] {
     imports = [
-        inputs.flatpak.nixosModules.declarative-flatpak
+        inputs.flatpak.nixosModule
     ];
     xdg.portal.enable = true;
     services.flatpak = {
-      enableModule = false;
       enable = false;
       remotes = {
         "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";

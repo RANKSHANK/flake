@@ -12,15 +12,14 @@
     home-manager.users.${user} = {
       services.mako = {
         enable = true;
-        defaultTimeout = 8000;
-        borderRadius = 12;
-        extraConfig = ''
-          []
-          text-alignment=center
-          icons=1
-          width=300
-          height=110
-        '';
+        defaultTimeout = toString 8000;
+        borderRadius = toString 12;
+        settings = builtins.mapAttrs (_: attr: lib.ternary (lib.isString attr) attr (toString attr)) {
+            text-alignment = "center";
+            icons = 1;
+            width = 300;
+            height = 110;
+        };
       };
     };
 }

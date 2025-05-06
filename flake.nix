@@ -3,10 +3,6 @@
 
   inputs = {
 
-    satisfactory-mod-pr.url = "github:TomaSajt/nixpkgs?&ref=refs/heads/satisfactorymodmanager";
-
-    hoarder-pr.url = "github:three/nixpkgs/?&ref=refs/heads/add-hoarder-app-pr";
-
     nix-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
     nix-staging.url = "github:nixos/nixpkgs/nixpkgs-unstable";
