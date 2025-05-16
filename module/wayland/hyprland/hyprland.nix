@@ -107,7 +107,7 @@ in lib.mkModule "hyprland" [] {
                     layout = "dwindle";
                 };
                 render = {
-                    explicit_sync = false;
+                    # explicit_sync = false;
                 };
 
                 cursor = {
@@ -205,8 +205,9 @@ in lib.mkModule "hyprland" [] {
         };
 
         xdg.configFile."hypr/shader.frag".text = let
-            hex2Vec3 = color: "vec3(float((0x${color} >> 16) & 0xFF) / 255.0, float((0x${color} >> 8) & 0xFF) / 255.0, float(0x${color} & 0xFF) / 255.0)";
-            hex2Vec4 = color: opacity: "vec4(float((0x${color} >> 16) & 0xFF) / 255.0, float((0x${color} >> 8) & 0xFF) / 255.0, float(0x${color} & 0xFF) / 255.0, ${toString opacity})";
+            hex2Vec4 = color: opacity: let
+                rgb = lib.hexToRgb color;
+            in "vec4(${toString rgb.r}.0 / 255.0, ${toString rgb.g}.0 / 255.0, ${toString rgb.b}.0 /  255.0, ${toString opacity})";
             inherit (config.lib.stylix) colors;
         in ''
 #extension GL_EXT_gpu_shader4: enable
@@ -217,7 +218,7 @@ in lib.mkModule "hyprland" [] {
 #define resolution vec3(1.0, 1.0, 1.)
 #define spin_amount 0.7
 #define contrast 1.5
-#define tolerance 0.045
+#define tolerance 0.018
 #define color_1 ${hex2Vec4 colors.base05 1.0}
 #define color_2 ${hex2Vec4 colors.base06 1.0}
 #define color_3 ${hex2Vec4 colors.base00 1.0}

@@ -1,12 +1,10 @@
-{ pkgs, inputs, ... }: let
-  lib = pkgs.lib.extend (_: final: inputs.nvf.lib // import ../../lib { inherit (pkgs) lib; });
-in (lib.neovimConfiguration {
-
+{ inputs, pkgs, lib, ... }: let
+    inherit (inputs) nvf;
+in (nvf.lib.neovimConfiguration {
     inherit pkgs;
-
-    extraSpecialArgs = {
-      inherit lib inputs;
-    };
-
-    modules = lib.listNixFilesRecursively ./config;
+    modules = [
+        (import ../../module/txt/nvf/nvf-init.nix {
+            inherit inputs pkgs lib;
+        })
+    ];
 }).neovim

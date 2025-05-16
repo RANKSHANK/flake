@@ -1,8 +1,8 @@
 {
 
     disabledModules = [
-        "neovim"
-        "anyrun"
+        "qutebrowser"
+        "tor"
     ];
 
     enabledModules = [

@@ -20,7 +20,6 @@
 
     hyprland = {
         url = "github:hyprwm/Hyprland";
-        # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hyprland-plugins = {
@@ -32,12 +31,14 @@
 
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
+
     nix-gaming.url = "github:fufexan/nix-gaming";
 
     nur.url = "github:nix-community/NUR";
 
     nvf = {
-        url = "github:notashelf/nvf";
+        url = #"github:notashelf/nvf";
+         "/home/rankshank/projects/nvf";
         inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -53,25 +54,15 @@
         inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # oil-nvim = {
-    #     url = "https://github.com/stevearc/oil.nvim";
-    #     flake = false;
-    # };
-
   };
 
   outputs = inputs@{ self, ... }: let
 
       inherit (inputs) nixpkgs;
-
+      
       lib = nixpkgs.lib.extend (_: final: import ./lib { lib = final; });
       
-      supportedSystems = [
-        "x86_64-linux"
-        "armv7-linux"
-      ];
-
-      eachSys = lib.genAttrs supportedSystems;
+      eachSys = lib.genAttrs lib.platforms.all;
 
     in {
  
@@ -148,7 +139,7 @@
             ];
             value = import shell { inherit inputs pkgs lib; };
           }) shells);
-        }) supportedSystems);
+        }) lib.platforms.all);
 
     };
 }

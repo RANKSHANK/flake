@@ -15,6 +15,7 @@
         interactiveShellInit = ''
           set fish_greeting
           fish_vi_key_bindings
+          ${lib.ternary (config.modules.neovim.enable) ''set -gx MANPAGER "nvim +Man!"'' ''''}
 
         '';
         plugins = [

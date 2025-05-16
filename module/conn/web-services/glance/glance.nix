@@ -17,7 +17,7 @@ lib.mkModule "glance" [ "server" ] {
                         (hx: lib.rgbToHsl (lib.hexToRgb hx))
                         (hsl: "${toString hsl.hue} ${toString hsl.saturation} ${toString hsl.luminance}")
                     ];
-                in {
+                in lib.mkForce {
                     light = config.stylix.polarity == "light";
                     background-color = conv base00;
                     primary-color = conv base05;
