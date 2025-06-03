@@ -1,5 +1,7 @@
 {
     disabledModules = [
+        # "glance"
+        "tor"
     ];
 
     enabledModules = [

@@ -18,7 +18,7 @@ lib.mkModule "vikunja" [ "server" ] {
         };
     };
 
-    webservices."vikunja" = "${config.services.vikunja.frontendHostname}.${toString config.services.vikunja.port}";
+    webservices."vikunja" = "${config.services.vikunja.frontendHostname}:${toString config.services.vikunja.port}";
 
     users = {
         users = { 

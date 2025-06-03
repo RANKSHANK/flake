@@ -148,7 +148,7 @@ lib.mkModule "searxng" [ "server" ] {
         };
     };
 
-    webservices."searx" = "${config.services.searx.settings.server.bind_address}.${toString config.services.searx.settings.server.port}";
+    webservices."searx" = "${config.services.searx.settings.server.bind_address}:${toString config.services.searx.settings.server.port}";
 
     users.users.searx.extraGroups = [
         config.services.nginx.user

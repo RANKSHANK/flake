@@ -12,21 +12,21 @@ lib.mkModule "glance" [ "server" ] {
                     logo-text = "󱄅";
                 };
 
-                theme = with config.lib.stylix.colors; let
-                    conv = hex: lib.pipe hex [
-                        (hx: lib.rgbToHsl (lib.hexToRgb hx))
-                        (hsl: "${toString hsl.hue} ${toString hsl.saturation} ${toString hsl.luminance}")
-                    ];
-                in lib.mkForce {
-                    light = config.stylix.polarity == "light";
-                    background-color = conv base00;
-                    primary-color = conv base05;
-                    positive-color = conv base0B;
-                    negative-color = conv base08;
-                    contrast-multiplier = 1.2;
-                    text-saturation-multiplier = 1.2;
-                    custom-css-file = pkgs.writeText "glance-webfont" ''@import "https://www.nerdfonts.com/assets/css/webfont.css"'';
-                };
+                # theme = with config.lib.stylix.colors; let
+                #     conv = hex: lib.pipe hex [
+                #         (hx: lib.rgbToHsl (lib.hexToRgb hx))
+                #         (hsl: "${toString hsl.hue} ${toString hsl.saturation} ${toString hsl.luminance}")
+                #     ];
+                # in lib.mkForce {
+                #     light = config.stylix.polarity == "light";
+                #     background-color = conv base00;
+                #     primary-color = conv base05;
+                #     positive-color = conv base0B;
+                #     negative-color = conv base08;
+                #     contrast-multiplier = 1.2;
+                #     text-saturation-multiplier = 1.2;
+                #     custom-css-file = pkgs.writeText "glance-webfont" ''@import "https://www.nerdfonts.com/assets/css/webfont.css"'';
+                # };
 
                 pages = let
                     widgets = builtins.foldl' (attr: file:
@@ -50,7 +50,7 @@ lib.mkModule "glance" [ "server" ] {
 
     };
 
-    webservices."glance" = "${config.services.glance.settings.server.host}.${toString config.services.glance.settings.server.port}";
+    webservices."glance" = "${config.services.glance.settings.server.host}:${toString config.services.glance.settings.server.port}";
 
     systemd.services = lib.mkIf config.services.changedetection-io.enable {
 

@@ -88,9 +88,7 @@ in {
         file = ../../${builtins.replaceStrings [ "#SALT#" "\n" ]  [ "" "" ] (builtins.readFile ../../.crypted.crypt.txt)};
     in builtins.isPath file && builtins.pathExists file;
 
-    url-head = lib.mkDefault config.networking.hostName;
-
-    url-tail = lib.mkDefault (lib.ternary config.decrypted (builtins.readFile ./domain.crypt.txt) "local");
+    url-tail = lib.mkDefault (lib.ternary config.decrypted (builtins.replaceStrings [ "\n" ] [ ""] (builtins.readFile ./domain.crypt.txt)) "local");
   };
 
 

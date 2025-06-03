@@ -37,8 +37,8 @@
     nur.url = "github:nix-community/NUR";
 
     nvf = {
-        url = #"github:notashelf/nvf";
-         "/home/rankshank/projects/nvf";
+        url = "github:notashelf/nvf";
+         # "/home/rankshank/projects/nvf";
         inputs.nixpkgs.follows = "nixpkgs";
     };
 
