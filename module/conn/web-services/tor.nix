@@ -44,7 +44,7 @@ lib.mkModule "tor" [ "connectivity" ] {
                 ];
                 script = ''
 #!${pkgs.runtimeShell}
-if [[ $IFACE == "wlan0" && $AdministrativeState == "configured" ]]; then
+if [[ $IFACE == "wlan0" && "''${AdministrativeState+set}" = "set" && $AdministrativeState == "configured" ]]; then
 echo "Restarting Tor ..."
 systemctl restart tor
 fi

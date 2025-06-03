@@ -70,11 +70,6 @@ in {
         description = "Attrs of web services for reverse proxying";
     };
 
-    url-head = mkOption {
-        type = lib.types.str; 
-        description = "Beginning of the URL for the server";
-    };
-
     url-tail = mkOption {
         type = lib.types.str; 
         description = "Ending of the URL for the server";
