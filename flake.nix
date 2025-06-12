@@ -31,7 +31,6 @@
 
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
-
     nix-gaming.url = "github:fufexan/nix-gaming";
 
     nur.url = "github:nix-community/NUR";
@@ -53,6 +52,8 @@
         # "/home/rankshank/projects/stylix/";
         inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
 
   };
 

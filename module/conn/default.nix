@@ -9,6 +9,7 @@
         ./radicale.nix
         ./ssh
         ./tailscale.nix
+        ./vpn-confinement.nix
         ./web-services
     ];
 }

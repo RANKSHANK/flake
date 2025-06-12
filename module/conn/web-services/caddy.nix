@@ -10,7 +10,7 @@ lib.mkModule "caddy" [ "server" ] {
             hash =  "sha256-Gsuo+ripJSgKSYOM9/yl6Kt/6BFCA6BuTDvPdteinAI=";
         };
         virtualHosts = (lib.mapAttrs' (subdomain: redir: lib.nameValuePair 
-            ("${subdomain}.${config.url-tail}") 
+            ("${subdomain}.${config.baseURL}") 
             {
                 extraConfig = ''
                     reverse_proxy ${redir}

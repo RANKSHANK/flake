@@ -160,6 +160,8 @@ in rec {
     ((r - g) / delta + 4.0)) * 60.0);
   };
 
-  _file = ./default.nix;
-  
+  isDecrypted = let 
+      file = ../${builtins.replaceStrings [ "#SALT#" "\n" ]  [ "" "" ] (builtins.readFile ../.crypted.crypt.txt)};
+  in builtins.isPath file && builtins.pathExists file;
+
 }

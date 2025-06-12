@@ -7,7 +7,24 @@
 }: {
     documentation.enable = false; # Breaks Nixos-Install due to cross sys linking? TODO: read into this
     powerManagement.cpuFreqGovernor = "performance";
-    hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
+
+    environment.sessionVariables = {
+        LIBVA_DRIVER_NAME = "iHD";
+    };
+
+    hardware = {
+        cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
+        graphics = {
+            enable = true;
+            extraPackages = builtins.attrValues {
+                inherit (pkgs)  
+                    intel-media-driver
+                    intel-compute-runtime
+                    vpl-gpu-rt
+                    intel-ocl;
+            };
+        };
+    };
 
     boot = {
       supportedFilesystems = [

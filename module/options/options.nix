@@ -4,11 +4,6 @@ in {
 
   options = {
 
-    decrypted = mkOption {
-        default = false;
-        type = lib.types.bool;
-        description = "Decryption flag"; 
-    };
     enabledModules = mkOption {
       default = [];
       type = lib.types.listOf lib.types.str;
@@ -70,7 +65,7 @@ in {
         description = "Attrs of web services for reverse proxying";
     };
 
-    url-tail = mkOption {
+    baseURL = mkOption {
         type = lib.types.str; 
         description = "Ending of the URL for the server";
     };
@@ -79,11 +74,7 @@ in {
 
   config = {
 
-    decrypted = let 
-        file = ../../${builtins.replaceStrings [ "#SALT#" "\n" ]  [ "" "" ] (builtins.readFile ../../.crypted.crypt.txt)};
-    in builtins.isPath file && builtins.pathExists file;
-
-    url-tail = lib.mkDefault (lib.ternary config.decrypted (builtins.replaceStrings [ "\n" ] [ ""] (builtins.readFile ./domain.crypt.txt)) "local");
+    baseURL = lib.mkDefault (lib.ternary lib.isDecrypted (builtins.replaceStrings [ "\n" ] [ ""] (builtins.readFile ./domain.crypt.txt)) "local");
   };
 
 

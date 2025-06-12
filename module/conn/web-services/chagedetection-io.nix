@@ -17,15 +17,12 @@ lib.mkModule "changedetection-io" [ "server" ] {
             enable = true;
             # webDriverSupport = true;
             playwrightSupport = true;
-        
+            behindProxy = true;
+            baseURL = "https://changedetection-io.${config.baseURL}";
         };
     };
 
     webservices."changedetection-io" = "${config.services.changedetection-io.listenAddress}:${toString config.services.changedetection-io.port}";
-
-    # users.users.changedetection-io.extraGroups = [
-    #     config.services.nginx.user
-    # ];
 
     systemd.services.changedetection-io = {
         after = lib.mkForce [ "network-online.target" ];

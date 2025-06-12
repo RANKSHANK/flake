@@ -1,6 +1,4 @@
-{ config, lib, pkgs, ... }:
-
-lib.mkModule "tor" [ "connectivity" ] {
+{ config, lib, pkgs, ... }: lib.mkModule "tor" [ "connectivity" ] {
 
     services = {
         tor = {
@@ -53,5 +51,7 @@ exit 0
             };
         };
     };
+
     networking.nameservers = [ "127.0.0.1" ];
+
 }

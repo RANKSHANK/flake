@@ -3,14 +3,24 @@
 {
     type = "monitor";
     title = "services";
-    sites = [
+    sites = let 
+        mkURL = urlHead: "https://${urlHead}.${config.baseURL}";
+    in [
         (lib.mkIf config.services.changedetection-io.enable {
              title = "Change Detection";
-             url = "http://${config.services.changedetection-io.listenAddress}:${toString config.services.changedetection-io.port}";
+             url = mkURL "changedetection-io";
          })
         (lib.mkIf config.services.vikunja.enable {
              title = "Vikunja";
-             url = "http://${config.services.vikunja.frontendHostname}:${toString config.services.vikunja.port}";
+             url = mkURL "vikunja";
+         })
+         (lib.mkIf config.services.searx.enable {
+            title = "SearXNG";
+            url = mkURL "searx";
+         })
+         (lib.mkIf config.services.gotify.enable {
+            title = "Gotify";
+            url = mkURL "gotify";
          })
     ];
 

@@ -5,6 +5,7 @@ lib.mkModule "glance" [ "server" ] {
     services = {
         glance = {
             enable = true;
+            environmentFile = "/tmp/glance-data";
             settings = {
 
                 branding = {
@@ -36,7 +37,7 @@ lib.mkModule "glance" [ "server" ] {
                     (import page {
                         inherit config lib pkgs widgets;
                     } // { name = lib.head (lib.splitString "." (lib.getModuleName page)); })
-                ) (lib.ternary (builtins.pathExists ./pages) (lib.ternary config.decrypted (lib.listNixFilesRecursively ./pages) []) [])));
+                ) (lib.ternary (builtins.pathExists ./pages) (lib.ternary lib.isDecrypted (lib.listNixFilesRecursively ./pages) []) [])));
                 };
 
         };
@@ -57,9 +58,6 @@ lib.mkModule "glance" [ "server" ] {
         glance = {
             after = lib.mkForce [ "glance-env.service" ];
             wants = lib.mkForce [ "glance-env.service" ];
-            serviceConfig = {
-                EnvironmentFile = "/tmp/glance-data";
-            };
         };
 
         changedetection-io = {
