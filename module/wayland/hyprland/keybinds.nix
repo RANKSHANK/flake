@@ -66,4 +66,6 @@ in {
       ];
     };
 
+    # Xremap for per app key remaps
+    services.xremap.withHypr = lib.mkIf config.modules.xremap.enable true;
 }

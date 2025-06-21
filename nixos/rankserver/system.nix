@@ -73,17 +73,6 @@
       useXkbConfig = true; # use xkbOptions in tty.
     };
 
-    users.users.${user} = {
-      isNormalUser = true;
-      extraGroups = [
-        "wheel"
-        "video"
-        "adbusers"
-        "tty"
-        "dialout"
-      ];
-    };
-
     services = {
       printing.enable = false; #CUPS Vuln
       libinput.enable = true; # enables touchpad

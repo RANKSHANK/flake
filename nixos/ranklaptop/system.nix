@@ -61,11 +61,6 @@
           hashedPassword = "!";
         };
         ${user} = {
-          isNormalUser = true;
-          extraGroups = [
-            "wheel"
-            "video"
-          ];
           hashedPasswordFile = "/persist/etc/shadow.d/${user}";
         };
       };

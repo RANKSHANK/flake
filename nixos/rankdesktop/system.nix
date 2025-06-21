@@ -63,14 +63,6 @@
     };
 
     users.users.${user} = {
-      isNormalUser = true;
-      extraGroups = [
-        "wheel"
-        "video"
-        "adbusers"
-        "tty"
-        "dialout"
-      ];
       hashedPasswordFile = "/persist/hash/rankshank";
     };
 

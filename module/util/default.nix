@@ -9,5 +9,7 @@
         ./gpg.nix
         ./ripgrep.nix
         ./unzip.nix
+        ./user.nix
+        ./xremap.nix
     ];
 }

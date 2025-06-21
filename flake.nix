@@ -36,8 +36,9 @@
     nur.url = "github:nix-community/NUR";
 
     nvf = {
-        url = "github:notashelf/nvf";
-         # "/home/rankshank/projects/nvf";
+        url = 
+            #"github:notashelf/nvf";
+            "/home/rankshank/projects/nvf";
         inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -54,6 +55,20 @@
     };
 
     vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
+    
+    xremap = {
+        url = "github:xremap/nix-flake";
+        inputs = {
+            xremap = {
+                url = 
+                # "/home/rankshank/projects/xremap";
+                "github:RANKSHANK/xremap?ref=hyprland-bindings-update";
+                #"github:xremap/xremap";
+                # "/tmp/xremap";
+            };
+            hyprland.follows = "hyprland";
+        };
+    };
 
   };
 
