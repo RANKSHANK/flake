@@ -2,6 +2,8 @@
 
     disabledModules = [
         "qutebrowser"
+        "pcmanfm"
+        "spyder"
         "tor"
     ];
 

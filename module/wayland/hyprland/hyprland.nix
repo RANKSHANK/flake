@@ -210,9 +210,11 @@ in lib.mkModule "hyprland" [] {
                 rgb = lib.hexToRgb color;
             in "vec4(${toString rgb.r}.0 / 255.0, ${toString rgb.g}.0 / 255.0, ${toString rgb.b}.0 /  255.0, ${toString opacity})";
             inherit (config.lib.stylix) colors;
-        in ''
 #extension GL_EXT_gpu_shader4: enable
+        in ''
+#version 300 es
 #define PIXEL_SIZE_FAC 700.0
+precision highp float;
 #define SPIN_EASE 0.5
 #define bkg_color ${hex2Vec4 colors.base00 1.0}
 #define bkg_color2 ${hex2Vec4 colors.base01 1.0}
@@ -224,10 +226,11 @@ in lib.mkModule "hyprland" [] {
 #define color_2 ${hex2Vec4 colors.base06 1.0}
 #define color_3 ${hex2Vec4 colors.base00 1.0}
 
-precision mediump float;
-varying vec2 v_texcoord;
 uniform sampler2D tex;
 uniform float time;
+
+in vec2 v_texcoord;
+layout(location = 0) out vec4 fragColor;
 
 void main()
 {
@@ -264,10 +267,10 @@ void main()
         float c3p = 1. - min(1., c1p + c2p);
 
         vec4 ret_col = (0.3/contrast)*color_1 + (1. - 0.3/contrast)*(color_1*c1p + color_2*c2p + vec4(c3p*color_3.rgb, c3p*color_1.a)) + 0.3*max(c1p*5. - 4., 0.) + 0.4*max(c2p*5. - 4., 0.);
-        gl_FragColor = mix(base_color, ret_col, 0.1 * (1. - dist / tolerance));
+        fragColor = mix(base_color, ret_col, 0.1 * (1. - dist / tolerance));
     } else {
 
-        gl_FragColor = base_color;
+        fragColor = base_color;
     }
 }
         '';
