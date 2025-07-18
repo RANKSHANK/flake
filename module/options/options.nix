@@ -53,6 +53,11 @@ in {
         type = lib.types.listOf lib.types.str;
     };
 
+    exec-once = mkOption {
+        default = [];
+        type = lib.types.listOf lib.types.str;
+    };
+
     monitors = mkOption {
       default = {};
       type = lib.types.attrs;

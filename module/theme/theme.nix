@@ -39,7 +39,7 @@
         desktop = 16;
         applications = 10;
         popups = 16;
-        terminal = 16;
+        terminal = 20;
       };
       monospace = font;
       serif = font;

@@ -3,7 +3,7 @@
 
   inputs = {
 
-    nix-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nix-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     nix-staging.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 

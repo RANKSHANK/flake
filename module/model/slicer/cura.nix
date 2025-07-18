@@ -1,10 +1,9 @@
-{ lib, config, pkgs-stable, ... }:
+{ lib, config, pkgs, ... }:
 
 lib.mkModule "cura" [ "desktop" "cad" ] {
 
     environment.systemPackages = builtins.attrValues {
-        inherit (pkgs-stable) cura;
-
+        inherit (pkgs) cura-appimage;
     };
 
 }

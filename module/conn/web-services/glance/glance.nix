@@ -58,6 +58,10 @@ lib.mkModule "glance" [ "server" ] {
         glance = {
             after = lib.mkForce [ "glance-env.service" ];
             wants = lib.mkForce [ "glance-env.service" ];
+            serviceConfig = {
+                Restart = "always";
+                RestartSec = "30";
+            };
         };
 
         changedetection-io = {

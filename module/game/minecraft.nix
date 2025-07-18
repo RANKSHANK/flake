@@ -2,6 +2,6 @@
 
 lib.mkModule "minecraft" [ "gaming" "desktop" ] {
     environment.systemPackages = builtins.attrValues {
-        inherit (pkgs) prismlauncher;
+        # inherit (pkgs) prismlauncher;
     };
 }

@@ -7,6 +7,7 @@
 }:
 lib.mkModule "firefox" [ "connectivity" "desktop" ] {
     home-manager.users.${user} = {
+      stylix.targets.firefox.profileNames = [ user ];
       programs.firefox = {
         enable = true;
         package = pkgs.wrapFirefox pkgs.firefox.unwrapped {

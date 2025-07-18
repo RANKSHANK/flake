@@ -5,8 +5,9 @@
   ...
 }: lib.mkModule "audio" [] {
     
-    exec = [
-        "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
+    exec-once = [
+        "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1" # Initial mute of default input 
+        "pw-loopback" # Listen to inputs
     ];
 
     keybinds = [

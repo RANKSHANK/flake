@@ -10,14 +10,23 @@
     programs.fish.enable = true;
 
     home-manager.users.${user} = {
-      programs.fish = {
+      programs.fish = let
+        cfg = config.modules;
+      in {
         enable = true;
-        interactiveShellInit = ''
-          set fish_greeting
-          fish_vi_key_bindings
-          ${lib.ternary (config.modules.neovim.enable) ''set -gx MANPAGER "nvim +Man!"'' ''''}
-
-        '';
+        interactiveShellInit = (lib.concatStringsSep "\n" (lib.flatten [
+          ''
+            set fish_greeting
+            fish_vi_key_bindings
+          ''
+          (lib.ternary (config.modules.neovim.enable) ''set -gx MANPAGER "nvim +Man!"'' "")
+        ]));
+        functions = {
+           # "nix log" = lib.mkIf cfg.fish.enable {
+           #  body = "nix log $argv[1] | bat";
+           # };
+            
+        };
         plugins = [
           {
             name = "sponge";

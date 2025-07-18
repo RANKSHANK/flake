@@ -1,6 +1,14 @@
 { user, lib, config, ... }:
 
 lib.mkModule "wezterm" [ "desktop" ] {
+    keybinds = [
+      {
+        name = "Wezterm";
+        mods = ["super"];
+        combo = ["return"];
+        exec = "wezterm";
+      }
+    ];
     home-manager.users.${user} = {
       programs.wezterm = {
         enable = true;

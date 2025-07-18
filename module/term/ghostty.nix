@@ -1,14 +1,14 @@
 { config, lib, user, ... }:
 
 lib.mkModule "ghostty" [ "desktop" ] {
-    keybinds = [
-      {
-        name = "Ghostty";
-        mods = ["super"];
-        combo = ["return"];
-        exec = "ghostty";
-      }
-    ];
+    # keybinds = [
+    #   {
+    #     name = "Ghostty";
+    #     mods = ["super"];
+    #     combo = ["return"];
+    #     exec = "ghostty";
+    #   }
+    # ];
 
     home-manager.users.${user} = {
         programs.ghostty = {
