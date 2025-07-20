@@ -1,6 +1,7 @@
 {
   pkgs,
   user,
+  lib,
   ...
 }: {
   config = {
@@ -66,7 +67,14 @@
       };
     };
 
+
+
     services = {
+      btrfs.autoScrub = {
+        enable = true;
+        interval = "weekly";
+        fileSystems = [ "/" ];
+      };
       printing.enable = false;
       libinput.enable = true; # enables touchpad
       xserver = {

@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-lib.mkModule "displaylink" [] { 
+{ 
     environment.systemPackages = builtins.attrValues {
         inherit (pkgs) displaylink;
     };

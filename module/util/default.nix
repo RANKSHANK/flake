@@ -8,6 +8,7 @@
         ./git.nix
         ./gpg.nix
         ./ripgrep.nix
+        ./sudo.nix
         ./unzip.nix
         ./user.nix
         ./xremap.nix

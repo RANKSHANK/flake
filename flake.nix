@@ -37,8 +37,8 @@
 
     nvf = {
         url = 
-            #"github:notashelf/nvf";
-            "/home/rankshank/projects/nvf";
+            "github:notashelf/nvf";
+            #"/home/rankshank/projects/nvf";
         inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -1,19 +1,22 @@
-{...}: let
+{ lib, ...}: let
   rootDisk = "nvme0n1";
   homeDisk = "sda";
   swapSizeG = 32;
   mountOptions = ["noatime" "compress=zstd" "nodiratime" "discard"];
   extraArgs = ["-f"];
 in {
-  disko.devices = {
-    nodev."/" = {
-      fsType = "tmpfs";
-      mountOptions = [
-        #"size=${builtins.toString tmpfsSizeG}G"
-        "defaults"
-        "mode=755"
-      ];
+  boot.initrd = {
+    postDeviceCommands = lib.mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
+    luks.devices."luks-root" = {
+        # device = "/dev/disk/by-partlabel/disk-${rootDisk}-luks";
+        allowDiscards = true;
+        preLVM = true;
     };
+
+  };
+
+  disko.devices = {
+
     disk = {
       ${rootDisk} = {
         type = "disk";
@@ -45,18 +48,32 @@ in {
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted_${rootDisk}";
+                name = "luks-root";
                 content = {
                   type = "btrfs";
                   inherit extraArgs;
-                  subvolumes = {
+                  subvolumes = let
+                    mtOpts = name: extra: lib.flatten [ 
+                        "subvol=${name}"
+                        "noatime"
+                        "compress=zstd"
+                        extra
+                    ];
+                  in {
+                    "/root" = {
+                        mountpoint = "/";
+                        mountOptions = mtOpts "root" [];
+                    };
+                    "/snapshots" = {
+                        mountOptions = [ "subvol=snapshots" "nodatacow" "noatime" ]; 
+                    };
                     "/nix" = {
                       mountpoint = "/nix";
-                      inherit mountOptions;
+                      mountOptions = mtOpts "nix" [];
                     };
                     "/persist" = {
                       mountpoint = "/persist";
-                      inherit mountOptions;
+                      mountOptions = mtOpts "persist" [];
                     };
                   };
                 };
@@ -64,32 +81,32 @@ in {
             };
           };
         };
-      };
+     };
       ${homeDisk} = {
-        type = "disk";
-        device = "/dev/${homeDisk}";
-        content = {
-          type = "gpt";
-          partitions = {
-            luks = {
-              size = "100%";
-              content = {
-                type = "luks";
-                name = "crypted_${homeDisk}";
-                content = {
-                  type = "btrfs";
-                  inherit extraArgs;
-                  subvolumes = {
-                    "/home" = {
-                      mountpoint = "/home";
-                      inherit mountOptions;
-                    };
+          type = "disk";
+          device = "/dev/${homeDisk}";
+          content = {
+              type = "gpt";
+              partitions = {
+                  luks = {
+                      size = "100%";
+                      content = {
+                          type = "luks";
+                          name = "luks-home";
+                          content = {
+                              type = "btrfs";
+                              inherit extraArgs;
+                              subvolumes = {
+                                  "/home" = {
+                                      mountpoint = "/home";
+                                      inherit mountOptions;
+                                  };
+                              };
+                          };
+                      };
                   };
-                };
               };
-            };
           };
-        };
       };
     };
   };

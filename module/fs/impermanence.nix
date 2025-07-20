@@ -14,6 +14,7 @@
         "/persist" = {
           hideMounts = true;
           directories = lib.flatten [
+            "/root"
             "/etc/NetworkManager/system-connections"
             "/etc/ssh"
             "/var/lib/bluetooth"

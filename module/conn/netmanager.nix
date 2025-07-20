@@ -10,5 +10,5 @@
       };
     };
 
-    users.users.${user}.extraGroups = [ "networking" ]; # config {
+    users.users.${user}.extraGroups = [ "networkmanager" ];
 }
