@@ -1,96 +1,137 @@
-{...}: let
-  rootDisk = "sda";
-  homeDisk = "sdb";
-  swapSizeG = 32;
-  mountOptions = ["noatime" "compress=zstd" "nodiratime" "discard"];
-  extraArgs = ["-f"];
+{ lib, ...}: let
+    rootDisk = "wwn-0x5002538870016672";
+    nixDisk = "wwn-0x5002538e406c3bda";
+    userDisk = "wwn-0x5000c5007924f326";
+    swapSizeG = 128;
+    mtOpts = name: extra: lib.flatten [ 
+        "subvol=${name}"
+        "noatime"
+        "compress=zstd"
+        extra
+    ];
 in {
-  disko.devices = {
-    nodev."/" = {
-      fsType = "tmpfs";
-      mountOptions = [
-        #"size=${builtins.toString tmpfsSizeG}G"
-        "defaults"
-        "mode=755"
-      ];
-    };
-    disk = {
-      ${rootDisk} = {
-        type = "disk";
-        device = "/dev/${rootDisk}";
-        content = {
-          type = "gpt";
-          partitions = {
-            boot = {
-              size = "512M";
-              type = "EF02";
+    boot.initrd = {
+        postDeviceCommands = lib.mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
+        luks = {
+            devices."luks-root" = {
+                allowDiscards = true;
+                preLVM = true;
             };
-            esp = {
-              size = "512M";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
-            };
-            swap = {
-              size = "${toString swapSizeG}G";
-              content = {
-                type = "swap";
-                randomEncryption = true;
-              };
-            };
-            luks = {
-              size = "100%";
-              content = {
-                type = "luks";
-                name = "crypted_${rootDisk}";
-                content = {
-                  type = "btrfs";
-                  inherit extraArgs;
-                  subvolumes = {
-                    "/nix" = {
-                      mountpoint = "/nix";
-                      inherit mountOptions;
-                    };
-                    "/persist" = {
-                      mountpoint = "/persist";
-                      inherit mountOptions;
-                    };
-                  };
-                };
-              };
-            };
-          };
+            reusePassphrases = true;
         };
-      };
-      ${homeDisk} = {
-        type = "disk";
-        device = "/dev/${homeDisk}";
-        content = {
-          type = "gpt";
-          partitions = {
-            luks = {
-              size = "100%";
-              content = {
-                type = "luks";
-                name = "crypted_${homeDisk}";
-                content = {
-                  type = "btrfs";
-                  inherit extraArgs;
-                  subvolumes = {
-                    "/home" = {
-                      mountpoint = "/home";
-                      inherit mountOptions;
-                    };
-                  };
-                };
-              };
-            };
-          };
-        };
-      };
     };
-  };
+
+    disko.devices = {
+        disk = {
+            root = {
+                type = "disk";
+                device = "/dev/disk/by-id/${rootDisk}";
+                content = {
+                    type = "gpt";
+                    partitions = {
+                        boot = {
+                            size = "512M";
+                            type = "EF02";
+                        };
+                        esp = {
+                            size = "512M";
+                            type = "EF00";
+                            content = {
+                                type = "filesystem";
+                                format = "vfat";
+                                mountpoint = "/boot";
+                            };
+                        };
+                        swap = {
+                            size = "${toString swapSizeG}G";
+                            content = {
+                                type = "swap";
+                                randomEncryption = true;
+                            };
+                        };
+                        luks = {
+                            size = "100%";
+                            content = {
+                                type = "luks";
+                                name = "luks-root";
+                                content = {
+                                    type = "btrfs";
+                                    extraArgs = [ "-L" "root" "-f"];
+                                    subvolumes = {
+                                        "/root" = {
+                                            mountpoint = "/";
+                                            mountOptions = mtOpts "root" [];
+                                        };
+                                        "/tmp" = {
+                                            mountpoint = "/tmp";
+                                            mountOptions = mtOpts "tmp" [];
+                                        };
+                                        "/snapshots" = {
+                                            mountOptions = [ "subvol=snapshots" "nodatacow" "noatime" ]; 
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            nix = {
+                type = "disk";
+                device = "/dev/disk/by-id/${nixDisk}";
+                content = {
+                    type = "gpt";
+                    partitions = {
+                        luks = {
+                            size = "100%";
+                            content = {
+                                type = "luks";
+                                name = "luks-nix";
+                                content = {
+                                    type = "btrfs";
+                                    extraArgs = [ "-L" "nix" "-f"];
+                                    subvolumes = {
+                                        "/nix" = {
+                                            mountpoint = "/nix";
+                                            mountOptions = mtOpts "nix" [];
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            user = {
+                type = "disk";
+                device = "/dev/disk/by-id/${userDisk}";
+                content = {
+                    type = "gpt";
+                    partitions = {
+                        luks = {
+                            size = "100%";
+                            content = {
+                                type = "luks";
+                                name = "luks-user";
+                                content = {
+                                    type = "btrfs";
+                                    extraArgs = [ "-L" "user" "-f"];
+                                    subvolumes = {
+                                        "/home" = {
+                                            mountpoint = "/home";
+                                            mountOptions = mtOpts "home" [];
+                                        };
+                                        "/persist" = {
+                                            mountpoint = "/persist";
+                                            mountOptions = mtOpts "persist" [];
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
 }

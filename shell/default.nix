@@ -4,7 +4,7 @@
 in
   pkgs.mkShell {
     packages = builtins.attrValues {
-      inherit (pkgs) git-crypt gnupg nil nvd nix-output-monitor;
+      inherit (pkgs) git-crypt gnupg nil npins nvd nix-output-monitor;
       inherit flup flop;
     };
   }

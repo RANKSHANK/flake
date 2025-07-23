@@ -2,6 +2,6 @@
 
 lib.mkModule "bitwarden" [ "desktop" ] {
     environment.systemPackages = builtins.attrValues {
-        # inherit (pkgs) bitwarden;
+        inherit (pkgs) bitwarden-desktop;
     };
 }

@@ -1,51 +1,44 @@
-{
-  config,
-  lib,
-  pkgs,
-  user,
-  ...
-}:
+{ config, lib, pkgs, user, ... }:
 lib.mkModule "firefox" [ "connectivity" "desktop" ] {
     home-manager.users.${user} = {
-      stylix.targets.firefox.profileNames = [ user ];
-      programs.firefox = {
-        enable = true;
-        package = pkgs.wrapFirefox pkgs.firefox.unwrapped {
-          nativeMessagingHosts = builtins.attrValues {
-            inherit (pkgs) tridactyl-native;
-          };
-          extraPolicies = {
-            DirectDownloadDirectory = "$XDG_DOWNLOAD_DIR";
-            DisableFirefoxStudies = true;
-            DisableTelemetry = true;
-            DisableFirefoxAccounts = false;
-            DisablePocket = false;
-            FirefoxHome = {
-              Pocket = false;
-              Snippets = false;
-            };
-            UserMessaging = {
-              ExtensionReccomendations = false;
-              SkipOnboarding = true;
-            };
-            gdkWayland = true;
-          };
-        };
-        policies = {
-            ExtensionSettings = let
-                latest = str: "https://addons.mozilla.org/firefox/downloads/latest/${str}/latest.xpi";
-          in
-            builtins.mapAttrs (name: attrs: attrs // {installation_mode = "force_installed";}) {
-              "tridactyl.vim@cmcaine.co.uk" = {
-                install_url = latest "tridactyl-vim";
-              };
+        xdg.mimeApps = {
+            defaultApplications = {
+                "text/html" = "firefox.desktop";
+                "x-scheme-handler/http" = "firefox.desktop";
+                "x-scheme-handler/https" = "firefox.desktop";
+                "x-scheme-handler/about" = "firefox.desktop";
+                "x-scheme-handler/unknown" = "firefox.desktop";
             };
         };
-        profiles.${user} = let
-            inherit (config.stylix) fonts;
+        stylix.targets.firefox.profileNames = [ user ];
+        programs.firefox = {
+            enable = true;
+            package = pkgs.wrapFirefox pkgs.firefox.unwrapped {
+                nativeMessagingHosts = builtins.attrValues {
+                    inherit (pkgs) tridactyl-native;
+                };
+                extraPolicies = {
+                    DirectDownloadDirectory = "$XDG_DOWNLOAD_DIR";
+                    DisableFirefoxStudies = true;
+                    DisableTelemetry = true;
+                    DisableFirefoxAccounts = false;
+                    DisablePocket = false;
+                    FirefoxHome = {
+                        Pocket = false;
+                        Snippets = false;
+                    };
+                    UserMessaging = {
+                        ExtensionReccomendations = false;
+                        SkipOnboarding = true;
+                    };
+                    gdkWayland = true;
+                };
+            };
+            profiles.${user} = let
+                inherit (config.stylix) fonts;
             inherit (config.lib.stylix) colors;
             genCSS = dir: lib.concatStrings (lib.flatten [
-                '':root {
+                    '':root {
                     --hide-delay: 300ms;
                     --hide-duration: 32ms;
                     --tab-active-bg-color: #${colors.base02};
@@ -81,56 +74,112 @@ lib.mkModule "firefox" [ "connectivity" "desktop" ] {
                     --base0D: #${colors.base0D}
                     --base0E: #${colors.base0E}
                     --base0F: #${colors.base0F}
-                }''
-                (map (builtins.readFile) (lib.listTargetFilesRecursively ".css" dir))
-          ]);
-        in {
-          extensions.packages = builtins.attrValues {
-              inherit (pkgs.nur.repos.rycee.firefox-addons) 
-                # bypass-paywalls-clean
-                tridactyl
-              ;
-          };
-          id = 0;
-          isDefault = true;
-          name = "${user}";
-          settings = import ./userprefs.nix config user;
-          search = {
-            force = true;
-            engines = builtins.listToAttrs (builtins.map (entry: {
-                name = entry.name;
-                value = {
-                  urls = [
-                    {
-                      template = builtins.replaceStrings ["{}"] ["{searchTerms}"] entry.url;
-                    }
-                  ];
-                  definedAliases = [
-                    "!${entry.shortcut}"
-                  ];
-                  updateIterval = 24 * 60 * 60 * 1000;
-                  iconUpdateUrl = lib.mkIf (lib.safeIsString "icon" entry) entry.icon;
+                    }''
+            (map (builtins.readFile) (lib.listTargetFilesRecursively ".css" dir))
+                ]);
+            in {
+                extensions = {
+                    force = true;
+                    packages = builtins.attrValues {
+                        inherit (pkgs.nur.repos.rycee.firefox-addons) 
+# bypass-paywalls-clean
+                            tridactyl
+                            ublock-origin
+                            darkreader
+                            bitwarden
+                            temporary-containers
+                            multi-account-containers
+                            ;
+                    };
+                    settings = {
+                        "{c607c8df-14a7-4f28-894f-29e8722976af}" = { #temporary-containers
+                            force = true;
+                            settings = {
+                                preferences = {
+                                    automaticMode = {
+                                        active = true;
+                                    };
+                                    container = {
+                                        namePrefix = "";
+                                        color = "red";
+                                        icon = "fence";
+                                        numberMode = "reuse";
+                                    };
+                                    isolation = {
+                                        global = {
+                                            navigation.targetDomain = "notsamedomain";
+                                        };
+                                    };
+                                };
+                            };
+
+                        };
+                    };
+
                 };
-              })
-              config.browsers.searchEngines);
-            default = "${(lib.head config.browsers.searchEngines).name}";
-            order = map (attrs: attrs.name) config.browsers.searchEngines;
-          };
-          # extraConfig = ''
-          # '';
-          userContent = genCSS ./usercontent;
-          userChrome = genCSS ./userchrome;
+                id = 0;
+                isDefault = true;
+                name = "${user}";
+                settings = import ./userprefs.nix config user;
+                search = {
+                    force = true;
+                    engines = builtins.listToAttrs (builtins.map (entry: {
+                        name = entry.name;
+                        value = {
+                            urls = [{
+                                template = builtins.replaceStrings ["{}"] ["{searchTerms}"] entry.url;
+                            }];
+                            definedAliases = [
+                                "!${entry.shortcut}"
+                            ];
+                            updateIterval = 24 * 60 * 60 * 1000;
+                            iconUpdateUrl = lib.mkIf (lib.safeIsString "icon" entry) entry.icon;
+                        };
+                    }) config.browsers.searchEngines);
+                    default = "${(lib.head config.browsers.searchEngines).name}";
+                    order = map (attrs: attrs.name) config.browsers.searchEngines;
+                };
+                userContent = genCSS ./usercontent;
+                userChrome = genCSS ./userchrome;
+                containersForce = true;
+                containers = {
+                    google = {
+                        icon = "fingerprint";
+                        color = "green";
+                        id = 0;
+                    };
+                    microsoft = {
+                        icon = "fingerprint";
+                        color = "green";
+                        id = 1;
+                    };
+                    yahoo = {
+                        icon = "fingerprint";
+                        color = "green";
+                        id = 2;
+                    };
+                    uni = {
+                        icon = "briefcase";
+                        color = "blue";
+                        id = 3;
+                    };
+                    shopping = {
+                        icon = "cart";
+                        color = "orange";
+                        id = 4;
+                    };
+                };
+            };
         };
-      };
 
-      xdg.configFile."tridactyl/tridactylrc".text = import ./tridactylrc.nix config user lib;
+        xdg.configFile."tridactyl/tridactylrc".text = import ./tridactylrc.nix config user lib;
 
-      xdg.configFile."tridactyl/themes/nix.css".text = import ./tridactylchrome.nix config;
+        xdg.configFile."tridactyl/themes/nix.css".text = import ./tridactylchrome.nix config;
 
-      home.sessionVariables = {
-        MOZ_ENABLE_WAYLAND = 1;
-        MOZ_ACCELERATED = 1;
-        MOZ_WEBRENDER = 1;
-      };
-  };
+        home.sessionVariables = {
+            MOZ_ENABLE_WAYLAND = 1;
+            MOZ_ACCELERATED = 1;
+            MOZ_WEBRENDER = 1;
+        };
+    };
 }

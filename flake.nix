@@ -29,18 +29,13 @@
 
     impermanence.url = "github:nix-community/Impermanence";
 
+    mnw.url = "github:Gerg-L/mnw";
+
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     nix-gaming.url = "github:fufexan/nix-gaming";
 
     nur.url = "github:nix-community/NUR";
-
-    nvf = {
-        url = 
-            "github:notashelf/nvf";
-            #"/home/rankshank/projects/nvf";
-        inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     spicetify = {
         url = "github:Gerg-L/spicetify-nix";
@@ -92,7 +87,7 @@
               }); 
             }
           ) {} names);
-      in packaged // { default = packaged.nvf; });
+      in packaged // { default = packaged.nvim; });
 
       nixosConfigurations = lib.genAttrs (lib.findTopLevelDirectories ./nixos)
         (host:
@@ -133,7 +128,6 @@
               ({ ... }: {
                 networking.hostName = host;
                 nixpkgs.hostPlatform = system;
-                system.stateVersion = "23.11";
                 programs.nano.enable = false;
               })
             ];

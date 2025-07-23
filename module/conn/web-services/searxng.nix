@@ -64,7 +64,7 @@ lib.mkModule "searxng" [ "server" ] {
 
                 engines = lib.mapAttrsToList (name: value: { 
                     inherit name; 
-                    # request_timeout = lib.mkDefault 10.0;
+                    request_timeout = lib.mkDefault 10.0;
                 } // value) {
                     "duckduckgo".disabled = true;
                     "brave".disabled = false;

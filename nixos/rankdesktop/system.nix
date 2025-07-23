@@ -5,6 +5,8 @@
   user,
   ...
 }: {
+
+    system.stateVersion = "25.05";
     #documentation.enable = false; # Breaks Nixos-Install due to cross sys linking? TODO: read into this
     powerManagement.cpuFreqGovernor = "performance";
     hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
@@ -42,9 +44,6 @@
           "ums_realtek"
           "sd_mod"
         ];
-        luks = {
-          reusePassphrases = true;
-        };
       };
       kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
@@ -56,17 +55,17 @@
     time.timeZone = "Australia/Sydney";
 
     i18n.defaultLocale = "en_US.UTF-8";
-    console = {
-      # font = "Lat2-Terminus16";
-      #keyMap = "us";
-      useXkbConfig = true; # use xkbOptions in tty.
-    };
 
     users.users.${user} = {
-      hashedPasswordFile = "/persist/hash/rankshank";
+      hashedPasswordFile = "/persist/etc/shadow.d/rankshank";
     };
 
     services = {
+      btrfs.autoScrub = {
+        enable = true;
+        interval = "daily";
+        fileSystems = [ "/" ];
+      };
       printing.enable = false; #CUPS Vuln
       libinput.enable = true; # enables touchpad
       xserver = {
