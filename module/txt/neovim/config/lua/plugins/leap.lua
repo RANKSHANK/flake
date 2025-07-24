@@ -7,8 +7,15 @@ end
 return {
     "ggandor/leap.nvim",
     dir = require("lazy-nix-helper").get_plugin_path("leap.nvim"),
-    keys = {
-        { "sf", mode = { "n", "x", "o" }, desc = "Leap", omnileap},
+    binds = {
+        {
+            "gs",
+            mode = { "n", "x", "o" },
+            desc = "Leap Remote",
+            function()
+                require("leap.remote
+            end,
+        },
     },
     config = function(_, opts)
         local leap = require("leap")

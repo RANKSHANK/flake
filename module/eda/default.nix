@@ -1,7 +1,5 @@
-{ ... }:
-
-{
-    imports = [
-        ./kicad.nix
-    ];
+{...}: {
+  imports = [
+    ./kicad.nix
+  ];
 }

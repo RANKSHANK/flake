@@ -1,11 +1,9 @@
-{ ... }:
-
-{
-    type = "markets";
-    markets = [
-        {
-            name = "AUD→USD";
-            symbol = "AUDUSD%3DX";
-        }
-    ];
+{...}: {
+  type = "markets";
+  markets = [
+    {
+      name = "AUD→USD";
+      symbol = "AUDUSD%3DX";
+    }
+  ];
 }

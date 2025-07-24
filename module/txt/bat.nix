@@ -3,8 +3,9 @@
   config,
   lib,
   ...
-}: lib.mkModule "bat" [ "shell" ] {
-    environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) bat;
-    };
+}:
+lib.mkModule "bat" ["shell"] {
+  environment.systemPackages = builtins.attrValues {
+    inherit (pkgs) bat;
+  };
 }

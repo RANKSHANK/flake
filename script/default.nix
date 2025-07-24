@@ -31,8 +31,8 @@
     exit 1
   '';
 in {
-    environment.systemPackages = [
-      track
-      open_term
-    ];
+  environment.systemPackages = [
+    track
+    open_term
+  ];
 }

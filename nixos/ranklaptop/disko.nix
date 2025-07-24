@@ -1,4 +1,4 @@
-{ lib, ...}: let
+{lib, ...}: let
   rootDisk = "nvme0n1";
   homeDisk = "sda";
   swapSizeG = 32;
@@ -8,15 +8,13 @@ in {
   boot.initrd = {
     postDeviceCommands = lib.mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
     luks.devices."luks-root" = {
-        # device = "/dev/disk/by-partlabel/disk-${rootDisk}-luks";
-        allowDiscards = true;
-        preLVM = true;
+      # device = "/dev/disk/by-partlabel/disk-${rootDisk}-luks";
+      allowDiscards = true;
+      preLVM = true;
     };
-
   };
 
   disko.devices = {
-
     disk = {
       ${rootDisk} = {
         type = "disk";
@@ -53,19 +51,20 @@ in {
                   type = "btrfs";
                   inherit extraArgs;
                   subvolumes = let
-                    mtOpts = name: extra: lib.flatten [ 
+                    mtOpts = name: extra:
+                      lib.flatten [
                         "subvol=${name}"
                         "noatime"
                         "compress=zstd"
                         extra
-                    ];
+                      ];
                   in {
                     "/root" = {
-                        mountpoint = "/";
-                        mountOptions = mtOpts "root" [];
+                      mountpoint = "/";
+                      mountOptions = mtOpts "root" [];
                     };
                     "/snapshots" = {
-                        mountOptions = [ "subvol=snapshots" "nodatacow" "noatime" ]; 
+                      mountOptions = ["subvol=snapshots" "nodatacow" "noatime"];
                     };
                     "/nix" = {
                       mountpoint = "/nix";
@@ -81,32 +80,32 @@ in {
             };
           };
         };
-     };
+      };
       ${homeDisk} = {
-          type = "disk";
-          device = "/dev/${homeDisk}";
-          content = {
-              type = "gpt";
-              partitions = {
-                  luks = {
-                      size = "100%";
-                      content = {
-                          type = "luks";
-                          name = "luks-home";
-                          content = {
-                              type = "btrfs";
-                              inherit extraArgs;
-                              subvolumes = {
-                                  "/home" = {
-                                      mountpoint = "/home";
-                                      inherit mountOptions;
-                                  };
-                              };
-                          };
-                      };
+        type = "disk";
+        device = "/dev/${homeDisk}";
+        content = {
+          type = "gpt";
+          partitions = {
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "luks-home";
+                content = {
+                  type = "btrfs";
+                  inherit extraArgs;
+                  subvolumes = {
+                    "/home" = {
+                      mountpoint = "/home";
+                      inherit mountOptions;
+                    };
                   };
+                };
               };
+            };
           };
+        };
       };
     };
   };

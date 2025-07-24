@@ -1,9 +1,7 @@
-{ ... }:
-
-{
-    imports = [
-        ./bookmarks.crypt.nix
-        ./icons.nix
-        ./options.nix
-    ];
+{...}: {
+  imports = [
+    ./bookmarks.crypt.nix
+    ./icons.nix
+    ./options.nix
+  ];
 }

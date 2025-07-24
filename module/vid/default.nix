@@ -1,9 +1,7 @@
-{ ... }:
-
-{
-    imports = [
-        ./kdenlive.nix
-        ./mpv.nix
-        ./obs.nix
-    ];
+{...}: {
+  imports = [
+    ./kdenlive.nix
+    ./mpv.nix
+    ./obs.nix
+  ];
 }

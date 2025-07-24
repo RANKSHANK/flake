@@ -1,0 +1,18 @@
+{
+  "pins": {
+    "blink.cmp": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Saghen",
+        "repo": "blink.cmp"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "b163deb174806b5cdb1e7e68bf53e7cf56caea65",
+      "url": "https://github.com/Saghen/blink.cmp/archive/b163deb174806b5cdb1e7e68bf53e7cf56caea65.tar.gz",
+      "hash": "0gdhsyqk3b937v9a05iaksby7zsycjga5bqasvipi9d16aiyyncl"
+    }
+  },
+  "version": 5
+}

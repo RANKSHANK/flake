@@ -67,20 +67,18 @@
       };
     };
 
-
-
     services = {
       btrfs.autoScrub = {
         enable = true;
         interval = "weekly";
-        fileSystems = [ "/" ];
+        fileSystems = ["/"];
       };
       printing.enable = false;
       libinput.enable = true; # enables touchpad
       xserver = {
         xkb = {
-            options = "caps:escape";
-            layout = "us";
+          options = "caps:escape";
+          layout = "us";
         };
       };
     };

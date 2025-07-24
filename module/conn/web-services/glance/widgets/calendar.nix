@@ -1,5 +1,3 @@
-{ ... }:
-
-{
-    type = "calendar";
+{...}: {
+  type = "calendar";
 }

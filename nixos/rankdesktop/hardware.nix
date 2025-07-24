@@ -1,4 +1,10 @@
-{ lib, pkgs, user, config, ...}: {
+{
+  lib,
+  pkgs,
+  user,
+  config,
+  ...
+}: {
   config = {
     monitors = {
       a = {
@@ -22,12 +28,13 @@
       };
     };
 
-    home-manager.users.${user}.wayland.windowManager.hyprland.settings.device = lib.mkIfEnabled "hyprland" config [{
-            name = "tablet-monitor-pen";
-            transform = 0;
-            output = "HDMI-A-2";
-        }];
-
+    home-manager.users.${user}.wayland.windowManager.hyprland.settings.device = lib.mkIfEnabled "hyprland" config [
+      {
+        name = "tablet-monitor-pen";
+        transform = 0;
+        output = "HDMI-A-2";
+      }
+    ];
 
     hardware = {
       enableAllFirmware = true;

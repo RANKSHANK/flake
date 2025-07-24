@@ -1,11 +1,9 @@
-{ ... }:
-
-{
-    imports = [
-        ./aseprite.nix
-        ./feh.nix
-        ./gimp.nix
-        ./inkscape.nix
-        ./krita.nix
-    ];
+{...}: {
+  imports = [
+    ./aseprite.nix
+    ./feh.nix
+    ./gimp.nix
+    ./inkscape.nix
+    ./krita.nix
+  ];
 }

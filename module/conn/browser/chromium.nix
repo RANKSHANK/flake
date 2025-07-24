@@ -1,7 +1,10 @@
-{ config, lib, user, ... }:
-
 {
-    home-manager.users.${user}.programs.chromium = {
-        enable = true;
-    };
+  config,
+  lib,
+  user,
+  ...
+}: {
+  home-manager.users.${user}.programs.chromium = {
+    enable = true;
+  };
 }

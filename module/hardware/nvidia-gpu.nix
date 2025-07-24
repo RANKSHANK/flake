@@ -3,35 +3,36 @@
   config,
   pkgs,
   ...
-}: lib.mkModule "nvidia-gpu" [] {
-    boot = {
-      kernelModules = ["nvidia"];
-      kernelParams = [
-        "module_blacklist=nouveau"
-      ];
-    };
-    services.xserver.videoDrivers = ["nvidia"];
-    hardware = {
-      nvidia = {
-        open = false;
-        modesetting.enable = true;
-        powerManagement.enable = false;
-        nvidiaSettings = false;
-        forceFullCompositionPipeline = true;
-        package = config.boot.kernelPackages.nvidiaPackages.beta;
-        prime = {
-          offload = {
-            enable = true;
-            enableOffloadCmd = true;
-          };
-          sync.enable = false;
+}:
+lib.mkModule "nvidia-gpu" [] {
+  boot = {
+    kernelModules = ["nvidia"];
+    kernelParams = [
+      "module_blacklist=nouveau"
+    ];
+  };
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware = {
+    nvidia = {
+      open = false;
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      nvidiaSettings = false;
+      forceFullCompositionPipeline = true;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      prime = {
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
         };
-      };
-      graphics = {
-        enable32Bit = lib.mkForce true;
-        extraPackages = builtins.attrValues {
-          inherit (pkgs) nvidia-vaapi-driver;
-        };
+        sync.enable = false;
       };
     };
+    graphics = {
+      enable32Bit = lib.mkForce true;
+      extraPackages = builtins.attrValues {
+        inherit (pkgs) nvidia-vaapi-driver;
+      };
+    };
+  };
 }

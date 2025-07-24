@@ -1,7 +1,14 @@
-{lib, enables ? { disabledModules = []; enabledModules = []; enabledTags = []; }, ...}: let
+{
+  lib,
+  enables ? {
+    disabledModules = [];
+    enabledModules = [];
+    enabledTags = [];
+  },
+  ...
+}: let
   inherit lib;
 in rec {
-
   ternary = bool: pass: fail:
     if bool
     then pass
@@ -43,9 +50,18 @@ in rec {
       (strs: lib.last strs)
     ];
 
-    kebabCaseToCamelCase = str: lib.pipe str [
-        (lib.splitString "-")
-        (strs: lib.foldl (acc: str: acc + (if str != (builtins.head strs) then (lib.toUpper (builtins.substring 0 1 str)) + (builtins.substring 1 (builtins.stringLength str) str) else str)) "" strs)
+  kebabCaseToCamelCase = str:
+    lib.pipe str [
+      (lib.splitString "-")
+      (strs:
+        lib.foldl (acc: str:
+          acc
+          + (
+            if str != (builtins.head strs)
+            then (lib.toUpper (builtins.substring 0 1 str)) + (builtins.substring 1 (builtins.stringLength str) str)
+            else str
+          )) ""
+        strs)
     ];
 
   readFileOrDefault = file: default: ternary (builtins.pathExists file) (lib.removeSuffix "\n" (builtins.readFile file)) default;
@@ -84,60 +100,68 @@ in rec {
 
   isEnabled = moduleName: requiredTags: !(builtins.elem moduleName enables.disabledModules) && (builtins.elem moduleName enables.enabledModules || builtins.elem moduleName enables.enabledTags || (ternary (requiredTags == []) false (builtins.all (tag: builtins.elem tag enables.enabledTags) requiredTags)));
 
- genNumStrs = num: str: builtins.genList (i: builtins.replaceStrings ["<num>"] [(toString i)] str) num;
+  genNumStrs = num: str: builtins.genList (i: builtins.replaceStrings ["<num>"] [(toString i)] str) num;
 
   mkModule = moduleName: requiredTags: module: let
-    filter = name: builtins.elem name [ "options" "imports" ];
-    mkOpt = set: { 
-        options.modules.${moduleName}.enable = lib.mkOption {
-            description = "Enable flag module";
-            default = set;
-        };
-   };
-  in builtins.seq # Don't support top level configs as that may lead to issues with top level mkIf
-    (lib.throwIf (builtins.hasAttr "config" module) "lib.mkModule for ${moduleName} has unsupported top level config = {...};")
-    (ternary (isEnabled moduleName requiredTags) ({
-        config = (lib.filterAttrs (name: _: !(filter name)) module);
-    } // mkOpt true) (mkOpt false)
-    ) // (lib.filterAttrs (name: _: filter name) module);
-
-  hexToInt = hex: let 
-      codes = {
-          "#" = 0;
-          "x" = 0;
-          "X" = 0;
-          "0" = 0;
-          "1" = 1;
-          "2" = 2;
-          "3" = 3;
-          "4" = 4;
-          "5" = 5;
-          "6" = 6;
-          "7" = 7;
-          "8" = 8;
-          "9" = 9;
-          "a" = 10;
-          "b" = 11;
-          "c" = 12;
-          "d" = 13;
-          "e" = 14;
-          "f" = 15;
-          "A" = 10;
-          "B" = 11;
-          "C" = 12;
-          "D" = 13;
-          "E" = 14;
-          "F" = 15;
+    filter = name: builtins.elem name ["options" "imports"];
+    mkOpt = set: {
+      options.modules.${moduleName}.enable = lib.mkOption {
+        description = "Enable flag module";
+        default = set;
       };
+    };
+  in
+    builtins.seq # Don't support top level configs as that may lead to issues with top level mkIf
+    
+    (lib.throwIf (builtins.hasAttr "config" module) "lib.mkModule for ${moduleName} has unsupported top level config = {...};")
+    (
+      ternary (isEnabled moduleName requiredTags) ({
+          config = lib.filterAttrs (name: _: !(filter name)) module;
+        }
+        // mkOpt true) (mkOpt false)
+    )
+    // (lib.filterAttrs (name: _: filter name) module);
+
+  hexToInt = hex: let
+    codes = {
+      "#" = 0;
+      "x" = 0;
+      "X" = 0;
+      "0" = 0;
+      "1" = 1;
+      "2" = 2;
+      "3" = 3;
+      "4" = 4;
+      "5" = 5;
+      "6" = 6;
+      "7" = 7;
+      "8" = 8;
+      "9" = 9;
+      "a" = 10;
+      "b" = 11;
+      "c" = 12;
+      "d" = 13;
+      "e" = 14;
+      "f" = 15;
+      "A" = 10;
+      "B" = 11;
+      "C" = 12;
+      "D" = 13;
+      "E" = 14;
+      "F" = 15;
+    };
   in
     lib.foldl' (acc: char: acc * 16 + codes.${char}) 0 (lib.stringToCharacters hex);
-        
 
   hexToRgb = hex: {
-    r = (hexToInt (builtins.substring 0 2 hex));
-    g = (hexToInt (builtins.substring 2 2 hex));
-    b = (hexToInt (builtins.substring 4 2 hex));
+    r = hexToInt (builtins.substring 0 2 hex);
+    g = hexToInt (builtins.substring 2 2 hex);
+    b = hexToInt (builtins.substring 4 2 hex);
   };
+
+  hex2Vec4 = color: opacity: let
+    rgb = hexToRgb color;
+  in "vec4(${toString rgb.r}.0 / 255.0, ${toString rgb.g}.0 / 255.0, ${toString rgb.b}.0 /  255.0, ${toString opacity})";
 
   rgbToHsl = rgb: let
     r = rgb.r / 255.0;
@@ -147,21 +171,27 @@ in rec {
     minVal = lib.min r (lib.min g b);
     delta = maxVal - minVal;
     average = (maxVal + minVal) / 2.0;
-  in ternary (delta == 0.0) {
-    hue = 0.0;
-    saturation = 0.0;
-    luminance = builtins.floor average;
-  } {
-    saturation = builtins.floor (delta / (ternary (average > 0.5) ((2.0 - maxVal - minVal)) (maxVal + minVal)) * 100.0);
-    luminance = builtins.floor (average * 100.0);
-    hue = builtins.floor (
-    ternary (maxVal == r) ((g - b) / delta + (ternary (g < b) 6.0 0.0)) (
-    ternary (maxVal == g) ((b - r) / delta + 2.0)
-    ((r - g) / delta + 4.0)) * 60.0);
-  };
+  in
+    ternary (delta == 0.0) {
+      hue = 0.0;
+      saturation = 0.0;
+      luminance = builtins.floor average;
+    } {
+      saturation = builtins.floor (delta / (ternary (average > 0.5) (2.0 - maxVal - minVal) (maxVal + minVal)) * 100.0);
+      luminance = builtins.floor (average * 100.0);
+      hue = builtins.floor (
+        ternary (maxVal == r) ((g - b) / delta + (ternary (g < b) 6.0 0.0)) (
+          ternary (maxVal == g) ((b - r) / delta + 2.0)
+          ((r - g) / delta + 4.0)
+        )
+        * 60.0
+      );
+    };
 
-  isDecrypted = let 
-      file = ../${builtins.replaceStrings [ "#SALT#" "\n" ]  [ "" "" ] (builtins.readFile ../.crypted.crypt.txt)};
-  in builtins.isPath file && builtins.pathExists file;
+  isDecrypted = let
+    file = ../${builtins.replaceStrings ["#SALT#" "\n"] ["" ""] (builtins.readFile ../.crypted.crypt.txt)};
+  in
+    builtins.isPath file && builtins.pathExists file;
 
+  fromNpins = import ./npins.nix;
 }

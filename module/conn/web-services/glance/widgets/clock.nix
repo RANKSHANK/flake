@@ -1,6 +1,4 @@
-{ ... }:
-
-{
-    type = "clock";
-    hour-format = "24h";
+{...}: {
+  type = "clock";
+  hour-format = "24h";
 }

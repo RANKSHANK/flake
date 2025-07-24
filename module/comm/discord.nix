@@ -12,12 +12,12 @@
   #     withOpenASAR = true;
   #   };
   # };
-in lib.mkModule "discord" [ "desktop" "communication" ] {
-
+in
+  lib.mkModule "discord" ["desktop" "communication"] {
     # imports = [
     #     inputs.arrpc.homeManagerModules.default
     # ];
-   
+
     # home-manager.users.${user} = {
     #     services.arrpc.enable = lib.mkForce true;
     # };
@@ -34,7 +34,6 @@ in lib.mkModule "discord" [ "desktop" "communication" ] {
       # ))
       # pkgs.arrpc
     ];
-
 
     nixpkgs.config.allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
@@ -55,4 +54,4 @@ in lib.mkModule "discord" [ "desktop" "communication" ] {
     #         RestartSec ="5s";
     #     };
     # };
-}
+  }

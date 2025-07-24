@@ -1,10 +1,9 @@
 {...}: {
-
-   disabledModules = [
+  disabledModules = [
     "neovoim"
-   ];
+  ];
 
-   enabledTags = [
+  enabledTags = [
     "connectivity"
     "filesystem"
     "repo"
@@ -12,5 +11,5 @@
     "sync"
     "vpn"
     "xdg"
-   ];
+  ];
 }

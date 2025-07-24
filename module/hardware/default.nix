@@ -1,8 +1,6 @@
-{ ... }:
-
-{
-    imports = [
-        ./displaylink.nix
-        ./nvidia-gpu.nix
-    ];
+{...}: {
+  imports = [
+    ./displaylink.nix
+    ./nvidia-gpu.nix
+  ];
 }

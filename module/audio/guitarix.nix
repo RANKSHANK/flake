@@ -3,8 +3,9 @@
   lib,
   config,
   ...
-}: lib.mkModule "guitarix" [ "audio" "desktop" ] {
-    environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) guitarix;
-    };
+}:
+lib.mkModule "guitarix" ["audio" "desktop"] {
+  environment.systemPackages = builtins.attrValues {
+    inherit (pkgs) guitarix;
+  };
 }

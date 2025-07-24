@@ -1,9 +1,7 @@
-{ ... }:
-
-{
-    imports = [
-        ./discord.nix
-        ./signal.nix
-        ./thunderbird.nix
-    ];
+{...}: {
+  imports = [
+    ./discord.nix
+    ./signal.nix
+    ./thunderbird.nix
+  ];
 }

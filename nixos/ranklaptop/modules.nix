@@ -1,37 +1,36 @@
 {
+  disabledModules = [
+    "qutebrowser"
+    "pcmanfm"
+    "spyder"
+    "tor"
+  ];
 
-    disabledModules = [
-        "qutebrowser"
-        "pcmanfm"
-        "spyder"
-        "tor"
-    ];
+  enabledModules = [
+    "hyprland"
+    "disko"
+    "impermanence"
+    "nvidia-gpu"
+    "theme"
+  ];
 
-    enabledModules = [
-        "hyprland"
-        "disko"
-        "impermanence"
-        "nvidia-gpu"
-        "theme"
-    ];
-
-    enabledTags = [
-        "audio"
-        "communication"
-        "connectivity"
-        "cad"
-        "desktop"
-        "filesystem"
-        "gaming"
-        "graphics"
-        "math"
-        "office"
-        "repo"
-        "shell"
-        "sync"
-        "video"
-        "virtualization"
-        "wayland"
-        "xdg"
-    ];
+  enabledTags = [
+    "audio"
+    "communication"
+    "connectivity"
+    "cad"
+    "desktop"
+    "filesystem"
+    "gaming"
+    "graphics"
+    "math"
+    "office"
+    "repo"
+    "shell"
+    "sync"
+    "video"
+    "virtualization"
+    "wayland"
+    "xdg"
+  ];
 }

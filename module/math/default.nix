@@ -1,8 +1,6 @@
-{ ... }:
-
-{
-    imports = [
-        ./octave.nix
-        ./spyder.nix
-    ];
+{...}: {
+  imports = [
+    ./octave.nix
+    ./spyder.nix
+  ];
 }

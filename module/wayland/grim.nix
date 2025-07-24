@@ -15,7 +15,8 @@
           notify-send "$title" "$body"
       fi
     '';
-in lib.mkModule "grim" [ "desktop" "wayland" ] {
+in
+  lib.mkModule "grim" ["desktop" "wayland"] {
     keybinds = [
       {
         name = "Screen Capture";
@@ -24,5 +25,4 @@ in lib.mkModule "grim" [ "desktop" "wayland" ] {
         exec = "${lib.getExe' snip "snip"}";
       }
     ];
-
-}
+  }

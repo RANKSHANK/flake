@@ -1,9 +1,14 @@
-{ pkgs, lib, config, user ? null, ...}: {
-
+{
+  pkgs,
+  lib,
+  config,
+  user ? null,
+  ...
+}: {
   stylix = let
     font = {
-       package = pkgs.nerd-fonts.fira-code;
-       name = "FiraCode Nerd Font Mono";
+      package = pkgs.nerd-fonts.fira-code;
+      name = "FiraCode Nerd Font Mono";
       # package = pkgs.nerd-fonts.jetbrains-mono;
       # name = "JetBrains Nerd Font Mono";
       # package = pkgs.jetbrains-mono;
@@ -15,19 +20,10 @@
   in {
     enable = true;
     polarity = "dark";
-    image = 
-    # pkgs.fetchurl {
-    #   url = "https://images.alphacoders.com/695/69561.jpg";
-    #   sha256 = "sha256-RKhIar3wMwo/5rWG5AdQbnOP4HX+C138Q5YeNY/acgY=";
-    # };
-    config.lib.stylix.pixel "base00";
+    image =
+      config.lib.stylix.pixel "base00";
 
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-latte.yaml";
+    base16Scheme = import ./scheme.nix {inherit pkgs;};
     opacity = {
       desktop = 1.0;
       applications = 1.0;
@@ -62,7 +58,7 @@
   };
 
   home-manager.users = lib.mkIf (user != null) {
-    ${user}.gtk.iconTheme = { 
+    ${user}.gtk.iconTheme = {
       package = pkgs.beauty-line-icon-theme;
       # size = 16;
       name = "BeautyLine";

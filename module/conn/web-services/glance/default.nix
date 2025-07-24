@@ -1,7 +1,5 @@
-{ ... }:
-
-{
-    imports = [
-        ./glance.nix
-    ];
+{...}: {
+  imports = [
+    ./glance.nix
+  ];
 }

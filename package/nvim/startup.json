@@ -1,0 +1,60 @@
+{
+  "pins": {
+    "lz.n": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nvim-neorocks",
+        "repo": "lz.n"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "f93b3de8b5a336e14365985403f464e4d2ebe473",
+      "url": "https://github.com/nvim-neorocks/lz.n/archive/f93b3de8b5a336e14365985403f464e4d2ebe473.tar.gz",
+      "hash": "0gg9zq54b86wizyr44cff5bj6mrxy54gjybha1kmvmxpyplgyi9z"
+    },
+    "oil.nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "stevearc",
+        "repo": "oil.nvim"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "bbad9a76b2617ce1221d49619e4e4b659b3c61fc",
+      "url": "https://github.com/stevearc/oil.nvim/archive/bbad9a76b2617ce1221d49619e4e4b659b3c61fc.tar.gz",
+      "hash": "1x5dlwga3j17i6j3ycycl93pry8ccwji9ii3vjlsgp30053kl4hs"
+    },
+    "plenary.nvim": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nvim-lua",
+        "repo": "plenary.nvim"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.1.4",
+      "revision": "50012918b2fc8357b87cff2a7f7f0446e47da174",
+      "url": "https://api.github.com/repos/nvim-lua/plenary.nvim/tarball/v0.1.4",
+      "hash": "1sn7vpsbwpyndsjyxb4af8fvz4sfhlbavvw6jjsv3h18sdvkh7nd"
+    },
+    "which-key.nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "folke",
+        "repo": "which-key.nvim"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "370ec46f710e058c9c1646273e6b225acf47cbed",
+      "url": "https://github.com/folke/which-key.nvim/archive/370ec46f710e058c9c1646273e6b225acf47cbed.tar.gz",
+      "hash": "0am4yw7lnibgc949qvbsi4a7hqdx6gk209l5vafv5bwcvd4irwxs"
+    }
+  },
+  "version": 5
+}

@@ -11,8 +11,8 @@
         cliphist list | rofi -dmenu | cliphist decode | wl-copy
     fi
   '';
-in lib.mkModule "cliphist" [ "desktop" "wayland" ] {
-
+in
+  lib.mkModule "cliphist" ["desktop" "wayland"] {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs) wl-clipboard;
     };
@@ -22,14 +22,13 @@ in lib.mkModule "cliphist" [ "desktop" "wayland" ] {
         enable = true;
         # package = pkgs-stable.legacyPackages.${pkgs.system}.cliphist;
         extraOptions = [
-            "-max-items=1"
+          "-max-items=1"
         ];
+      };
 
-    };
-
-    wayland.windowManager.hyprland.settings.exec-once = [
+      wayland.windowManager.hyprland.settings.exec-once = [
         "wl-paste --type text --watch cliphist store"
         "wl-paste --type image --watch cliphist store"
-    ];
-  };
-}
+      ];
+    };
+  }

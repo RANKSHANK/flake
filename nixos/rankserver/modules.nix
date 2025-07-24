@@ -1,18 +1,18 @@
 {
-    disabledModules = [
-    ];
+  disabledModules = [
+  ];
 
-    enabledModules = [
-        "disko"
-        "theme"
-    ];
+  enabledModules = [
+    "disko"
+    "theme"
+  ];
 
-    enabledTags = [
-        "connectivity"
-        "repo"
-        "server"
-        "shell"
-        "sync"
-        "vpn"
-    ];
+  enabledTags = [
+    "connectivity"
+    "repo"
+    "server"
+    "shell"
+    "sync"
+    "vpn"
+  ];
 }

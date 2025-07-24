@@ -1,9 +1,7 @@
-{ ... }:
-
-{
-    imports = [
-        ./cura.nix
-        ./orca.nix
-        ./prusa.nix
-    ];
+{...}: {
+  imports = [
+    ./cura.nix
+    ./orca.nix
+    ./prusa.nix
+  ];
 }

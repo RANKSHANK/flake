@@ -1,6 +1,11 @@
-{ lib, pkgs, user, config, ...}: {
+{
+  lib,
+  pkgs,
+  user,
+  config,
+  ...
+}: {
   config = {
-
     hardware = {
       enableRedistributableFirmware = true;
     };

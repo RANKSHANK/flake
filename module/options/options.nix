@@ -1,9 +1,11 @@
-{lib, config, ...}: let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkOption;
 in {
-
   options = {
-
     enabledModules = mkOption {
       default = [];
       type = lib.types.listOf lib.types.str;
@@ -17,7 +19,7 @@ in {
     };
 
     enabledTags = mkOption {
-      default = [ "system" ];
+      default = ["system"];
       type = lib.types.listOf lib.types.str;
       description = "Tags used to enable modules and features";
     };
@@ -29,33 +31,33 @@ in {
     };
 
     browsers = {
-        homepage = mkOption {
-            default = "";
-            type = lib.types.str;
-            description = "Default Homepage/ new tab page";
-        };
+      homepage = mkOption {
+        default = "";
+        type = lib.types.str;
+        description = "Default Homepage/ new tab page";
+      };
 
-        bookmarks = mkOption {
-          default = [];
-          type = lib.types.listOf lib.types.attrs;
-          description = "Browser bookmarks";
-        };
+      bookmarks = mkOption {
+        default = [];
+        type = lib.types.listOf lib.types.attrs;
+        description = "Browser bookmarks";
+      };
 
-        searchEngines = mkOption {
-          default = [];
-          type = lib.types.listOf lib.types.attrs;
-          description = "Browser search engines";
-        };
+      searchEngines = mkOption {
+        default = [];
+        type = lib.types.listOf lib.types.attrs;
+        description = "Browser search engines";
+      };
     };
 
     exec = mkOption {
-        default = [];
-        type = lib.types.listOf lib.types.str;
+      default = [];
+      type = lib.types.listOf lib.types.str;
     };
 
     exec-once = mkOption {
-        default = [];
-        type = lib.types.listOf lib.types.str;
+      default = [];
+      type = lib.types.listOf lib.types.str;
     };
 
     monitors = mkOption {
@@ -65,22 +67,18 @@ in {
     };
 
     webservices = mkOption {
-        default = {}; 
-        type = lib.types.attrsOf lib.types.str;
-        description = "Attrs of web services for reverse proxying";
+      default = {};
+      type = lib.types.attrsOf lib.types.str;
+      description = "Attrs of web services for reverse proxying";
     };
 
     baseURL = mkOption {
-        type = lib.types.str; 
-        description = "Ending of the URL for the server";
+      type = lib.types.str;
+      description = "Ending of the URL for the server";
     };
-
   };
 
   config = {
-
-    baseURL = lib.mkDefault (lib.ternary lib.isDecrypted (builtins.replaceStrings [ "\n" ] [ ""] (builtins.readFile ./domain.crypt.txt)) "local");
+    baseURL = lib.mkDefault (lib.ternary lib.isDecrypted (builtins.replaceStrings ["\n"] [""] (builtins.readFile ./domain.crypt.txt)) "local");
   };
-
-
 }

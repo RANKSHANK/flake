@@ -1,7 +1,5 @@
-{ lib, ... }:
-
-{
-    security.sudo.extraConfig = ''
-        Defaults lecture = never
-    '';
+{lib, ...}: {
+  security.sudo.extraConfig = ''
+    Defaults lecture = never
+  '';
 }

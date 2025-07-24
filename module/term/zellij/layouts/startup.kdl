@@ -5,7 +5,9 @@ layout {
         }
     }
     default_tab_template hide_floating_panes=true {
-        pane
+        pane {
+            cwd "~"
+        }
     }
     tab name="1" hide_floating_panes=true focus=true
 }

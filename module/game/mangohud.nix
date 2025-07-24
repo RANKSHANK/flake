@@ -6,7 +6,8 @@
 }: let
   font = config.stylix.fonts.monospace;
   colors = config.lib.stylix.colors;
-in lib.mkModule "mangohud" [ "desktop" "gaming" ] {
+in
+  lib.mkModule "mangohud" ["desktop" "gaming"] {
     home-manager.users.${user} = {
       programs.mangohud = {
         enable = true;
@@ -30,14 +31,14 @@ in lib.mkModule "mangohud" [ "desktop" "gaming" ] {
         };
       };
       xdg.configFile."MangoHud/MangoHud.conf".text = ''
-          cpu_temp
-          gpu_temp
-          gpu_name
-          vram
-          ram
-          swap
-          vulkan_driver
-          no_display
+        cpu_temp
+        gpu_temp
+        gpu_name
+        vram
+        ram
+        swap
+        vulkan_driver
+        no_display
       '';
     };
-}
+  }

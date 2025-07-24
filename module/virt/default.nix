@@ -1,7 +1,5 @@
-{ ... }:
-
-{
-    imports = [
-        ./virtmanager.nix
-    ];
+{...}: {
+  imports = [
+    ./virtmanager.nix
+  ];
 }

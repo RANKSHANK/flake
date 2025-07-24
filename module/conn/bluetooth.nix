@@ -1,10 +1,8 @@
-{
-  lib,
-  ...
-}: lib.mkModule "bluetooth" [ "connectivity" ] {
-    services.blueman.enable = true;
+{lib, ...}:
+lib.mkModule "bluetooth" ["connectivity"] {
+  services.blueman.enable = true;
 
-    hardware.bluetooth = {
-      enable = true;
-    };
+  hardware.bluetooth = {
+    enable = true;
+  };
 }

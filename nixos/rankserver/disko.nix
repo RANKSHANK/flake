@@ -3,7 +3,7 @@
   storageDisk = "/dev/disk/by-id/usb-Samsung_PSSD_T7_Shield_S6SGNS0X600702J-0:0";
   swapSizeG = 16;
   bootSizeM = 512;
-  espSizeM = 512; 
+  espSizeM = 512;
   homeSizeG = 100;
   mountOptions = ["noatime" "compress=zstd" "nodiratime" "discard"];
 in {
@@ -12,18 +12,18 @@ in {
       ${rootDisk} = {
         type = "disk";
         device = rootDisk;
-        
+
         content = {
           type = "gpt";
           partitions = {
             boot = {
               size = "${toString bootSizeM}M";
-	      priority = 2;
+              priority = 2;
               type = "EF02";
             };
             esp = {
               size = "${toString espSizeM}M";
-	      priority = 2;
+              priority = 2;
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -33,7 +33,7 @@ in {
             };
             swap = {
               size = "${toString swapSizeG}G";
-	      priority = 3;
+              priority = 3;
               content = {
                 type = "swap";
                 randomEncryption = true;
@@ -41,7 +41,7 @@ in {
             };
             root = {
               size = "100%";
-	      priority = 4;
+              priority = 4;
               content = {
                 type = "btrfs";
                 extraArgs = [];
@@ -59,7 +59,7 @@ in {
             };
             home = {
               size = "${toString homeSizeG}G";
-	      priority = 2;
+              priority = 2;
               content = {
                 type = "btrfs";
                 subvolumes = {
@@ -80,16 +80,16 @@ in {
           type = "gpt";
           partitions = {
             storage = {
-	      priority = 2;
+              priority = 2;
               size = "100%";
               content = {
                 type = "btrfs";
-		mountOptions = builtins.concatLists [mountOptions  [ "nofail" ]];
-	        mountpoint = "/storage";
-	      };
-	    };
-	  };
-	};
+                mountOptions = builtins.concatLists [mountOptions ["nofail"]];
+                mountpoint = "/storage";
+              };
+            };
+          };
+        };
       };
     };
   };
