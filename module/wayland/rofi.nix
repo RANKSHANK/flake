@@ -19,12 +19,6 @@ lib.mkModule "rofi" ["desktop" "wayland"] {
       exec = "rofi -modi \"emoji:${pkgs.rofimoji}/bin/rofimoji\" -show emoji";
     }
     {
-      name = "Rofi Window Menu";
-      mods = ["super"];
-      combo = ["tab"];
-      exec = "pkill rofi || rofi -show window";
-    }
-    {
       name = "Rofi Power Menu";
       mods = ["ctrl" "alt"];
       combo = ["delete"];

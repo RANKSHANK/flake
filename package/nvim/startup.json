@@ -13,6 +13,19 @@
       "url": "https://github.com/nvim-neorocks/lz.n/archive/f93b3de8b5a336e14365985403f464e4d2ebe473.tar.gz",
       "hash": "0gg9zq54b86wizyr44cff5bj6mrxy54gjybha1kmvmxpyplgyi9z"
     },
+    "base16-nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "RRethy",
+        "repo": "base16-nvim"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "aa923daec4e778cd31ccfb0dcf083aff3c442159",
+      "url": "https://github.com/RRethy/base16-nvim/archive/aa923daec4e778cd31ccfb0dcf083aff3c442159.tar.gz",
+      "hash": "11aprmrby37gfkvk568j44d2pz4p2ppll4jlbx4ysfyshwg1zzb0"
+    },
     "oil.nvim": {
       "type": "Git",
       "repository": {

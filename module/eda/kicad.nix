@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   lib,
-  config,
   ...
 }:
 lib.mkModule "kicad" ["desktop" "cad"] {

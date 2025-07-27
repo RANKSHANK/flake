@@ -6,3 +6,5 @@ Configs I have ~~pilfered from~~ been inspired by:
     [fufexan](https://github.com/fufexan/dotfiles)
     [hlissner](https://github.com/hlissner/dotfiles)
     [Gerg-L](https://github.com/Gerg-L/nixos)
+
+

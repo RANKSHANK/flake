@@ -35,7 +35,7 @@
             };
             testScript = ''
               output = test.succeed("echo test");
-              assert "test" in output, f"'{output}' does not contain 'test'"
+              assert "test" in output, f"'{output}' does not contain 'test
             '';
           }
         ];

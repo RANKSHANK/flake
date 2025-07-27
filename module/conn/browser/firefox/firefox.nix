@@ -152,33 +152,33 @@ lib.mkModule "firefox" ["connectivity" "desktop"] {
         userContent = genCSS ./usercontent;
         userChrome = genCSS ./userchrome;
         containersForce = true;
-        containers = {
-          google = {
-            icon = "fingerprint";
-            color = "green";
-            id = 0;
-          };
-          microsoft = {
-            icon = "fingerprint";
-            color = "green";
-            id = 1;
-          };
-          yahoo = {
-            icon = "fingerprint";
-            color = "green";
-            id = 2;
-          };
-          uni = {
-            icon = "briefcase";
-            color = "blue";
-            id = 3;
-          };
-          shopping = {
-            icon = "cart";
-            color = "orange";
-            id = 4;
-          };
-        };
+        # containers = {
+        #   google = {
+        #     icon = "fingerprint";
+        #     color = "green";
+        #     id = 0;
+        #   };
+        #   microsoft = {
+        #     icon = "fingerprint";
+        #     color = "green";
+        #     id = 1;
+        #   };
+        #   yahoo = {
+        #     icon = "fingerprint";
+        #     color = "green";
+        #     id = 2;
+        #   };
+        #   uni = {
+        #     icon = "briefcase";
+        #     color = "blue";
+        #     id = 3;
+        #   };
+        #   shopping = {
+        #     icon = "cart";
+        #     color = "orange";
+        #     id = 4;
+        #   };
+        # };
       };
     };
 

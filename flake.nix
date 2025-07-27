@@ -71,7 +71,19 @@
 
     eachSys = lib.genAttrs lib.platforms.all;
   in {
-    formatter = eachSys (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = eachSys (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+      pkgs.writeShellApplication {
+        name = "flake-format";
+        runtimeInputs = builtins.attrValues {
+          inherit (pkgs) alejandra fd stylua;
+        };
+        text = ''
+          fd "$@" -t f -e nix -x alejandra -q '{}'
+          fd "$@" -t f -e lua -x stylua -f '${./stylua.toml}' '{}'
+        '';
+      });
 
     packages = let
       targets = lib.filterAttrs (name: attr: !(lib.hasSuffix ".json" name)) (builtins.readDir ./package);

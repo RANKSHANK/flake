@@ -1,3 +1,10 @@
-inputs: pkgs: [
-  # inputs.hyprland-plugins.packages.${pkgs.system}.borders-plus-plus
-]
+{
+  inputs,
+  pkgs,
+  ...
+}:
+builtins.attrValues {
+  inherit
+    (inputs.hyprland-plugins.packages.${pkgs.system})
+    ;
+}

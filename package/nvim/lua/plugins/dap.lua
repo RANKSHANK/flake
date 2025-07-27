@@ -40,13 +40,6 @@ return {
         desc = "Step Over",
       },
       {
-        "<leader>dr",
-        function()
-          require("dap").repl.open()
-        end,
-        desc = "Repl Inspection",
-      },
-      {
         "<leader>dl",
         function()
           require("osv").launch({ prot = 8086 })
@@ -84,7 +77,6 @@ return {
         enabled = true,
         virt_text_pos = "inline",
       })
-
     end,
   },
 }

@@ -1,11 +1,10 @@
 {
   disabledModules = [
     "gimp"
-    "kicad"
-    "pcmanfm"
+    # "kicad"
+    # "pcmanfm"
     "qutebrowser"
     "protonvpn"
-    #            "neovim"
     "thunderbird"
     "dwarf-fortress"
     "lutris"

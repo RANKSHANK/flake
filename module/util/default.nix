@@ -5,6 +5,7 @@
     ./direnv.nix
     ./git.nix
     ./gpg.nix
+    ./nvtop.nix
     ./ripgrep.nix
     ./sudo.nix
     ./unzip.nix

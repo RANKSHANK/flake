@@ -13,22 +13,22 @@
   '';
 in
   lib.mkModule "cliphist" ["desktop" "wayland"] {
+    exec-once = [
+      "wl-clip-persist"
+      "wl-paste --type text --watch cliphist store"
+      "wl-paste --type image --watch cliphist store"
+    ];
+
     environment.systemPackages = builtins.attrValues {
-      inherit (pkgs) wl-clipboard;
+      inherit (pkgs) wl-clipboard wl-clip-persist;
     };
 
     home-manager.users.${user} = {
       services.cliphist = {
         enable = true;
-        # package = pkgs-stable.legacyPackages.${pkgs.system}.cliphist;
         extraOptions = [
           "-max-items=1"
         ];
       };
-
-      wayland.windowManager.hyprland.settings.exec-once = [
-        "wl-paste --type text --watch cliphist store"
-        "wl-paste --type image --watch cliphist store"
-      ];
     };
   }

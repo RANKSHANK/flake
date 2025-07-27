@@ -48,8 +48,8 @@ in
 
     users.users.${user}.openssh.authorizedKeys.keys = lib.mkIf lib.isDecrypted keys.client;
 
-    # nix = lib.mkIf (config.decrypted) {
-    #   distributedBuilds = true;
-    #   buildMachines = keys.builder;
-    # };
+    nix = lib.mkIf (lib.isDecrypted) {
+      distributedBuilds = true;
+      buildMachines = keys.builder;
+    };
   }
