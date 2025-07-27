@@ -18,6 +18,7 @@ in ''
   #define CONTRAST 1.5
   #define TOLERANCE 0.0182
   #define STRENGTH 0.2
+  #define SCAN_LIGHT 0.8
   #define SCALE
   #define COLOR_1 ${hex2Vec4 colors.base03 1.0}
   #define COLOR_2 ${hex2Vec4 colors.base02 1.0}
@@ -66,6 +67,8 @@ in ''
 
     vec4 ret_col = (0.3/CONTRAST)*COLOR_1 + (1. - 0.3/CONTRAST)*(COLOR_1*c1p + COLOR_2*c2p + vec4(c3p*COLOR_3.rgb, c3p*COLOR_1.a)) + 0.3*max(c1p*5. - 4., 0.) + 0.4*max(c2p*5. - 4., 0.);
     float heaviside = 1. - step(TOLERANCE, dist);
+    float heaviside2 = step (3., float(int(gl_FragCoord.y) & 0x7));
+    ret_col = mix(ret_col, ret_col * SCAN_LIGHT, heaviside2);
     fragColor = mix(base_color, ret_col, heaviside * STRENGTH); // tol_mult * (TOLERANCE - dist));
   }
 ''
