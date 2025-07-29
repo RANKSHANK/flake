@@ -96,7 +96,7 @@ in rec {
 
   walkString = string: splitter: lib.foldl' (acc: str: builtins.concatLists [acc [(ternary (builtins.length acc > 0) "${lib.last acc}.${str}" str)]]) [] (lib.splitString splitter string);
 
-  mkIfEnabled = moduleName: requiredTags: set: lib.mkIf (isEnabled moduleName requiredTags) set;
+  mkIfEnabled = moduleName: requiredTags: toMake: lib.mkIf (isEnabled moduleName requiredTags) toMake;
 
   isEnabled = moduleName: requiredTags: !(builtins.elem moduleName enables.disabledModules) && (builtins.elem moduleName enables.enabledModules || builtins.elem moduleName enables.enabledTags || (ternary (requiredTags == []) false (builtins.all (tag: builtins.elem tag enables.enabledTags) requiredTags)));
 

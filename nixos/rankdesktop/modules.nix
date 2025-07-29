@@ -1,13 +1,5 @@
 {
   disabledModules = [
-    "gimp"
-    # "kicad"
-    # "pcmanfm"
-    "qutebrowser"
-    "protonvpn"
-    "thunderbird"
-    "dwarf-fortress"
-    "lutris"
   ];
 
   enabledModules = [
@@ -28,7 +20,7 @@
     "filesystem"
     "gaming"
     "graphics"
-    # "math"
+    "math"
     "media"
     "office"
     "repo"

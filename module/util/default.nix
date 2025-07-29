@@ -1,5 +1,9 @@
-{...}: {
-  imports = [
+{
+  lib,
+  config,
+  ...
+}: {
+  imports = lib.flatten [
     ./bitwarden.nix
     ./btop.nix
     ./direnv.nix
@@ -10,6 +14,6 @@
     ./sudo.nix
     ./unzip.nix
     ./user.nix
-    ./xremap.nix
+    (lib.ternary (lib.isEnabled "xremap" ["desktop"]) ./xremap.nix [])
   ];
 }

@@ -1,15 +1,16 @@
 {
+  config,
   inputs,
   lib,
   user,
   ...
-}:
-lib.mkModule "xremap" ["desktop"] {
+}: (lib.mkModule "xremap" ["desktop"] {
   imports = [inputs.xremap.nixosModules.default];
 
   services.xremap = {
     serviceMode = "user";
     userName = user;
+    withHypr = config.modules.hyprland.enable;
     # watch = true;
     # debug = true;
 
@@ -142,4 +143,4 @@ lib.mkModule "xremap" ["desktop"] {
       ];
     };
   };
-}
+})

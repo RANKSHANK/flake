@@ -53,11 +53,8 @@
       url = "github:xremap/nix-flake";
       inputs = {
         xremap = {
-          url =
-            # "/home/rankshank/projects/xremap";
-            "github:RANKSHANK/xremap?ref=hyprland-bindings-update";
+          url = "github:RANKSHANK/xremap?ref=hyprland-bindings-update";
           #"github:xremap/xremap";
-          # "/tmp/xremap";
         };
         hyprland.follows = "hyprland";
       };
@@ -116,10 +113,18 @@
         path = ./nixos/${host};
         user = lib.readFileOrDefault "${path}/user" "rankshank";
         system = lib.readFileOrDefault "${path}/architecture" "x86_64-linux";
+        pkgs = nixpkgs.legacyPackages.${system};
         lib = nixpkgs.lib.extend (_: final:
           import ./lib {
             lib = final;
-            enables = import ./nixos/${host}/modules.nix;
+            enables = let 
+              attrs = import ./nixos/${host}/modules.nix;
+            in attrs // {
+                disabledModules = lib.flatten [
+                  attrs.disabledModules
+                  (pkgs.callPackage ./lib/broken-check.nix { inherit inputs; })
+                ];
+              };
           });
       in
         lib.nixosSystem {

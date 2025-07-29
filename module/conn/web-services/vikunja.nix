@@ -9,7 +9,7 @@ lib.mkModule "vikunja" ["server"] {
     vikunja = {
       enable = true;
       package = pkgs-stable.vikunja;
-      frontendScheme = "http";
+      frontendScheme = "https";
       frontendHostname = "localhost";
       settings = {
         service = {

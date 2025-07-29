@@ -73,7 +73,11 @@ return {
     "nvim-autopairs",
     event = "InsertEnter",
     after = function()
-      require("nvim-autopairs").setup({})
+      local pairs = require("nvim-autopairs")
+      local rule = pairs.rule
+      local cond = pairs.cond
+      pairs.setup({})
+      pairs.add_rules({})
     end,
   },
 }

@@ -9,9 +9,9 @@ return {
       require("lz.n").trigger_load("nvim-lua/plenary.nvim")
     end,
     binds = {
+      mode = { "n", "x", "o" },
       {
         "<leader><leader>",
-        mode = { "n", "x", "o" },
         icon = "󰱼 ",
         desc = "Telescope Files",
         function()
@@ -20,11 +20,20 @@ return {
       },
       {
         "<leader>tf",
-        mode = { "n", "x", "o" },
-        desc = "GREP Contents",
+        desc = "Telescope GREP",
         function()
           require("telescope.builtin").live_grep()
         end,
+      },
+      {
+        "<leader>tb",
+        desc = "Telescope Buffers",
+        function()
+          require("telescope.builtin").buffers()
+        end,
+      },
+      {
+        "<>",
       },
     },
     after = function()

@@ -53,7 +53,7 @@ lib.mkModule "qutebrowser" ["desktop" "connectivity"] {
           ",c" = let
             hintCode = pkgs.fetchurl {
               url = "https:/raw.githubusercontent.com/LaurenceWarne/qute-code-hint/master/code_select.py";
-              hash = "sha256-wwwp6u9Vh35K0pRD85Db8dQ8fXScaLtZPijB1FhdcF8=";
+              hash = "sha256-HBIBilAqp/20jG0jlGruzpaMhszaLfP3O3tWizisKOg=";
             };
             wrapCode = pkgs.writeShellScript "wrapCodeHints" ''
               #!/usr/bin/env nix-shell

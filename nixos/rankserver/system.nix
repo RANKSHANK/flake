@@ -5,6 +5,8 @@
   user,
   ...
 }: {
+  system.stateVersion = "23.11";
+
   documentation.enable = false; # Breaks Nixos-Install due to cross sys linking? TODO: read into this
   powerManagement.cpuFreqGovernor = "performance";
 

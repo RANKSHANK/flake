@@ -4,99 +4,99 @@
   lib,
   ...
 }: {
-  config = {
-    documentation.enable = false;
+  system.stateVersion = "23.11";
 
-    powerManagement.cpuFreqGovernor = "performance";
+  documentation.enable = false;
 
-    boot = {
-      binfmt.emulatedSystems = [
-        "armv7l-linux"
-      ];
-      supportedFilesystems = [
-        "btrfs"
-      ];
-      loader = {
-        grub = {
-          enable = true;
-          devices = [
-            "nodev"
-          ];
-          efiSupport = true;
-          #efiInstallAsRemovable = true;
-          enableCryptodisk = true;
-          configurationLimit = 25;
-        };
-      };
-      initrd = {
-        availableKernelModules = [
-          "xhci_pci"
-          "ahci"
-          "nvme"
-          "usbhid"
-          "usb_storage"
-          "ums_realtek"
-          "sd_mod"
+  powerManagement.cpuFreqGovernor = "performance";
+
+  boot = {
+    binfmt.emulatedSystems = [
+      "armv7l-linux"
+    ];
+    supportedFilesystems = [
+      "btrfs"
+    ];
+    loader = {
+      grub = {
+        enable = true;
+        devices = [
+          "nodev"
         ];
-        luks = {
-          reusePassphrases = true;
-        };
+        efiSupport = true;
+        #efiInstallAsRemovable = true;
+        enableCryptodisk = true;
+        configurationLimit = 25;
       };
-      kernelPackages = pkgs.linuxPackages_xanmod_latest;
-      kernelModules = [
-        "kvm-intel"
+    };
+    initrd = {
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "ums_realtek"
+        "sd_mod"
       ];
+      luks = {
+        reusePassphrases = true;
+      };
     };
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelModules = [
+      "kvm-intel"
+    ];
+  };
 
-    time.timeZone = "Australia/Sydney";
+  time.timeZone = "Australia/Sydney";
 
-    i18n.defaultLocale = "en_US.UTF-8";
-    console = {
-      useXkbConfig = true; # use xkbOptions in tty.
-    };
+  i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+    useXkbConfig = true; # use xkbOptions in tty.
+  };
 
+  users = {
+    mutableUsers = false;
     users = {
-      mutableUsers = false;
-      users = {
-        root = {
-          hashedPassword = "!";
-        };
-        ${user} = {
-          hashedPasswordFile = "/persist/etc/shadow.d/${user}";
-        };
+      root = {
+        hashedPassword = "!";
+      };
+      ${user} = {
+        hashedPasswordFile = "/persist/etc/shadow.d/${user}";
       };
     };
+  };
 
-    services = {
-      btrfs.autoScrub = {
-        enable = true;
-        interval = "weekly";
-        fileSystems = ["/"];
-      };
-      printing.enable = false;
-      libinput.enable = true; # enables touchpad
-      xserver = {
-        xkb = {
-          options = "caps:escape";
-          layout = "us";
-        };
+  services = {
+    btrfs.autoScrub = {
+      enable = true;
+      interval = "weekly";
+      fileSystems = ["/"];
+    };
+    printing.enable = false;
+    libinput.enable = true; # enables touchpad
+    xserver = {
+      xkb = {
+        options = "caps:escape";
+        layout = "us";
       };
     };
+  };
 
-    hardware = {
-      enableAllFirmware = true;
-      nvidia = {
-        prime = {
-          intelBusId = "PCI:0:2:0";
-          nvidiaBusId = "PCI:1:0:0";
-        };
+  hardware = {
+    enableAllFirmware = true;
+    nvidia = {
+      prime = {
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
       };
-      graphics = {
-        enable = true;
-        # enable32Bit = true;
-        extraPackages = builtins.attrValues {
-          inherit (pkgs) vaapiVdpau libvdpau-va-gl;
-        };
+    };
+    graphics = {
+      enable = true;
+      # enable32Bit = true;
+      extraPackages = builtins.attrValues {
+        inherit (pkgs) vaapiVdpau libvdpau-va-gl;
       };
     };
   };
