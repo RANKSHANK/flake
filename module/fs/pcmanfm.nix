@@ -1,11 +1,14 @@
 {
-  config,
   lib,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "pcmanfm" ["desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) pcmanfm;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "pcmanfm" ["desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) pcmanfm;
+    };
+  }

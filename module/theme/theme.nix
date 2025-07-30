@@ -2,28 +2,29 @@
   pkgs,
   lib,
   config,
-  user ? null,
+  user,
   ...
-}: {
-  stylix = let
-    font = {
-      package = pkgs.nerd-fonts.fira-code;
-      name = "FiraCode Nerd Font Mono";
-      # package = pkgs.nerd-fonts.jetbrains-mono;
-      # name = "JetBrains Nerd Font Mono";
-      # package = pkgs.jetbrains-mono;
-      # name = "Comic Nerd Font Mono";
-      # package = pkgs.comic-mono;
-      # package = pkgs.monaspace;
-      # name = "Monaspace Nerd Font Krypton Mono";
-    };
-  in {
+}: let
+  inherit (lib.modules) mkIf;
+  font = {
+    package = pkgs.nerd-fonts.fira-code;
+    name = "FiraCode Nerd Font Mono";
+    # package = pkgs.nerd-fonts.jetbrains-mono;
+    # name = "JetBrains Nerd Font Mono";
+    # package = pkgs.jetbrains-mono;
+    # name = "Comic Nerd Font Mono";
+    # package = pkgs.comic-mono;
+    # package = pkgs.monaspace;
+    # name = "Monaspace Nerd Font Krypton Mono";
+  };
+in {
+  stylix = {
     enable = true;
     polarity = "dark";
     image =
       config.lib.stylix.pixel "base00";
 
-    base16Scheme = import ./scheme.nix {inherit pkgs;};
+    base16Scheme = pkgs.callPackage ./scheme.nix {};
     opacity = {
       desktop = 1.0;
       applications = 1.0;
@@ -40,12 +41,6 @@
       monospace = font;
       serif = font;
       sansSerif = font;
-      # {
-      #   name = "ComicRelief";
-      #   package = pkgs.comic-relief;
-      #   # name = "Cantarell";
-      #   # package = pkgs.cantarell-fonts;
-      # };
       #emoji = font;
     };
     cursor = {
@@ -57,10 +52,9 @@
     };
   };
 
-  home-manager.users = lib.mkIf (user != null) {
+  home-manager.users = mkIf (user != null) {
     ${user}.gtk.iconTheme = {
       package = pkgs.beauty-line-icon-theme;
-      # size = 16;
       name = "BeautyLine";
     };
   };

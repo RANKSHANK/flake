@@ -1,12 +1,13 @@
 {
   lib,
-  config,
+  util,
   ...
 }: let
+  inherit (util) mkModule;
   port = 42067;
   listenAddress = "localhost";
 in
-  lib.mkModule "mealie" ["server"] {
+  mkModule "mealie" ["server"] {
     services.mealie = {
       enable = true;
       inherit port listenAddress;

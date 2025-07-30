@@ -2,8 +2,7 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   packages = {
     "orca-slicer" = {
       package = pkgs.orca-slicer;
@@ -20,17 +19,21 @@ let
   };
   inherit (lib) mapAttrsToList;
   inherit (builtins) throw;
-in mapAttrsToList (name: attrs:
-  if (attrs.package.src.outputHash == attrs.hash)
-    then (attrs.disabledModule)
-    else (throw ''
-      ${name} marked broken due to ${attrs.reason}.
-      ${name} hash has changed, verify package is still broken and update hash.
+in
+  mapAttrsToList (
+    name: attrs:
+      if (attrs.package.src.outputHash == attrs.hash)
+      then (attrs.disabledModule)
+      else
+        (throw ''
+          ${name} marked broken due to ${attrs.reason}.
+          ${name} hash has changed, verify package is still broken and update hash.
 
-      Specified hash:
-        ${attrs.hash}
+          Specified hash:
+            ${attrs.hash}
 
-      Package hash:
-        ${attrs.package.src.outputHash}
-    '')
-  ) packages
+          Package hash:
+            ${attrs.package.src.outputHash}
+        '')
+  )
+  packages

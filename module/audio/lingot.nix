@@ -1,11 +1,13 @@
 {
-  config,
-  lib,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "lingot" ["audio" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) lingot;
-  };
-}
+}: let
+  inherit (builtins) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "lingot" ["audio" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) lingot;
+    };
+  }

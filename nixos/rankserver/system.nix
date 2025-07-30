@@ -1,10 +1,11 @@
 {
   config,
-  inputs,
   pkgs,
-  user,
+  lib,
   ...
-}: {
+}: let
+  inherit (lib.attrsets) attrValues;
+in {
   system.stateVersion = "23.11";
 
   documentation.enable = false; # Breaks Nixos-Install due to cross sys linking? TODO: read into this
@@ -18,7 +19,7 @@
     cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
     graphics = {
       enable = true;
-      extraPackages = builtins.attrValues {
+      extraPackages = attrValues {
         inherit
           (pkgs)
           intel-media-driver

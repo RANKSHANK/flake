@@ -1,12 +1,16 @@
 {
-  pkgs,
   inputs,
   lib,
+  pkgs,
+  util,
   ...
-}:
-lib.mkModule "kicad" ["desktop" "cad"] {
-  environment.systemPackages = builtins.attrValues {
-    # inherit (pkgs) kicad;
-    inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) kicad; # OOM -_-
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "kicad" ["desktop" "cad"] {
+    environment.systemPackages = attrValues {
+      # inherit (pkgs) kicad;
+      inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) kicad; # OOM -_-
+    };
+  }

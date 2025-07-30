@@ -1,11 +1,14 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "gimp" ["graphics" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) gimp;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "gimp" ["graphics" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) gimp;
+    };
+  }

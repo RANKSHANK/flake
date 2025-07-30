@@ -1,13 +1,13 @@
 {
-  config,
   lib,
-  pkgs,
+  util,
   ...
 }: let
+  inherit (util) mkModule;
   port = "42068";
   listenAddress = "localhost";
 in
-  lib.mkModule "gotify" ["server"] {
+  mkModule "gotify" ["server"] {
     services.gotify = {
       enable = true;
       environment = {

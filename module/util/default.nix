@@ -1,8 +1,10 @@
 {
   lib,
-  config,
+  util,
   ...
-}: {
+}: let
+  inherit (util) ternary isEnabled;
+in {
   imports = lib.flatten [
     ./bitwarden.nix
     ./btop.nix
@@ -14,6 +16,6 @@
     ./sudo.nix
     ./unzip.nix
     ./user.nix
-    (lib.ternary (lib.isEnabled "xremap" ["desktop"]) ./xremap.nix [])
+    (ternary (isEnabled "xremap" ["desktop"]) ./xremap.nix [])
   ];
 }

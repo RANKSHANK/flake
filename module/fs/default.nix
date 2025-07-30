@@ -6,7 +6,6 @@
     ./pcmanfm.nix
     ./rclone.nix
     ./syncthing.nix
-    ./udiskie.nix
     ./xdg.nix
   ];
 }

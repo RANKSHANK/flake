@@ -2,36 +2,45 @@
   lib,
   config,
   user,
+  util,
   ...
 }: let
-  inherit (builtins) elem filter foldl' head readFile unsafeDiscardStringContext;
+  inherit (builtins) elem foldl' head readFile unsafeDiscardStringContext;
+  inherit (lib.modules) mkIf;
+  inherit (lib.lists) flatten last;
+  inherit (lib.trivial) pipe;
+  inherit (lib.strings) splitString;
+  inherit (util) mkModule isDecrypted listTargetFilesRecursively;
   keys =
     foldl' (acc: attr: acc // attr) {
       client = [];
       builder = [];
-    } (lib.flatten (map (keyPath:
-      lib.pipe keyPath [
-        (lib.splitString "/")
-        (lib.last)
-        (lib.splitString ".")
+    } (flatten (map (keyPath:
+      pipe keyPath [
+        (splitString "/")
+        last
+        (splitString ".")
         (
           strs: let
             name = head strs;
             key = readFile keyPath;
-            attr = (map (tag: {
+            attr =
+              map (tag: {
                 hostName = name;
                 sshUser = user;
                 ${unsafeDiscardStringContext tag} = [key];
-              }) strs);
-            in
-              lib.mkIf (name != config.networking.hostName) {
-                client = lib.mkIf (elem "client" strs) attr;
-                builder = lib.mkIf (elem "builder strs") attr;
-              }
-        )])
-    (lib.listTargetFilesRecursively ".pub" ./keys)));
+              })
+              strs;
+          in
+            mkIf (name != config.networking.hostName) {
+              client = mkIf (elem "client" strs) attr;
+              builder = mkIf (elem "builder strs") attr;
+            }
+        )
+      ])
+    (listTargetFilesRecursively ".pub" ./keys)));
 in
-  lib.mkModule "ssh" ["connectivity"] {
+  mkModule "ssh" ["connectivity"] {
     programs = {
       mtr.enable = true;
       ssh = {
@@ -50,9 +59,9 @@ in
       };
     };
 
-    users.users.${user}.openssh.authorizedKeys.keys = lib.mkIf lib.isDecrypted keys.client;
+    users.users.${user}.openssh.authorizedKeys.keys = mkIf isDecrypted keys.client;
 
-    nix = lib.mkIf (lib.isDecrypted) {
+    nix = mkIf isDecrypted {
       distributedBuilds = true;
       buildMachines = keys.builder;
     };

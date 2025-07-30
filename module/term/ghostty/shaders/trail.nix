@@ -1,9 +1,9 @@
 {
   config,
-  lib,
+  util,
   ...
 }: let
-  inherit (lib) hex2Vec4;
+  inherit (util) hex2Vec4;
   inherit (config.lib.stylix) colors;
 in ''
   // modified from https://github.com/KroneCorylus/ghostty-shader-playground/tree/main

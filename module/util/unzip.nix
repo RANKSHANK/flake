@@ -1,11 +1,14 @@
 {
-  config,
   lib,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "unzip" ["shell"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) unzip;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "unzip" ["shell"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) unzip;
+    };
+  }

@@ -1,16 +1,19 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "localsend" ["connectivity" "sync" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) localsend;
-  };
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "localsend" ["connectivity" "sync" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) localsend;
+    };
 
-  networking.firewall = {
-    allowedUDPPorts = [53317];
-    allowedTCPPorts = [53317];
-  };
-}
+    networking.firewall = {
+      allowedUDPPorts = [53317];
+      allowedTCPPorts = [53317];
+    };
+  }

@@ -1,10 +1,12 @@
 {lib, ...}: let
+  inherit (lib.modules) mkBefore;
+  inherit (lib.lists) flatten;
   rootDisk = "wwn-0x5002538870016672";
   nixDisk = "wwn-0x5002538e406c3bda";
   userDisk = "wwn-0x5000c5007924f326";
   swapSizeG = 128;
   mtOpts = name: extra:
-    lib.flatten [
+    flatten [
       "subvol=${name}"
       "noatime"
       "compress=zstd"
@@ -12,7 +14,7 @@
     ];
 in {
   boot.initrd = {
-    postDeviceCommands = lib.mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
+    postDeviceCommands = mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
     luks = {
       devices."luks-root" = {
         allowDiscards = true;

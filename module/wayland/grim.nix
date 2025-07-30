@@ -1,9 +1,11 @@
 {
   pkgs,
-  config,
   lib,
+  util,
   ...
 }: let
+  inherit (lib.meta) getExe';
+  inherit (util) mkModule;
   snip = with pkgs;
     writeShellScriptBin "snip" ''
       #!/usr/bin/env bash
@@ -16,13 +18,13 @@
       fi
     '';
 in
-  lib.mkModule "grim" ["desktop" "wayland"] {
+  mkModule "grim" ["desktop" "wayland"] {
     keybinds = [
       {
         name = "Screen Capture";
         mods = ["super"];
         combo = ["s"];
-        exec = "${lib.getExe' snip "snip"}";
+        exec = "${getExe' snip "snip"}";
       }
     ];
   }

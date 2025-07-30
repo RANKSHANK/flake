@@ -1,11 +1,14 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "krita" ["graphics" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) krita;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "krita" ["graphics" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) krita;
+    };
+  }

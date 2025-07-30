@@ -1,11 +1,14 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "intellij" ["desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    # inherit (pkgs.jetbrains) idea-community;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "intellij" ["desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs.jetbrains) idea-community;
+    };
+  }

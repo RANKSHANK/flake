@@ -1,11 +1,14 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "prusa" ["desktop" "cad"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) prusa-slicer;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "prusa" ["desktop" "cad"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) prusa-slicer;
+    };
+  }

@@ -1,18 +1,22 @@
 {
   lib,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "spyder" ["math" "desktop"] {
-  environment.systemPackages = builtins.attrValues (let
-    spyder = pkgs.spyder.overrideAttrs (final: prev: {
-      propagatedBuildInputs =
-        prev.propagatedBuildInputs
-        ++ (builtins.attrValues {
-          inherit (pkgs.python312Packages) spyder-kernels ipython;
-        });
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "spyder" ["math" "desktop"] {
+    environment.systemPackages = attrValues (let
+      spyder = pkgs.spyder.overrideAttrs (final: prev: {
+        propagatedBuildInputs =
+          prev.propagatedBuildInputs
+          ++ (attrValues {
+            inherit (pkgs.python312Packages) spyder-kernels ipython;
+          });
+      });
+    in {
+      inherit spyder;
     });
-  in {
-    inherit spyder;
-  });
-}
+  }

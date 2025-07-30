@@ -1,15 +1,13 @@
 {
-  lib,
-  config,
   pkgs,
-  user,
+  util,
   ...
-}:
-lib.mkModule "thunderbird" ["desktop" "communication"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) thunderbird;
-  };
-  # home-manager.users.${user} = {
-  #     programs.thunderbird.enable = true;
-  # };
-}
+}: let
+  inherit (builtins) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "thunderbird" ["desktop" "communication"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) thunderbird;
+    };
+  }

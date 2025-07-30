@@ -2,25 +2,28 @@
   lib,
   config,
   user,
-  pkgs,
+  util,
   ...
 }: let
-  smush = builtins.concatStringsSep "";
-  catLine = builtins.concatStringsSep "\n";
+  inherit (lib.attrsets) hasAttr;
+  inherit (lib.strings) concatStringsSep;
+  inherit (lib.lists) filter flatten init length last;
+  inherit (util) genNumStrs safeIsList safeIsString ternary;
+  smush = concatStringsSep "";
 
   genBind = map (keybind:
-    builtins.concatStringsSep ", " (lib.flatten [
-      (lib.ternary (lib.safeIsList "mods" keybind) (smush keybind.mods) "")
-      (lib.ternary (lib.safeIsList "combo" keybind) (smush keybind.combo) [])
-      (lib.ternary (lib.safeIsString "exec" keybind) "exec, ${keybind.exec}" "")
-    ])) (builtins.filter (attr: builtins.hasAttr "combo" attr) config.keybinds);
+    concatStringsSep ", " (flatten [
+      (ternary (safeIsList "mods" keybind) (smush keybind.mods) "")
+      (ternary (safeIsList "combo" keybind) (smush keybind.combo) [])
+      (ternary (safeIsString "exec" keybind) "exec, ${keybind.exec}" "")
+    ])) (filter (attr: hasAttr "combo" attr) config.keybinds);
 
-  genBindr = lib.flatten (map (lr:
+  genBindr = flatten (map (lr:
     map (keybind:
-      builtins.concatStringsSep ", " (lib.flatten [
-        (lib.ternary (lib.safeIsList "mods" keybind) "${smush (lib.init keybind.mods)}${lib.ternary (lib.length keybind.mods > 1) "" (lib.last keybind.mods)}, ${lib.last keybind.mods}_${lr}" "")
-        (lib.ternary (lib.safeIsString "exec" keybind) "exec, ${keybind.exec}" "")
-      ])) (builtins.filter (attr: !builtins.hasAttr "combo" attr) config.keybinds)) ["L" "R"]);
+      concatStringsSep ", " (flatten [
+        (ternary (safeIsList "mods" keybind) "${smush (init keybind.mods)}${ternary (length keybind.mods > 1) "" (last keybind.mods)}, ${last keybind.mods}_${lr}" "")
+        (ternary (safeIsString "exec" keybind) "exec, ${keybind.exec}" "")
+      ])) (filter (attr: !hasAttr "combo" attr) config.keybinds)) ["L" "R"]);
 in {
   home-manager.users.${user}.wayland.windowManager.hyprland = {
     settings = {
@@ -28,7 +31,7 @@ in {
         "super, mouse:272, movewindow"
         "super, mouse:273, resizewindow"
       ];
-      bind = lib.flatten [
+      bind = flatten [
         "super, q, killactive"
         "super, h, movefocus, l"
         "super, j, movefocus, d"
@@ -45,10 +48,10 @@ in {
         "super, p, pin, active"
         "super, f, togglefloating, active"
 
-        (lib.genNumStrs 10 "super, <num>, focusworkspaceoncurrentmonitor, <num>")
-        (lib.genNumStrs 10 "super, kp_<num>, focusworkspaceoncurrentmonitor, <num>")
-        (lib.genNumStrs 10 "supershift, <num>, movetoworkspace, <num>")
-        (lib.genNumStrs 10 "supershift, kp_<num>, movetoworkspace, <num>")
+        (genNumStrs 10 "super, <num>, focusworkspaceoncurrentmonitor, <num>")
+        (genNumStrs 10 "super, kp_<num>, focusworkspaceoncurrentmonitor, <num>")
+        (genNumStrs 10 "supershift, <num>, movetoworkspace, <num>")
+        (genNumStrs 10 "supershift, kp_<num>, movetoworkspace, <num>")
         genBind
         ", XF86AudioMute, exec, set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ", XF86AudioPlay, exec, playerctl play-pause"
@@ -57,10 +60,10 @@ in {
         ", XF86AudioNext, exec, playerctl next"
         ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
       ];
-      # bindil = lib.flatten [
+      # bindil = flatten [
       #   ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0"
       # ];
-      bindirl = lib.flatten [
+      bindirl = flatten [
         # ", scroll_lock, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1"
         genBindr
       ];

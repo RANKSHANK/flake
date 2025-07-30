@@ -1,11 +1,14 @@
 {
-  config,
   lib,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "minecraft" ["gaming" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    # inherit (pkgs) prismlauncher;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "minecraft" ["gaming" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) prismlauncher;
+    };
+  }

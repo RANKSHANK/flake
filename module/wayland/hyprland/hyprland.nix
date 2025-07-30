@@ -1,21 +1,24 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   user,
-  lib,
+  util,
   ...
 }: let
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.lists) flatten;
+  inherit (lib.modules) mkIf;
+  inherit (util) mkModule;
   opacity = config.stylix.opacity.desktop;
   colors = config.lib.stylix.colors;
 in
-  lib.mkModule "hyprland" [] {
+  mkModule "hyprland" [] {
     imports = [
       ./keybinds.nix
       ./monitors.nix
     ];
-
-    # xdg.portal.config.common.default = lib.mkForce "xdg-desktop-portal-hyprland";
 
     services.greetd = {
       enable = true;
@@ -34,7 +37,7 @@ in
         XDG_CURRENT_DESKTOP = "hyprland";
         # WLR_BACKEND = "vulkan";
         NVD_BACKEND = "direct";
-        LIBVA_DRIVER_NAME = lib.mkIf config.modules.nvidia-gpu.enable "nvidia";
+        LIBVA_DRIVER_NAME = mkIf config.modules.nvidia-gpu.enable "nvidia";
         __GL_GSYNC_ALLOWED = "1";
         __GL_VRR_ALLOWED = "0";
       };
@@ -46,12 +49,12 @@ in
         SDL_VIDEODRIVER = "wayland";
         XDG_SESSION_TYPE = "wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-        GDK__BACKEND = lib.mkIf config.modules.nvidia-gpu.enable "nvidia-drm";
-        # GBM_BACKEND = lib.mkIfEnabled "nvidia-gpu" config "nvidia-drm";
+        GDK__BACKEND = mkIf config.modules.nvidia-gpu.enable "nvidia-drm";
+        # GBM_BACKEND = mkIfEnabled "nvidia-gpu" config "nvidia-drm";
         # WLR_NO_HARDWARE_CURSORS = "1";
       };
 
-      systemPackages = builtins.attrValues {
+      systemPackages = attrValues {
         inherit
           (pkgs)
           swaylock
@@ -94,19 +97,19 @@ in
 
         package = inputs.hyprland.packages.${pkgs.system}.hyprland;
 
-        plugins = pkgs.callPackage ./plugins.nix {inherit inputs pkgs;};
+        plugins = pkgs.callPackage ./plugins.nix {inherit inputs util;};
 
         settings = {
-          exec-once = lib.flatten [
+          exec-once = flatten [
             "sleep 1; killall -e xdg-desktop-portal-hyprland; killall -e xdg-desktop-portal-wlr; killall xdg-desktop-portal; /usr/lib/xdg-desktop-portal-hyprland &; sleep 2; \usr\lib\xdg-desktop-portal"
             "$systemctl --user start ${pkgs.hyprpolkitagent}/bin/hyprpolkitagent"
             # "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
             config.exec-once
           ];
           general = {
-            border_size = 3;
-            gaps_in = 3;
-            gaps_out = 3;
+            border_size = -1;
+            gaps_in = 0;
+            gaps_out = 0;
             layout = "dwindle";
           };
           render = {
@@ -119,7 +122,7 @@ in
           };
 
           decoration = {
-            rounding = 10;
+            rounding = 0;
             active_opacity = opacity;
             inactive_opacity = opacity;
             fullscreen_opacity = opacity;
@@ -132,7 +135,7 @@ in
                 pkgs.callPackage
                 ./shaders/balatro.nix
                 {
-                  inherit lib config inputs;
+                  inherit config inputs util;
                 }
               )).outPath;
           };
@@ -195,13 +198,9 @@ in
           };
 
           windowrulev2 = [
-            "bordersize 1, focus:1, fullscreen:0"
-            "noborder, focus:1, fullscreen:1"
             "noborder,onworkspace:1,floating:0,title:^.*(-\\sYouTube\\s—).*$"
             "noborder, floating:0, focused:1, initialClass:^.*(steam_app_\\d+)$"
             "bordercolor rgba(${colors.base0A}22) rgba(${colors.base0A}22) rgba(${colors.base0A}ff) rgba(${colors.base0A}44) rgba(${colors.base0A}22), focus:1"
-            "rounding 5, focus:1"
-            "rounding 0, xwayland:1, floating:1, focus:1"
             "float, title:^.*(Picture-in-Picture).*$"
             "pin, title:^.*(Picture-in-Picture).*$"
             "size 30% 30%, title:^.*(Picture-in-Picture).*$"

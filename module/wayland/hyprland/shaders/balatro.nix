@@ -1,11 +1,10 @@
 {
   config,
-  lib,
+  util,
   ...
 }: let
   inherit (config.lib.stylix) colors;
-  inherit (lib) hex2Vec4;
-  #extension GL_EXT_gpu_shader4: enable
+  inherit (util) hex2Vec4;
 in ''
   #version 300 es
   #define PIXEL_SIZE_FAC 700.0

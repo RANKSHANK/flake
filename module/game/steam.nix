@@ -1,16 +1,15 @@
 {
-  config,
   pkgs,
   lib,
+  util,
   ...
 }: let
-  steam-desktop-patcher =
-    lib.patchDesktopEntry pkgs pkgs.steam "steam"
-    ["^Exec=steam"]
-    ["Exec=PULSE_LATENCY_MS=50 mangohud steam"];
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.lists) elem;
+  inherit (util) mkModule;
 in
-  lib.mkModule "steam" ["desktop" "gaming"] {
-    environment.systemPackages = builtins.attrValues {
+  mkModule "steam" ["desktop" "gaming"] {
+    environment.systemPackages = attrValues {
       inherit (pkgs) steamcmd;
     };
 
@@ -19,7 +18,7 @@ in
         enable = true;
         package = pkgs.steam.override {
           extraLibraries = pkgs:
-            builtins.attrValues {
+            attrValues {
               inherit
                 (pkgs)
                 at-spi2-atk
@@ -64,7 +63,7 @@ in
         gamescopeSession = {
           enable = true;
         };
-        extraCompatPackages = builtins.attrValues {
+        extraCompatPackages = attrValues {
           inherit (pkgs) proton-ge-bin;
         };
       };
@@ -79,7 +78,7 @@ in
     hardware.steam-hardware.enable = true;
 
     nixpkgs.config.allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
+      elem (lib.getName pkg) [
         "steam"
         "steam-original"
         "steam-runtime"

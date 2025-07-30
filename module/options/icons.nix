@@ -1,10 +1,9 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{lib, ...}: let
+  inherit (lib.options) mkOption;
+  inherit (lib.types) attrs;
+in {
   options = {
-    icons = lib.mkOption {
+    icons = mkOption {
       default = {
         search = "";
         diagnostics = {
@@ -25,7 +24,7 @@
           removed = "";
         };
       };
-      type = lib.types.attrs;
+      type = attrs;
       description = "Text Icons";
     };
   };

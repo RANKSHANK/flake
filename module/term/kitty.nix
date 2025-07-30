@@ -1,22 +1,14 @@
 {
-  config,
-  lib,
   user,
+  util,
   ...
-}:
-lib.mkModule "kitty" ["desktop"] {
-  # keybinds = [
-  #   {
-  #     name = "Kitty";
-  #     mods = ["super"];
-  #     combo = ["return"];
-  #     exec = "kitty";
-  #   }
-  # ];
-
-  home-manager.users.${user} = {
-    programs.kitty = {
-      enable = true;
+}: let
+  inherit (util) mkModule;
+in
+  mkModule "kitty" ["desktop"] {
+    home-manager.users.${user} = {
+      programs.kitty = {
+        enable = true;
+      };
     };
-  };
-}
+  }

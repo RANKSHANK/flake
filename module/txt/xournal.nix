@@ -1,11 +1,14 @@
 {
   pkgs,
-  config,
   lib,
+  util,
   ...
-}:
-lib.mkModule "xournal" ["desktop" "office"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) xournalpp;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "xournal" ["desktop" "office"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) xournalpp;
+    };
+  }

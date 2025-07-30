@@ -4,16 +4,15 @@
   lib,
   ...
 }: let
-  inherit (builtins) attrValues;
-  inherit (lib) fileset;
-  inherit (inputs) mnw;
-  inherit (mnw.lib) npinsToPlugins;
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.fileset) toSource unions;
+  inherit (inputs.mnw.lib) npinsToPlugins wrap;
 
   injectBaseColors = let
     inherit (inputs.stylix.inputs) base16;
     mk-scheme-attrs = (pkgs.callPackage base16.lib {}).mkSchemeAttrs;
 
-    colors = (mk-scheme-attrs (pkgs.callPackage ../../module/theme/scheme.nix {inherit pkgs;})).withHashtag;
+    colors = (mk-scheme-attrs (pkgs.callPackage ../../module/theme/scheme.nix {})).withHashtag;
   in ''
     BASE00 = "${colors.base00}"
     BASE01 = "${colors.base01}"
@@ -32,7 +31,7 @@
     BASE0E = "${colors.base0E}"
     BASE0F = "${colors.base0F}"
   '';
-in (mnw.lib.wrap pkgs {
+in (wrap pkgs {
   neovim = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
 
   appName = "nvim";
@@ -61,9 +60,9 @@ in (mnw.lib.wrap pkgs {
       ++ npinsToPlugins pkgs ./lazy.json;
 
     dev.nvim = {
-      pure = fileset.toSource {
+      pure = toSource {
         root = ./.;
-        fileset = fileset.unions [./lua];
+        fileset = unions [./lua];
       };
       impure = "/home/rankshank/projects/flake/package/nvim";
     };

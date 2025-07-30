@@ -1,18 +1,20 @@
 {
-  user,
-  config,
   lib,
+  user,
+  util,
   ...
-}:
-lib.mkModule "vim" ["shell"] {
-  home-manager.users.${user} = {
-    programs.vim = {
-      enable = true;
-      extraConfig = ''
-        set number
-        set relativenumber
-        set smartindent
-      '';
+}: let
+  inherit (util) mkModule;
+in
+  mkModule "vim" ["shell"] {
+    home-manager.users.${user} = {
+      programs.vim = {
+        enable = true;
+        extraConfig = ''
+          set number
+          set relativenumber
+          set smartindent
+        '';
+      };
     };
-  };
-}
+  }

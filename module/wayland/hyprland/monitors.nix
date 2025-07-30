@@ -2,36 +2,42 @@
   lib,
   config,
   user,
+  util,
   ...
-}: {
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.lists) elemAt flatten foldl' imap0 last length sort;
+  inherit (lib.strings) concatStringsSep;
+  inherit (util) safeIsInt safeIsFloat ternary;
+in {
   home-manager.users.${user}.wayland.windowManager.hyprland.settings.monitor = let
-    sortedMonitors = builtins.sort (first: second: (lib.ternary (lib.safeIsInt "xPos" first) first.xPos 0) < (lib.ternary (lib.safeIsInt "xPos" second) second.xPos 0)) (builtins.attrValues config.monitors);
+    sortedMonitors = sort (first: second: (ternary (safeIsInt "xPos" first) first.xPos 0) < (ternary (safeIsInt "xPos" second) second.xPos 0)) (attrValues config.monitors);
 
     xPoses =
-      lib.foldl' (
+      foldl' (
         acc: monitor:
-          lib.ternary ((builtins.length acc) > 0) (
-            acc ++ [((lib.last acc) + monitor.horizontal)]
+          ternary ((length acc) > 0) (
+            acc ++ [((last acc) + monitor.horizontal)]
           ) [0 monitor.horizontal]
       ) []
       sortedMonitors;
   in
-    lib.flatten [
-      (lib.imap0 (
+    flatten [
+      (imap0 (
           idx: monitor:
-            builtins.concatStringsSep "" [
+            concatStringsSep "" [
               (monitor.connection)
               ", "
               (toString monitor.horizontal)
               "x"
               (toString monitor.vertical)
-              (lib.ternary (lib.safeIsInt "refreshRate" monitor) "@${toString monitor.refreshRate}" "")
+              (ternary (safeIsInt "refreshRate" monitor) "@${toString monitor.refreshRate}" "")
               ", "
-              (toString (builtins.elemAt xPoses idx))
+              (toString (elemAt xPoses idx))
               "x"
-              (lib.ternary (lib.safeIsInt "yPos" monitor) (toString (monitor.vertical * monitor.yPos)) "0")
+              (ternary (safeIsInt "yPos" monitor) (toString (monitor.vertical * monitor.yPos)) "0")
               ", "
-              (lib.ternary (lib.safeIsFloat "scale" monitor) (toString monitor.scale) "1")
+              (ternary (safeIsFloat "scale" monitor) (toString monitor.scale) "1")
             ]
         )
         sortedMonitors)

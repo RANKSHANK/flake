@@ -1,12 +1,15 @@
 {
   pkgs,
-  config,
   lib,
+  util,
   ...
-}:
-lib.mkModule "octave" ["math" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) octave;
-    inherit (pkgs.octavePackages) symbolic;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "octave" ["math" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) octave;
+      inherit (pkgs.octavePackages) symbolic;
+    };
+  }

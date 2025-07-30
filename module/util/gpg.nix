@@ -1,16 +1,17 @@
 {
-  config,
-  lib,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "gpg" ["shell"] {
-  programs = {
-    gnupg.agent = {
-      enable = true;
-      pinentryPackage = pkgs.pinentry-curses;
-      enableSSHSupport = true;
+}: let
+  inherit (util) mkModule;
+in
+  mkModule "gpg" ["shell"] {
+    programs = {
+      gnupg.agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry-curses;
+        enableSSHSupport = true;
+      };
     };
-  };
-  services.pcscd.enable = true;
-}
+    services.pcscd.enable = true;
+  }

@@ -1,4 +1,6 @@
 {lib, ...}: let
+  inherit (lib.modules) mkBefore;
+  inherit (lib.lists) flatten;
   rootDisk = "nvme0n1";
   homeDisk = "sda";
   swapSizeG = 32;
@@ -6,7 +8,7 @@
   extraArgs = ["-f"];
 in {
   boot.initrd = {
-    postDeviceCommands = lib.mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
+    postDeviceCommands = mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
     luks.devices."luks-root" = {
       # device = "/dev/disk/by-partlabel/disk-${rootDisk}-luks";
       allowDiscards = true;
@@ -52,7 +54,7 @@ in {
                   inherit extraArgs;
                   subvolumes = let
                     mtOpts = name: extra:
-                      lib.flatten [
+                      flatten [
                         "subvol=${name}"
                         "noatime"
                         "compress=zstd"

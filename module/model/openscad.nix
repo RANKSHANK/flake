@@ -1,11 +1,14 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "openscad" ["desktop" "cad"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) openscad;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "openscad" ["desktop" "cad"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) openscad;
+    };
+  }

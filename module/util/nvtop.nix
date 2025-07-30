@@ -1,10 +1,14 @@
 {
   lib,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "nvtop" ["shell" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs.nvtopPackages) full;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "nvtop" ["shell" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs.nvtopPackages) full;
+    };
+  }

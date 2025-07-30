@@ -63,17 +63,27 @@
 
   outputs = inputs @ {self, ...}: let
     inherit (inputs) nixpkgs;
+    inherit (nixpkgs) lib;
 
-    lib = nixpkgs.lib.extend (_: final: import ./lib {lib = final;});
+    inherit (builtins) readDir;
 
-    eachSys = lib.genAttrs lib.platforms.all;
+    inherit (lib.attrsets) attrValues genAttrs filterAttrs listToAttrs mapAttrs' nameValuePair;
+    inherit (lib.lists) flatten last;
+    inherit (lib.platforms) all;
+    inherit (lib.strings) hasSuffix removeSuffix splitString;
+    inherit (lib.trivial) pipe;
+
+    util = import ./util {lib = nixpkgs.lib;};
+    inherit (util) fromNpins findTopLevelDirectories listNixFilesRecursively readFileOrDefault ternary;
+
+    eachSys = genAttrs all;
   in {
     formatter = eachSys (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in
       pkgs.writeShellApplication {
         name = "flake-format";
-        runtimeInputs = builtins.attrValues {
+        runtimeInputs = attrValues {
           inherit (pkgs) alejandra fd stylua;
         };
         text = ''
@@ -83,24 +93,22 @@
       });
 
     packages = let
-      targets = lib.filterAttrs (name: attr: !(lib.hasSuffix ".json" name)) (builtins.readDir ./package);
+      targets = filterAttrs (name: attr: !(hasSuffix ".json" name)) (readDir ./package);
     in
       eachSys (system: let
         pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {
-          inherit self pkgs inputs lib;
-          fromNpins = lib.fromNpins ./package/packages.json;
+          inherit self pkgs inputs util;
+          fromNpins = fromNpins ./package/packages.json;
         };
         pack = name: val:
-          lib.nameValuePair
-          name
-          (pkgs.callPackage val extraSpecialArgs);
+          nameValuePair name (pkgs.callPackage val extraSpecialArgs);
         packaged =
-          lib.mapAttrs' (
+          mapAttrs' (
             name: type: (
-              lib.ternary (type == "directory")
+              ternary (type == "directory")
               (pack name ./package/${name}/${name}.nix)
-              (pack (lib.removeSuffix ".nix" name) ./package/${name})
+              (pack (removeSuffix ".nix" name) ./package/${name})
             )
           )
           targets;
@@ -108,34 +116,35 @@
         packaged // {default = packaged.nvim.devMode;});
 
     nixosConfigurations =
-      lib.genAttrs (lib.findTopLevelDirectories ./nixos)
+      genAttrs (findTopLevelDirectories ./nixos)
       (host: let
         path = ./nixos/${host};
-        user = lib.readFileOrDefault "${path}/user" "rankshank";
-        system = lib.readFileOrDefault "${path}/architecture" "x86_64-linux";
+        user = readFileOrDefault "${path}/user" "rankshank";
+        system = readFileOrDefault "${path}/architecture" "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
-        lib = nixpkgs.lib.extend (_: final:
-          import ./lib {
-            lib = final;
-            enables = let 
+        util = nixpkgs.lib.extend (_: final:
+          import ./util {
+            inherit lib;
+            enables = let
               attrs = import ./nixos/${host}/modules.nix;
-            in attrs // {
-                disabledModules = lib.flatten [
+            in
+              attrs
+              // {
+                disabledModules = flatten [
                   attrs.disabledModules
-                  (pkgs.callPackage ./lib/broken-check.nix { inherit inputs; })
+                  (pkgs.callPackage ./util/broken-modules.nix {inherit util inputs;})
                 ];
               };
           });
       in
         lib.nixosSystem {
           specialArgs = {
-            inherit inputs lib self;
+            inherit inputs self util user;
             pkgs-stable = inputs.nix-stable.legacyPackages.${system};
             pkgs-staging = inputs.nix-staging.legacyPackages.${system};
-            user = user;
             modulesPath = "${nixpkgs}/nixos/modules";
           };
-          modules = lib.flatten [
+          modules = flatten [
             (with inputs; [
               home-manager.nixosModules.home-manager
               stylix.nixosModules.stylix
@@ -151,10 +160,10 @@
                 backupFileExtension = "bak";
               };
             })
-            (import (lib.ternary (host == "iso")
+            (import (ternary (host == "iso")
               "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
               "${nixpkgs}/nixos/modules/module-list.nix"))
-            (lib.listNixFilesRecursively path)
+            (listNixFilesRecursively path)
             ./module
             ({...}: {
               networking.hostName = host;
@@ -165,23 +174,23 @@
         });
 
     devShells = let
-      shells = lib.listNixFilesRecursively ./shell;
+      shells = listNixFilesRecursively ./shell;
     in
-      lib.listToAttrs (map (system: let
-          pkgs = import nixpkgs {inherit system;};
+      listToAttrs (map (system: let
+          pkgs = import nixpkgs {inherit system util;};
         in {
           name = system;
-          value = lib.listToAttrs (map (shell: {
-              name = lib.pipe shell [
+          value = listToAttrs (map (shell: {
+              name = pipe shell [
                 toString
-                (lib.removeSuffix ".nix")
-                (lib.splitString "/")
-                (lib.last)
+                (removeSuffix ".nix")
+                (splitString "/")
+                last
               ];
-              value = import shell {inherit inputs pkgs lib;};
+              value = pkgs.callPackage shell {inherit inputs util;};
             })
             shells);
         })
-        lib.platforms.all);
+        all);
   };
 }

@@ -1,13 +1,15 @@
 {
-  inputs,
+  lib,
   pkgs,
   ...
 }: let
-  flup = pkgs.writeShellScriptBin "flup" (builtins.readFile ../script/flup.sh);
-  flop = pkgs.writeShellScriptBin "flop" (builtins.readFile ../script/flop.sh);
+  inherit (lib.attrsets) attrValues;
+  inherit (lib.trivial) readFile;
+  flup = pkgs.writeShellScriptBin "flup" (readFile ../script/flup.sh);
+  flop = pkgs.writeShellScriptBin "flop" (readFile ../script/flop.sh);
 in
   pkgs.mkShell {
-    packages = builtins.attrValues {
+    packages = attrValues {
       inherit (pkgs) git-crypt gnupg nil npins nvd nix-output-monitor;
       inherit flup flop;
     };

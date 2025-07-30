@@ -1,11 +1,14 @@
 {
   pkgs,
-  config,
   lib,
+  util,
   ...
-}:
-lib.mkModule "appimage" ["repo" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) appimage-run;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "appimage" ["repo" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) appimage-run;
+    };
+  }

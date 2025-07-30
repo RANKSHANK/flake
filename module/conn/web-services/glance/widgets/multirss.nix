@@ -1,6 +1,8 @@
-{lib, ...}: feeds: {
+{lib, ...}: feeds: let
+  inherit (lib.attrsets) attrValues mapAttrs;
+in {
   type = "group";
-  widgets = builtins.attrValues (builtins.mapAttrs (title: sources: {
+  widgets = attrValues (mapAttrs (title: sources: {
       inherit title;
       type = "rss";
       hide-categories = true;

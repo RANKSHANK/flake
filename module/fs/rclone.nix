@@ -1,11 +1,14 @@
 {
   pkgs,
-  config,
   lib,
+  util,
   ...
-}:
-lib.mkModule "rclone" ["connectivity" "sync"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) rclone;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "rclone" ["connectivity" "sync"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) rclone;
+    };
+  }

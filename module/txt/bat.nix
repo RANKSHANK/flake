@@ -1,11 +1,14 @@
 {
-  pkgs,
-  config,
   lib,
+  pkgs,
+  util,
   ...
-}:
-lib.mkModule "bat" ["shell"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) bat;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "bat" ["shell"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) bat;
+    };
+  }

@@ -1,13 +1,14 @@
 {
   user,
-  config,
-  lib,
+  util,
   ...
-}:
-lib.mkModule "nnn" ["shell"] {
-  home-manager.users.${user} = {
-    programs.nnn = {
-      enable = true;
+}: let
+  inherit (util) mkModule;
+in
+  mkModule "nnn" ["shell"] {
+    home-manager.users.${user} = {
+      programs.nnn = {
+        enable = true;
+      };
     };
-  };
-}
+  }

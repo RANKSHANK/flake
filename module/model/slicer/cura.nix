@@ -1,11 +1,14 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "cura" ["desktop" "cad"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) cura-appimage;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "cura" ["desktop" "cad"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) cura-appimage;
+    };
+  }

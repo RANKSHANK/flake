@@ -1,11 +1,14 @@
 {
-  pkgs,
-  config,
   lib,
+  pkgs,
+  util,
   ...
-}:
-lib.mkModule "swww" ["desktop" "wayland"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) swww;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "swww" ["desktop" "wayland"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) swww;
+    };
+  }

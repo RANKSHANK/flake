@@ -1,11 +1,14 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "orca" ["desktop" "cad"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) orca-slicer;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "orca" ["desktop" "cad"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) orca-slicer;
+    };
+  }

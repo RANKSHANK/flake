@@ -1,4 +1,4 @@
-targetJSON: let
+{lib, ...}: targetJSON: let
   data = builtins.fromJSON (builtins.readFile targetJSON);
   version = data.version;
 

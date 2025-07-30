@@ -1,13 +1,14 @@
 {
-  pkgs,
-  config,
-  inputs,
   lib,
+  pkgs,
+  util,
   ...
-}:
-lib.mkModule "blender" ["cad" "desktop"] {
-  environment.systemPackages = builtins.attrValues {
-    # inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) blender;
-    inherit (pkgs) blender;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "blender" ["cad" "desktop"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) blender;
+    };
+  }

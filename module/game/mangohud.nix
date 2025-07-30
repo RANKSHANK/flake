@@ -1,32 +1,18 @@
 {
   config,
-  lib,
   user,
+  util,
   ...
 }: let
-  font = config.stylix.fonts.monospace;
-  colors = config.lib.stylix.colors;
+  inherit (util) mkModule;
 in
-  lib.mkModule "mangohud" ["desktop" "gaming"] {
+  mkModule "mangohud" ["desktop" "gaming"] {
     home-manager.users.${user} = {
       programs.mangohud = {
         enable = true;
         enableSessionWide = true;
         settings = {
           output_folder = "/home/${user}/tmp";
-          #round_corners = 5;
-          # text_color = colors.base05;
-          # background_color = colors.base00;
-          # gpu_color = colors.base0B;
-          # cpu_color = colors.base0D;
-          # vram_color = colors.base0C;
-          # media_player_color = colors.base05;
-          # engine_color = colors.base0E;
-          # wine_color = colors.base0E;
-          # frametime_color = colors.base0B;
-          # battery_color = colors.base04;
-          # io_color = colors.base0A;
-          #graphs = "gpu_load,cpu_load,gpu_core_clock,gpu_mem_clock,vram,ram,cpu_temp,gpu_temp";
           toggle_hud = "Shift_L+F5";
         };
       };

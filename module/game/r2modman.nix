@@ -1,11 +1,14 @@
 {
-  config,
   lib,
   pkgs,
+  util,
   ...
-}:
-lib.mkModule "r2modman" ["desktop" "gaming"] {
-  environment.systemPackages = builtins.attrValues {
-    inherit (pkgs) r2modman;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "r2modman" ["desktop" "gaming"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) r2modman;
+    };
+  }

@@ -1,10 +1,13 @@
 {
   inputs,
+  lib,
   pkgs,
   ...
-}:
-builtins.attrValues {
-  inherit
-    (inputs.hyprland-plugins.packages.${pkgs.system})
-    ;
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+in
+  attrValues {
+    inherit
+      (inputs.hyprland-plugins.packages.${pkgs.system})
+      ;
+  }

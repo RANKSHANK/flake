@@ -1,11 +1,14 @@
 {
-  pkgs,
-  config,
   lib,
+  pkgs,
+  util,
   ...
-}:
-lib.mkModule "aseprite" ["desktop" "graphics"] {
-  environment.systemPackages = builtins.attrValues {
-    # inherit (pkgs) aseprite;
-  };
-}
+}: let
+  inherit (lib.attrsets) attrValues;
+  inherit (util) mkModule;
+in
+  mkModule "aseprite" ["desktop" "graphics"] {
+    environment.systemPackages = attrValues {
+      inherit (pkgs) aseprite;
+    };
+  }

@@ -3,8 +3,10 @@
   lib,
   pkgs,
   ...
-}: {
-  environment.systemPackages = builtins.attrValues {
+}: let
+  inherit (lib.attrsets) attrValues;
+in {
+  environment.systemPackages = attrValues {
     inherit (pkgs) displaylink;
   };
 

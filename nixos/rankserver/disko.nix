@@ -1,4 +1,5 @@
-{...}: let
+{lib, ...}: let
+  inherit (lib) concatLists;
   rootDisk = "/dev/disk/by-id/ata-UDSS_UD3CS1HT301-256G_TUSJA24BNX01378";
   storageDisk = "/dev/disk/by-id/usb-Samsung_PSSD_T7_Shield_S6SGNS0X600702J-0:0";
   swapSizeG = 16;
@@ -84,7 +85,7 @@ in {
               size = "100%";
               content = {
                 type = "btrfs";
-                mountOptions = builtins.concatLists [mountOptions ["nofail"]];
+                mountOptions = concatLists [mountOptions ["nofail"]];
                 mountpoint = "/storage";
               };
             };
