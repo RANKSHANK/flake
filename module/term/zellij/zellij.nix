@@ -1,12 +1,16 @@
 {
+  config,
   lib,
   pkgs,
   user,
   util,
   ...
 }: let
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkForce;
-  inherit (util) mkModule;
+  inherit (lib.options) mkOption;
+  inherit (lib.types) listOf str;
+  inherit (util) concatLines mkModule;
 in
   mkModule "zellij" ["shell"] {
     home-manager.users.${user} = {
@@ -22,8 +26,8 @@ in
         # ZELLIJ_AUTO_ATTACH = "true";
         ZELLIJ_AUTO_EXIT = mkForce "true";
       };
-      xdg.configFile."zellij/layouts" = {
-        source = ./layouts;
+      xdg.configFile."zellij/layouts/startup.kdl".text = pkgs.callPackage ./layouts/startup.nix {
+        inherit config util;
       };
       xdg.configFile."zellij/config.kdl".text = pkgs.callPackage ./config.nix {inherit util;};
     };

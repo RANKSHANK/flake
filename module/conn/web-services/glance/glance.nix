@@ -23,6 +23,9 @@ in
             hide-footer = true;
             logo-text = "󱄅";
           };
+          theme = {
+            disable-picker = true;
+          };
           pages = let
             widgets = foldl' (
               attr: file:

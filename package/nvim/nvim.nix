@@ -36,18 +36,15 @@ in (wrap pkgs {
 
   appName = "nvim";
 
-  initLua =
-    ''
-      ${injectBaseColors}
-      require("options")
-      require("lz.n")
-      require("theme")
-      require("lz.n").register_handler(require("handlers.which-key"))
-    ''
-    + ''
-      require("keybinds")
-      require("lz.n").load("plugins")
-    '';
+  initLua = ''
+    ${injectBaseColors}
+    require("options")
+    require("lz.n")
+    require("theme")
+    require("lz.n").register_handler(require("handlers.which-key"))
+    require("keybinds")
+    require("lz.n").load("plugins")
+  '';
 
   plugins = {
     start = npinsToPlugins pkgs ./startup.json;

@@ -1,16 +1,13 @@
 {
   disabledModules = [
-    "qutebrowser"
-    "pcmanfm"
-    "spyder"
-    "tor"
   ];
 
   enabledModules = [
-    "hyprland"
     "disko"
+    "hyprland"
     "impermanence"
     "nvidia-gpu"
+    "sops"
     "theme"
   ];
 
@@ -24,12 +21,15 @@
     "gaming"
     "graphics"
     "math"
+    "media"
     "office"
     "repo"
     "shell"
+    "stream-host"
     "sync"
     "video"
     "virtualization"
+    "vpn"
     "wayland"
     "xdg"
   ];

@@ -65,10 +65,6 @@ in {
                       mountpoint = "/";
                       mountOptions = mtOpts "root" [];
                     };
-                    "/tmp" = {
-                      mountpoint = "/tmp";
-                      mountOptions = mtOpts "tmp" [];
-                    };
                     "/snapshots" = {
                       mountOptions = ["subvol=snapshots" "nodatacow" "noatime"];
                     };

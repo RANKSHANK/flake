@@ -11,9 +11,16 @@
   inherit (util) isDecrypted ternary;
 in {
   options = {
+
+    termInit = mkOption {
+      default = [];
+      type = listOf str;
+      description = "Commands to run on terminal init";
+    };
+
     enabledModules = mkOption {
       default = [];
-      type = lib.types.listOf lib.types.str;
+      type = listOf str;
       description = "Explicitly enabled modules";
     };
 

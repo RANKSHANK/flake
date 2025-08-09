@@ -25,6 +25,7 @@
     "office"
     "repo"
     "shell"
+    "stream-host"
     "sync"
     "video"
     "virtualization"

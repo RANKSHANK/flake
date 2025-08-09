@@ -1,13 +1,13 @@
 {
-  inputs,
-  pkgs,
   config,
+  inputs,
   lib,
+  pkgs,
   user,
   util,
   ...
 }: let
-  inherit (util) listTargetFilesRecursively mkModule;
+  inherit (util) concatLines listTargetFilesRecursively mkModule;
 in
   mkModule "ghostty" ["desktop"] {
     keybinds = [

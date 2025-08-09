@@ -63,7 +63,7 @@ return {
     end,
     binds = {
       {
-        "<leader>gk",
+        "<leader>ch",
         function()
           require("gitsigns").preview_hunk()
         end,

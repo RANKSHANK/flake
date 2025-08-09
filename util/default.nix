@@ -106,6 +106,8 @@ in rec {
 
   mkIfEnabled = moduleName: requiredTags: toMake: mkIf (isEnabled moduleName requiredTags) toMake;
 
+  concatLines = concatStringsSep "\n";
+
   isEnabled = moduleName: requiredTags: !(elem moduleName enables.disabledModules) && (elem moduleName enables.enabledModules || elem moduleName enables.enabledTags || (ternary (requiredTags == []) false (all (tag: elem tag enables.enabledTags) requiredTags)));
 
   genNumStrs = num: str: genList (i: replaceStrings ["<num>"] [(toString i)] str) num;

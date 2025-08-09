@@ -12,7 +12,10 @@
 
     flatpak.url = "github:GermanBread/declarative-flatpak/dev";
 
-    ghostty.url = "github:ghostty-org/ghostty";
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -23,6 +26,11 @@
 
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    hypr-easymotion = {
+      url = "github:zakk4223/hyprland-easymotion";
       inputs.hyprland.follows = "hyprland";
     };
 

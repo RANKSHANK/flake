@@ -35,6 +35,8 @@ vim.cmd([[
    hi link TelescopeResultsBorder FloatBorder
    hi TelescopePromptTitle guifg=base05
    hi TelescopePromptTitle guibg=base00
+   hi TelescopeResultsTitle guifg=base05
+   hi TelescopeResultsTitle guibg=base00
    hi TelescopeNormal guifg=base05
    hi TelescopeNormal guibg=base00
    hi TelescopePromptBorder guifg=base05

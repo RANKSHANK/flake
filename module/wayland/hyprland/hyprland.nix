@@ -9,7 +9,8 @@
 }: let
   inherit (lib.attrsets) attrValues;
   inherit (lib.lists) flatten;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkForce mkIf;
+  inherit (lib.strings) toInt;
   inherit (util) mkModule;
   opacity = config.stylix.opacity.desktop;
   colors = config.lib.stylix.colors;
@@ -81,7 +82,8 @@ in
     };
 
     home-manager.users.${user} = {
-      stylix.targets.hyprland.enable = false;
+      stylix.targets.hyprpaper.enable = mkForce false;
+      services.hyprpaper.enable = mkForce false;
       wayland.windowManager.hyprland = {
         enable = true;
         xwayland.enable = true;
@@ -107,7 +109,7 @@ in
             config.exec-once
           ];
           general = {
-            border_size = -1;
+            border_size = 0;
             gaps_in = 0;
             gaps_out = 0;
             layout = "dwindle";
@@ -118,7 +120,7 @@ in
 
           cursor = {
             no_hardware_cursors = true;
-            use_cpu_buffer = true;
+            use_cpu_buffer = 1;
           };
 
           decoration = {
@@ -126,7 +128,6 @@ in
             active_opacity = opacity;
             inactive_opacity = opacity;
             fullscreen_opacity = opacity;
-            # drop_shadow = true;
             blur = {
               enabled = true;
             };
@@ -145,12 +146,16 @@ in
             bezier = [
               "move, 0.1, 0.7, 0.1, 1.05"
               "border,  0, 0, 1, 1"
+              "focusIn, 1, -0.07, -0.1, 0.95"
+              "focusOut, 1, -0.07, -0.1, 0.95"
             ];
             animation = [
-              "windows,1,7,move"
-              "windowsOut,1,3,default,popin 60%"
-              "windowsMove,1,7,move"
+              "windows,1,0.25,move"
+              "windowsOut,1,0.25,default,popin 60%"
+              "windowsMove,1,0.25,move"
               "borderangle,1,100,border,loop"
+              "hyprfocusIn, 1, 0.25, focusIn"
+              "hyprfocusOut, 1, 0.25, focusOut"
             ];
           };
 
@@ -194,7 +199,6 @@ in
             disable_splash_rendering = true;
             disable_xdg_env_checks = true;
             animate_mouse_windowdragging = true;
-            background_color = "rgba(${colors.base00}ff)";
           };
 
           windowrulev2 = [
@@ -208,6 +212,26 @@ in
           ];
 
           exec = config.exec;
+
+          plugin = {
+            hyprfocus = {
+              mode = "bounce";
+              bounce_strength = 0.98;
+              fade_opacity = 0.2;
+            };
+            easymotion = let
+              pixels = config.stylix.fonts.sizes.applications;
+            in {
+              textsize = 4 * pixels;
+              textcolor = "rgba(${colors.base0D}FF)";
+              bgcolor = "rgba(${colors.base01}FF)";
+              bordercolor = "rgba(${colors.base01}FF)";
+              bordersize = pixels;
+              rounding = pixels;
+              motionkeys = "qwfpgarstdzxcvb";
+              motionlabels = "QWFPGARSTDZXCVB";
+            };
+          };
         };
       };
     };

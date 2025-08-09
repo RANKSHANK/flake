@@ -3,20 +3,6 @@
   lib,
   ...
 }: let
-  packages = {
-    "orca-slicer" = {
-      package = pkgs.orca-slicer;
-      reason = "libsoup EOL/CVEs";
-      disabledModule = "orca";
-      hash = "sha256-MEa57jFBJkqwoAkqI7wXOn1X1zxgLQt3SNeanfD88kU=";
-    };
-    "spyder" = {
-      package = pkgs.spyder;
-      reason = "Missing setuptools.build_meta";
-      disabledModule = "spyder";
-      hash = "sha256-KbGfG9T3XkYXntIQx325mYb0Bh8c0idb+25awFlWD9s=";
-    };
-  };
   inherit (lib) mapAttrsToList;
   inherit (builtins) throw;
 in
@@ -34,6 +20,26 @@ in
 
           Package hash:
             ${attrs.package.src.outputHash}
+                    \n\n
         '')
   )
-  packages
+  {
+    "orca-slicer" = {
+      package = pkgs.orca-slicer;
+      reason = "libsoup EOL/CVEs";
+      disabledModule = "orca";
+      hash = "sha256-MEa57jFBJkqwoAkqI7wXOn1X1zxgLQt3SNeanfD88kU=";
+    };
+    "satisfactory-mod-manager" = {
+      package = pkgs.satisfactorymodmanager;
+      reason = "libsoup EOL/CVEs";
+      disabledModule = "satisfactory-mod-manager";
+      hash = "sha256-ndvrgSRblm7pVwnGvxpwtGVMEGp+mqpC4kE87lmt36M=";
+    };
+    "spyder" = {
+      package = pkgs.spyder;
+      reason = "Missing setuptools.build_meta";
+      disabledModule = "spyder";
+      hash = "sha256-KbGfG9T3XkYXntIQx325mYb0Bh8c0idb+25awFlWD9s=";
+    };
+  }

@@ -9,6 +9,7 @@
   inherit (lib.strings) concatStringsSep;
   inherit (lib.lists) filter flatten init length last;
   inherit (util) genNumStrs safeIsList safeIsString ternary;
+  colors = config.lib.stylix.colors;
   smush = concatStringsSep "";
 
   genBind = map (keybind:
@@ -32,7 +33,10 @@ in {
         "super, mouse:273, resizewindow"
       ];
       bind = flatten [
-        "super, q, killactive"
+        "super, q, easymotion, textcolor:rgba(${colors.base08}FF), action:hyprctl dispatch closewindow address:{}"
+        "supershift, q, killactive"
+        "super, t, easymotion, action:hyprctl dispatch focuswindow address:{}"
+        "super, b, easymotion, action:hyprctl dispatch focuswindow address:{}"
         "super, h, movefocus, l"
         "super, j, movefocus, d"
         "super, k, movefocus, u"
@@ -47,7 +51,6 @@ in {
         "superctrlshift, h, movetoworkspace, -1"
         "super, p, pin, active"
         "super, f, togglefloating, active"
-
         (genNumStrs 10 "super, <num>, focusworkspaceoncurrentmonitor, <num>")
         (genNumStrs 10 "super, kp_<num>, focusworkspaceoncurrentmonitor, <num>")
         (genNumStrs 10 "supershift, <num>, movetoworkspace, <num>")

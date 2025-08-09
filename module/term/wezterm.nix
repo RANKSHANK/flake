@@ -1,9 +1,11 @@
 {
+  config,
+  pkgs,
   user,
   util,
   ...
 }: let
-  inherit (util) mkModule;
+  inherit (util) concatLines mkModule;
 in
   mkModule "wezterm" ["desktop"] {
     home-manager.users.${user} = {

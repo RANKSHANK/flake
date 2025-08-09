@@ -5,7 +5,7 @@
   user,
   ...
 }: let
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkForce mkIf;
   font = {
     package = pkgs.nerd-fonts.fira-code;
     name = "FiraCode Nerd Font Mono";
@@ -21,8 +21,7 @@ in {
   stylix = {
     enable = true;
     polarity = "dark";
-    image =
-      config.lib.stylix.pixel "base00";
+    image = mkForce null;
 
     base16Scheme = pkgs.callPackage ./scheme.nix {};
     opacity = {
