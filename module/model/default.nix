@@ -1,7 +1,7 @@
 {...}: {
   imports = [
     ./blender.nix
-    ./freecad.nix
+    ./freecad
     ./openscad.nix
     ./slicer
   ];

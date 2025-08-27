@@ -26,6 +26,19 @@
       "url": "https://github.com/L3MON4D3/LuaSnip/archive/de10d8414235b0a8cabfeba60d07c24304e71f5c.tar.gz",
       "hash": "0pa171dx8rfi6d8xz7a3lfwkrgkxivhp09f1xj4vq8hzci6fl516"
     },
+    "colorful-menu.nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xzbdmw",
+        "repo": "colorful-menu.nvim"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "bc3e82609f2fcf7dad7ca87c20e65e51d5d9d87c",
+      "url": "https://github.com/xzbdmw/colorful-menu.nvim/archive/bc3e82609f2fcf7dad7ca87c20e65e51d5d9d87c.tar.gz",
+      "hash": "0r6q17ldg0npx7d05szimp9ip2jpkx0cbr7rw1kp9vrinw8ppk2x"
+    },
     "flit.nvim": {
       "type": "Git",
       "repository": {
@@ -77,6 +90,45 @@
       "revision": "ed1f853847ffd04b2b61c314865665e1dadf22c7",
       "url": "https://github.com/ThePrimeagen/harpoon/archive/ed1f853847ffd04b2b61c314865665e1dadf22c7.tar.gz",
       "hash": "1dcpdlna2lff9dlsh6i4v16qmn5r9279wdvn0ry3xg4abqwnzc9g"
+    },
+    "helpview.nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "OXY2DEV",
+        "repo": "helpview.nvim"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "10a4fc23876c879bcd364b7d21564e905ff49d36",
+      "url": "https://github.com/OXY2DEV/helpview.nvim/archive/10a4fc23876c879bcd364b7d21564e905ff49d36.tar.gz",
+      "hash": "1g5k5vqk3ys24njvmp9fhi1lqas72vv6sp9hawga8m25l062a8kc"
+    },
+    "hlargs.nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "m-demare",
+        "repo": "hlargs.nvim"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "ce8d705866dae44513ff48613d5e37e4da524d70",
+      "url": "https://github.com/m-demare/hlargs.nvim/archive/ce8d705866dae44513ff48613d5e37e4da524d70.tar.gz",
+      "hash": "03h0hx2jgr9ac4sa8gwz8q7kxsr2h67c7jin04maih0sszi2hiiw"
+    },
+    "image.nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "3rd",
+        "repo": "image.nvim"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5cbb891eb8dde53f350dde69e23106d4e85d898b",
+      "url": "https://github.com/3rd/image.nvim/archive/5cbb891eb8dde53f350dde69e23106d4e85d898b.tar.gz",
+      "hash": "18xnx5f7hm1j29c5s1nq38mf6wr9v9007q5ii7x3144rphvgklcn"
     },
     "indent-blankline.nvim": {
       "type": "Git",
@@ -285,6 +337,19 @@
       "revision": "6853ecb2cd8b062365da1cdd1a2e6f934ad55ed6",
       "url": "https://github.com/nvim-treesitter/nvim-treesitter-context/archive/6853ecb2cd8b062365da1cdd1a2e6f934ad55ed6.tar.gz",
       "hash": "13dc0z4nm4x1wvgb9bzn9sm5m328a6d05zmhmzq4gvajapws9l5g"
+    },
+    "nvim-treesitter-endwise": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "RRethy",
+        "repo": "nvim-treesitter-endwise"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "a61a9de7965324d4019fb1637b66bfacdcb01f51",
+      "url": "https://github.com/RRethy/nvim-treesitter-endwise/archive/a61a9de7965324d4019fb1637b66bfacdcb01f51.tar.gz",
+      "hash": "1vl1my4rcp2qd7j7a77dv6sdavzjcglwx2irh7jws37j6zjxvv01"
     },
     "nvim-treesitter-textobjects": {
       "type": "Git",

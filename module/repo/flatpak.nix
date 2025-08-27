@@ -5,13 +5,13 @@
 }: let
   inherit (util) mkModule;
 in
-  mkModule "flatpak" ["repo" "desktop"] {
+  mkModule "flatpak" ["repo"] {
     imports = [
       inputs.flatpak.nixosModule
     ];
     xdg.portal.enable = true;
     services.flatpak = {
-      enable = false;
+      enable = true;
       remotes = {
         "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";
         "flathub-beta" = "https://dl.flathub.org/beta-repo/flathub-beta.flatpakrepo";

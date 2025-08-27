@@ -25,7 +25,7 @@ in
           obs-pipewire-audio-capture
           obs-vkcapture
           ;
-        wlrobs = mkIfEnabled "" [ "wayland" ] pkgs.obs-studio-plugins.wlrobs;
+        wlrobs = mkIfEnabled "" ["wayland"] pkgs.obs-studio-plugins.wlrobs;
       };
     };
 

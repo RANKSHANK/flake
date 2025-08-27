@@ -8,38 +8,27 @@
 in
   mapAttrsToList (
     name: attrs:
-      if (attrs.package.src.outputHash == attrs.hash)
+      if (attrs.package.outPath == attrs.path)
       then (attrs.disabledModule)
       else
         (throw ''
           ${name} marked broken due to ${attrs.reason}.
-          ${name} hash has changed, verify package is still broken and update hash.
+          ${name} hash has changed, verify package is still broken and update path.
 
-          Specified hash:
-            ${attrs.hash}
+          Specified store path:
+            ${attrs.path}
 
-          Package hash:
-            ${attrs.package.src.outputHash}
-                    \n\n
+          Package store path:
+            ${attrs.package.outPath}
+
+
         '')
   )
   {
-    "orca-slicer" = {
-      package = pkgs.orca-slicer;
-      reason = "libsoup EOL/CVEs";
-      disabledModule = "orca";
-      hash = "sha256-MEa57jFBJkqwoAkqI7wXOn1X1zxgLQt3SNeanfD88kU=";
-    };
-    "satisfactory-mod-manager" = {
-      package = pkgs.satisfactorymodmanager;
-      reason = "libsoup EOL/CVEs";
-      disabledModule = "satisfactory-mod-manager";
-      hash = "sha256-ndvrgSRblm7pVwnGvxpwtGVMEGp+mqpC4kE87lmt36M=";
-    };
-    "spyder" = {
-      package = pkgs.spyder;
-      reason = "Missing setuptools.build_meta";
-      disabledModule = "spyder";
-      hash = "sha256-KbGfG9T3XkYXntIQx325mYb0Bh8c0idb+25awFlWD9s=";
-    };
+    # "spyder" = {
+    #   package = pkgs.spyder;
+    #   reason = "Missing setuptools.build_meta";
+    #   disabledModule = "spyder";
+    #   path = "/nix/store/r24rxgm82zn9kipm7z1hd6x5nnvp85a2-python3.13-spyder-6.1.0a2";
+    # };
   }

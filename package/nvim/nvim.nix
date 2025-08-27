@@ -31,8 +31,8 @@
     BASE0E = "${colors.base0E}"
     BASE0F = "${colors.base0F}"
   '';
-in (wrap pkgs {
-  neovim = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
+in wrap pkgs {
+  inherit (inputs.neovim-nightly.packages.${pkgs.system}) neovim;
 
   appName = "nvim";
 
@@ -71,6 +71,7 @@ in (wrap pkgs {
       bash-language-server
       deadnix
       fzf
+      imagemagick
       lua-language-server
       marksman
       nil
@@ -79,4 +80,4 @@ in (wrap pkgs {
       vscode-langservers-extracted
       ;
   };
-})
+}

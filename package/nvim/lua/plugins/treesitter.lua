@@ -96,4 +96,23 @@ return {
     end,
     binds = {},
   },
+  {
+    "hlargs",
+    event = "DeferredUIEnter",
+    aftres = function ()
+      require("hlargs").setup({
+      })
+    end
+  },
+  {
+    "helpview.nvim",
+    lazy = false,
+    after = function ()
+      require("helpview").setup({
+      })
+    end
+  },
+  {
+    "nvim-treesitter-endwise",
+  },
 }

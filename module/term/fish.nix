@@ -37,10 +37,10 @@ in
           };
         };
         plugins = [
-          {
-            name = "sponge";
-            src = pkgs.fishPlugins.sponge.src;
-          }
+          # { # Disabled for now. annoying having to retype out failed commands
+          #   name = "sponge";
+          #   src = pkgs.fishPlugins.sponge.src;
+          # }
         ];
       };
     };

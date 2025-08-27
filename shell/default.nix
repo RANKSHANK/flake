@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   pkgs,
   ...
@@ -11,6 +12,8 @@ in
   pkgs.mkShell {
     packages = attrValues {
       inherit (pkgs) git-crypt gnupg nil npins nvd nix-output-monitor;
+      inherit (pkgs.qt6) qtdeclarative;
+      inherit (inputs.quickshell.packages.${pkgs.system}) quickshell;
       inherit flup flop;
     };
   }

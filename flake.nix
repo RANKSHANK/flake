@@ -2,9 +2,10 @@
   description = "My personal collection of technical debt.";
 
   inputs = {
+
     nix-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    nix-staging.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nix-staging.url = "github:nixos/nixpkgs/master";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -38,11 +39,18 @@
 
     mnw.url = "github:Gerg-L/mnw";
 
+    mqsw.url = "/home/rankshank/projects/mqsw";
+
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     nix-gaming.url = "github:fufexan/nix-gaming";
 
     nur.url = "github:nix-community/NUR";
+
+    quickshell = {
+      url = "github:quickshell-mirror/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     spicetify = {
       url = "github:Gerg-L/spicetify-nix";

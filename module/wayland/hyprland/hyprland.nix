@@ -102,6 +102,8 @@ in
         plugins = pkgs.callPackage ./plugins.nix {inherit inputs util;};
 
         settings = {
+          inherit (config) exec;
+
           exec-once = flatten [
             "sleep 1; killall -e xdg-desktop-portal-hyprland; killall -e xdg-desktop-portal-wlr; killall xdg-desktop-portal; /usr/lib/xdg-desktop-portal-hyprland &; sleep 2; \usr\lib\xdg-desktop-portal"
             "$systemctl --user start ${pkgs.hyprpolkitagent}/bin/hyprpolkitagent"
@@ -204,14 +206,14 @@ in
           windowrulev2 = [
             "noborder,onworkspace:1,floating:0,title:^.*(-\\sYouTube\\s—).*$"
             "noborder, floating:0, focused:1, initialClass:^.*(steam_app_\\d+)$"
-            "bordercolor rgba(${colors.base0A}22) rgba(${colors.base0A}22) rgba(${colors.base0A}ff) rgba(${colors.base0A}44) rgba(${colors.base0A}22), focus:1"
+            "bordersize 2,floating:1"
+            "rounding 8,floating:1"
+            "bordercolor rgba(${colors.base05}22) rgba(${colors.base05}22) rgba(${colors.base05}ff) rgba(${colors.base05}44) rgba(${colors.base05}22), focus:1"
             "float, title:^.*(Picture-in-Picture).*$"
             "pin, title:^.*(Picture-in-Picture).*$"
             "size 30% 30%, title:^.*(Picture-in-Picture).*$"
             "move 70% 70%, title:^.*(Picture-in-Picture).*$"
           ];
-
-          exec = config.exec;
 
           plugin = {
             hyprfocus = {
@@ -228,8 +230,8 @@ in
               bordercolor = "rgba(${colors.base01}FF)";
               bordersize = pixels;
               rounding = pixels;
-              motionkeys = "qwfpgarstdzxcvb";
-              motionlabels = "QWFPGARSTDZXCVB";
+              motionkeys = "wfpgarstdzxcvb";
+              motionlabels = "WFPGARSTDZXCVB";
             };
           };
         };

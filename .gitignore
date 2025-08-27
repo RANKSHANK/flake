@@ -2,3 +2,4 @@
 result
 secrets.yaml
 .prev_locks/*
+.qmlls.ini

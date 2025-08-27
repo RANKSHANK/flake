@@ -6,6 +6,9 @@
   inherit (util) hex2Vec4;
   inherit (config.lib.stylix) colors;
 in ''
+  const vec4 TRAIL_COLOR = ${hex2Vec4 colors.base05 0.2};
+  const vec4 TRAIL_COLOR_ACCENT = ${hex2Vec4 colors.base06 0.2};
+  const float DURATION = 0.1; //IN SECONDS
   // modified from https://github.com/KroneCorylus/ghostty-shader-playground/tree/main
   // MIT license
   float getSdfRectangle(in vec2 p, in vec2 xy, in vec2 b)
@@ -74,10 +77,6 @@ in ''
   float ease(float x) {
       return pow(1.0 - x, 3.0);
   }
-
-  const vec4 TRAIL_COLOR = ${hex2Vec4 colors.base05 0.2};
-  const vec4 TRAIL_COLOR_ACCENT = ${hex2Vec4 colors.base06 0.5};
-  const float DURATION = 0.1; //IN SECONDS
 
   void mainImage(out vec4 fragColor, in vec2 fragCoord)
   {

@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  user,
   util,
   ...
 }: let
@@ -9,9 +10,7 @@
   inherit (util) mkModule;
 in
   mkModule "discord" ["desktop" "communication"] {
-    environment.systemPackages = attrValues {
-      inherit (pkgs) vesktop;
-    };
+    home-manager.users.${user}.programs.vesktop.enable = true;
 
     nixpkgs.config.allowUnfreePredicate = pkg:
       elem (getName pkg) [

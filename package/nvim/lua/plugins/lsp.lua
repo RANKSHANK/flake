@@ -72,7 +72,7 @@ return {
       local completion = nonels.builtins.completion
 
       local ls_sources = {
-        formatting.sylua,
+        --formatting.sylua,
         formatting.nixfmt,
         diagnostics.statix,
         code_actions.statix,
@@ -241,6 +241,11 @@ return {
 
       lspconfig.pyright.setup({
         capabilities = capabilities,
+      })
+
+      lspconfig.qmlls.setup({
+        capabilities = capabilities,
+        cmd = { "qmlls", "-E" },
       })
 
       lspconfig.texlab.setup({

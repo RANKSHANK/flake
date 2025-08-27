@@ -7,7 +7,7 @@
   },
   ...
 }: let
-  inherit (builtins) isPath readDir trace typeOf;
+  inherit (builtins) ceil isPath readDir trace typeOf;
   inherit (lib.attrsets) hasAttr filterAttrs mapAttrsToList;
   inherit (lib.lists) all any concatLists count elem filter foldl foldl' genList head last length zipLists;
   inherit (lib.filesystem) listFilesRecursive;
@@ -196,6 +196,16 @@ in rec {
         )
         * 60.0
       );
+    };
+
+  rgbToDec = rgb: rgb.r * 65536 + rgb.g * 256 + rgb.b;
+
+  mixRgb = rgb1: rgb2: percent1: let
+      percent2 = 1.0 - percent1;
+    in {
+      r = ceil (rgb1.r * percent1 + rgb2.r * percent2);
+      g = ceil (rgb1.g * percent1 + rgb2.g * percent2);
+      b = ceil (rgb1.b * percent1 + rgb2.b * percent2);
     };
 
   isDecrypted = let

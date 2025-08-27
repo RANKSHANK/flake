@@ -13,7 +13,7 @@ in
         propagatedBuildInputs =
           prev.propagatedBuildInputs
           ++ (attrValues {
-            inherit (pkgs.python312Packages) spyder-kernels ipython;
+            inherit (pkgs.python313Packages) spyder-kernels ipython;
           });
       });
     in {

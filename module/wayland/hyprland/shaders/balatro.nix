@@ -4,6 +4,7 @@
   ...
 }: let
   inherit (config.lib.stylix) colors;
+  light = util.ternary (config.stylix.polarity == "light");
   inherit (util) hex2Vec4;
 in
   /*
@@ -21,12 +22,12 @@ in
     #define SPIN_AMOUNT 0.7
     #define CONTRAST 1.5
     #define TOLERANCE 0.0182
-    #define STRENGTH 0.2
+    #define STRENGTH ${toString (light 0.4 0.2)}
     #define SCAN_LIGHT 0.8
     #define SCAN_SPEED 18.0
-    #define COLOR_1 ${hex2Vec4 colors.base03 1.0}
+    #define COLOR_1 ${hex2Vec4 (light colors.base00 colors.base03) 1.0}
     #define COLOR_2 ${hex2Vec4 colors.base02 1.0}
-    #define COLOR_3 ${hex2Vec4 colors.base00 1.0}
+    #define COLOR_3 ${hex2Vec4 (light colors.base03 colors.base00) 1.0}
 
     uniform sampler2D tex;
     uniform float time;

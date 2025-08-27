@@ -11,7 +11,6 @@
   inherit (util) isDecrypted ternary;
 in {
   options = {
-
     termInit = mkOption {
       default = [];
       type = listOf str;
