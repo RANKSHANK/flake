@@ -33,7 +33,7 @@ in
     home-manager.users.${user} = {
       programs.rofi = {
         enable = true;
-        package = pkgs.rofi-wayland;
+        package = pkgs.rofi;
         plugins = attrValues {
           inherit (pkgs) rofimoji rofi-power-menu;
         };

@@ -35,7 +35,7 @@ in
       graphics = {
         enable32Bit = lib.mkForce true;
         extraPackages = attrValues {
-          inherit (pkgs) nvidia-vaapi-driver;
+          inherit (pkgs) libva-vdpau-driver;
         };
       };
     };

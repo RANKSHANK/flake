@@ -2,10 +2,12 @@
   config,
   lib,
   pkgs,
+  util,
   ...
 }: let
   inherit (lib.attrsets) attrValues;
-in {
+  inherit (util) mkModule;
+in mkModule "displaylink" [ "desktop" ] {
   environment.systemPackages = attrValues {
     inherit (pkgs) displaylink;
   };
@@ -20,4 +22,5 @@ in {
       ];
     };
   };
+
 }

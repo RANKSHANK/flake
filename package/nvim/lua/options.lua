@@ -20,6 +20,7 @@ for k, v in pairs({
   list = true,
   listchars = {
     trail = "␣",
+    tab = "␣ ",
   },
   mouse = "a",
   number = true,

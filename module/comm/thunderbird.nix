@@ -1,5 +1,6 @@
 {
   pkgs,
+  user,
   util,
   ...
 }: let
@@ -7,7 +8,19 @@
   inherit (util) mkModule;
 in
   mkModule "thunderbird" ["desktop" "communication"] {
+    home-manager.users.${user} = {
+      programs.thunderbird = {
+        enable = true;
+        profiles.${user} = {
+          isDefault = true;
+
+        };
+
+      };
+
+    };
+
     environment.systemPackages = attrValues {
-      inherit (pkgs) thunderbird;
+      inherit (pkgs) protonmail-bridge-gui;
     };
   }

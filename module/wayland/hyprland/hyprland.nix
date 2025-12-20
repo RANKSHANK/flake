@@ -180,8 +180,8 @@ in
           };
 
           gestures = {
-            workspace_swipe = true;
-            workspace_swipe_fingers = 3;
+            # workspace_swipe = true;
+            # workspace_swipe_fingers = 3;
             workspace_swipe_distance = 100;
           };
 
@@ -221,18 +221,18 @@ in
               bounce_strength = 0.98;
               fade_opacity = 0.2;
             };
-            easymotion = let
-              pixels = config.stylix.fonts.sizes.applications;
-            in {
-              textsize = 4 * pixels;
-              textcolor = "rgba(${colors.base0D}FF)";
-              bgcolor = "rgba(${colors.base01}FF)";
-              bordercolor = "rgba(${colors.base01}FF)";
-              bordersize = pixels;
-              rounding = pixels;
-              motionkeys = "wfpgarstdzxcvb";
-              motionlabels = "WFPGARSTDZXCVB";
-            };
+            # easymotion = let
+            #   pixels = config.stylix.fonts.sizes.applications;
+            # in {
+            #   textsize = 4 * pixels;
+            #   textcolor = "rgba(${colors.base0D}FF)";
+            #   bgcolor = "rgba(${colors.base01}FF)";
+            #   bordercolor = "rgba(${colors.base01}FF)";
+            #   bordersize = pixels;
+            #   rounding = pixels;
+            #   motionkeys = "wfpgarstdzxcvb";
+            #   motionlabels = "WFPGARSTDZXCVB";
+            # };
           };
         };
       };

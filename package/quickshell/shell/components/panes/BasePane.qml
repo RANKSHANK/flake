@@ -5,7 +5,7 @@ import qs.vars
 PanelWindow {
   required property string name
 
-  WlrLayershell.namespace: Globals.shellname + name
+  WlrLayershell.namespace: Globals.namespace("background")
   color: "transparent"
 
 }

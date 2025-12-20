@@ -1,14 +1,16 @@
 {
   lib,
   pkgs,
+  inputs,
   util,
   ...
-}: let
+}:
+let
   inherit (lib.attrsets) attrValues;
   inherit (util) mkModule;
 in
-  mkModule "intellij" ["desktop"] {
+  mkModule "magic" ["desktop" "cad"] {
     environment.systemPackages = attrValues {
-      inherit (pkgs.jetbrains) idea-community;
+      inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) magic-vlsi;
     };
   }

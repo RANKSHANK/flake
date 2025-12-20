@@ -4,31 +4,25 @@ import Quickshell.Wayland
 import qs.components.panes
 import qs.vars
 
-Loader {
-  asynchronous: true
+Scope {
 
-  sourceComponent: Variants {
-    model: Quickshell.screens
+  BasePane {
 
-    BubblePane {
+    id: pane
 
-    }
-    // BasePane {
-    //
-    //   required property ShellScreen modeldata
-    //   name: "background"
-    //
-    //   screen: modelData
-    //
-    //   anchors: {
-    //     top: true
-    //     bottom: true
-    //     left: true
-    //     right: true
-    //   }
-    //
-    //   color: Theme.base04
-    // }
+
+    name: Globals.namespace("background")
+
+    WlrLayershell.exclusionMode: ExclusionMode.Ignore
+    WlrLayershell.layer: WlrLayer.Background
+    color: "transparent"
+
+    anchors.top: true
+    anchors.bottom: true
+    anchors.left: true
+    anchors.right: true
+
+
   }
-}
 
+}

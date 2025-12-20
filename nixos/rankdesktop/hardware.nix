@@ -51,7 +51,7 @@ in {
       enable = true;
       # enable32Bit = true;
       extraPackages = attrValues {
-        inherit (pkgs) vaapiVdpau libvdpau-va-gl;
+        inherit (pkgs) libvdpau-va-gl;
       };
     };
   };

@@ -14,23 +14,23 @@ return {
           require("leap.remote").action()
         end,
       },
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("leap").action()
+        end,
+      },
+      {
+        "S",
+        mode = { "n", "x", "o" },
+        function()
+          require("leap-from-window").action()
+        end,
+      },
     },
     before = function()
       require("lz.n").trigger_load("vim-repeat")
-    end,
-    after = function()
-      require("leap").set_default_mappings()
-    end,
-  },
-  {
-    "flit.nvim",
-    before = function()
-      require("lz.n").trigger_load("leap")
-    end,
-    after = function()
-      require("flit").setup({
-        labeled_modes = "nx",
-      })
     end,
   },
   {

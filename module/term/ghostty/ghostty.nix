@@ -22,7 +22,7 @@ in
     home-manager.users.${user} = {
       programs.ghostty = {
         enable = true;
-        package = inputs.ghostty.packages.${pkgs.system}.default;
+        # package = inputs.ghostty.packages.${pkgs.system}.default;
         installVimSyntax = true;
         installBatSyntax = true;
         clearDefaultKeybinds = true;

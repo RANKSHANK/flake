@@ -3,11 +3,13 @@
 
   inputs = {
 
-    nix-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nix-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
     nix-staging.url = "github:nixos/nixpkgs/master";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nix-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     disko.url = "github:nix-community/disko";
 
@@ -30,10 +32,15 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    hypr-easymotion = {
-      url = "github:zakk4223/hyprland-easymotion";
+    hypr-darkwindow = {
+      url = "github:micha4w/Hypr-DarkWindow";
       inputs.hyprland.follows = "hyprland";
     };
+    #
+    # hypr-easymotion = {
+    #   url = "github:zakk4223/hyprland-easymotion";
+    #   inputs.hyprland.follows = "hyprland";
+    # };
 
     impermanence.url = "github:nix-community/Impermanence";
 

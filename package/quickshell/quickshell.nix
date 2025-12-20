@@ -3,6 +3,7 @@
   lib,
   pkgs,
   theme ? pkgs.callPackage ./theme.nix { inherit inputs; },
+  sounds ? pkgs.callPackage ./sounds.nix { inherit inputs; },
   util,
   ...
 }: let
@@ -19,10 +20,13 @@
 
   }) (util.fromNpins ./sources.json);
 in wrap pkgs {
-  quickshell = inputs.quickshell.packages.${pkgs.system}.quickshell.withModules [];
+  quickshell = inputs.quickshell.packages.${pkgs.system}.quickshell.withModules [
+      pkgs.kdePackages.qtmultimedia
+    ];
   sources = {
     packaged = attrValues {
       theme = theme // { linkPath = "vars"; };
+      sounds = sounds // { linkPath = "vars"; };
     };
     local = {
       pure = toSource {

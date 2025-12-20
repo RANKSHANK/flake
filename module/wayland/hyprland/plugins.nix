@@ -5,14 +5,19 @@
   ...
 }: let
   inherit (lib.attrsets) attrValues;
+  inherit (pkgs.stdenv.hostPlatform) system;
 in
   attrValues {
     inherit
-      (inputs.hyprland-plugins.packages.${pkgs.system})
+      (inputs.hyprland-plugins.packages.${system})
       hyprfocus
       ;
+    # inherit
+    #   (inputs.hypr-easymotion.packages.${system})
+    #   hyprland-easymotion
+    #   ;
     inherit
-      (inputs.hypr-easymotion.packages.${pkgs.system})
-      hyprland-easymotion
+      (inputs.hypr-darkwindow.packages.${system})
+      Hypr-DarkWindow
       ;
   }

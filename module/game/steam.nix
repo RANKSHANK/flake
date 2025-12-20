@@ -23,7 +23,6 @@ in
                 (pkgs)
                 at-spi2-atk
                 fmodex
-                glxinfo
                 gtk3
                 gtk3-x11
                 harfbuzz

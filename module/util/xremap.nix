@@ -13,6 +13,7 @@ in
     imports = [inputs.xremap.nixosModules.default];
 
     services.xremap = {
+      enable = true;
       serviceMode = "user";
       userName = user;
       withHypr = config.modules.hyprland.enable;

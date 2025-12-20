@@ -4,6 +4,7 @@
   lib,
   ...
 }: let
+  inherit (pkgs.stdenv.hostPlatform) system;
   inherit (lib.attrsets) attrValues;
   inherit (lib.fileset) toSource unions;
   inherit (inputs.mnw.lib) npinsToPlugins wrap;
@@ -32,7 +33,7 @@
     BASE0F = "${colors.base0F}"
   '';
 in wrap pkgs {
-  inherit (inputs.neovim-nightly.packages.${pkgs.system}) neovim;
+  inherit (inputs.neovim-nightly.packages.${system}) neovim;
 
   appName = "nvim";
 
@@ -51,7 +52,7 @@ in wrap pkgs {
 
     opt =
       attrValues {
-        inherit (inputs.self.packages.${pkgs.system}) blink-cmp;
+        inherit (inputs.self.packages.${system}) blink-cmp;
         inherit (pkgs.vimPlugins.nvim-treesitter) withAllGrammars;
       }
       ++ npinsToPlugins pkgs ./lazy.json;
