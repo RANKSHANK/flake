@@ -11,6 +11,6 @@ let
 in
   mkModule "magic" ["desktop" "cad"] {
     environment.systemPackages = attrValues {
-      inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) magic-vlsi;
+      inherit (inputs.nix-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system}) magic-vlsi;
     };
   }

@@ -35,7 +35,7 @@ in {
               ", "
               (toString (elemAt xPoses idx))
               "x"
-              (ternary (safeIsInt "yPos" monitor) (toString (monitor.vertical * monitor.yPos)) "0")
+              (ternary (safeIsInt "yPos" monitor) (toString monitor.yPos) "0")
               ", "
               (ternary (safeIsFloat "scale" monitor) (toString monitor.scale) "1")
             ]

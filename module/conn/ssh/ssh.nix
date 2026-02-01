@@ -1,6 +1,7 @@
 {
-  lib,
+  decrypted,
   config,
+  lib,
   user,
   util,
   ...
@@ -10,7 +11,7 @@
   inherit (lib.lists) flatten last;
   inherit (lib.trivial) pipe;
   inherit (lib.strings) splitString;
-  inherit (util) mkModule isDecrypted listTargetFilesRecursively;
+  inherit (util) mkModule listTargetFilesRecursively ternary;
   keys =
     foldl' (acc: attr: acc // attr) {
       client = [];
@@ -59,9 +60,9 @@ in
       };
     };
 
-    users.users.${user}.openssh.authorizedKeys.keys = mkIf isDecrypted keys.client;
+    users.users.${user}.openssh.authorizedKeys.keys = mkIf decrypted keys.client;
 
-    nix = mkIf isDecrypted {
+    nix = mkIf decrypted {
       distributedBuilds = true;
       buildMachines = keys.builder;
     };

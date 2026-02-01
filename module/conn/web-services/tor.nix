@@ -34,9 +34,9 @@ in
         enable = true;
         enableTor = true;
       };
-      resolved = {
+      Resolve = {
         enable = true;
-        fallbackDns = [""];
+        FallbackDns = [""];
       };
       networkd-dispatcher = {
         enable = true;

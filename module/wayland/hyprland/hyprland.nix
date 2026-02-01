@@ -12,13 +12,14 @@
   inherit (lib.modules) mkForce mkIf;
   inherit (lib.strings) toInt;
   inherit (util) mkModule;
+
+  inherit (pkgs.stdenv.hostPlatform) system;
+  inherit (config.lib.stylix) colors;
   opacity = config.stylix.opacity.desktop;
-  colors = config.lib.stylix.colors;
 in
   mkModule "hyprland" [] {
     imports = [
       ./keybinds.nix
-      ./monitors.nix
     ];
 
     services.greetd = {
@@ -26,7 +27,7 @@ in
       settings = rec {
         # Skip the login screen because luks
         initial_session = {
-          command = "dbus-launch --sh-syntax --exit-with-session Hyprland";
+          command = "dbus-launch --sh-syntax --exit-with-session start-hyprland";
           user = "${user}";
         };
         default_session = initial_session;
@@ -41,6 +42,7 @@ in
         LIBVA_DRIVER_NAME = mkIf config.modules.nvidia-gpu.enable "nvidia";
         __GL_GSYNC_ALLOWED = "1";
         __GL_VRR_ALLOWED = "0";
+        AQ_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
       };
 
       sessionVariables = {
@@ -58,11 +60,12 @@ in
       systemPackages = attrValues {
         inherit
           (pkgs)
+          nwg-displays
           swaylock
           swayidle
           ;
         inherit
-          (inputs.hyprland.packages.${pkgs.system})
+          (inputs.hyprland.packages.${system})
           xdg-desktop-portal-hyprland
           ;
       };
@@ -77,7 +80,7 @@ in
       xwayland.enable = true;
       hyprland = {
         enable = true;
-        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+        package = inputs.hyprland.packages.${system}.hyprland;
       };
     };
 
@@ -97,7 +100,7 @@ in
           ];
         };
 
-        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+        package = inputs.hyprland.packages.${system}.hyprland;
 
         plugins = pkgs.callPackage ./plugins.nix {inherit inputs util;};
 
@@ -110,6 +113,12 @@ in
             # "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
             config.exec-once
           ];
+
+          source = [
+            "~/.config/hypr/monitors.conf"
+            "~/.config/hypr/workspaces.conf"
+          ];
+
           general = {
             border_size = 0;
             gaps_in = 0;
@@ -203,16 +212,16 @@ in
             animate_mouse_windowdragging = true;
           };
 
-          windowrulev2 = [
-            "noborder,onworkspace:1,floating:0,title:^.*(-\\sYouTube\\s—).*$"
-            "noborder, floating:0, focused:1, initialClass:^.*(steam_app_\\d+)$"
-            "bordersize 2,floating:1"
-            "rounding 8,floating:1"
-            "bordercolor rgba(${colors.base05}22) rgba(${colors.base05}22) rgba(${colors.base05}ff) rgba(${colors.base05}44) rgba(${colors.base05}22), focus:1"
-            "float, title:^.*(Picture-in-Picture).*$"
-            "pin, title:^.*(Picture-in-Picture).*$"
-            "size 30% 30%, title:^.*(Picture-in-Picture).*$"
-            "move 70% 70%, title:^.*(Picture-in-Picture).*$"
+          windowrule = [
+            "border_size 0, match:workspace 1, match:float 0, match:title ^.*(-\\sYouTube\\s—).*$"
+            "border_size 0, match:float 0, match:focus 1, match:initial_class ^.*(steam_app_\\d+)$"
+            "border_size 2, match:float 1"
+            "rounding 8, match:float 1"
+            "border_color rgba(${colors.base05}22) rgba(${colors.base05}22) rgba(${colors.base05}ff) rgba(${colors.base05}44) rgba(${colors.base05}22), match:focus 1"
+            "float 1, match:title ^.*(Picture-in-Picture).*$"
+            "pin 1, match:title ^.*(Picture-in-Picture).*$"
+            "size 30% 30%, match:title ^.*(Picture-in-Picture).*$"
+            "move 70% 70%, match:title ^.*(Picture-in-Picture).*$"
           ];
 
           plugin = {
@@ -221,18 +230,18 @@ in
               bounce_strength = 0.98;
               fade_opacity = 0.2;
             };
-            # easymotion = let
-            #   pixels = config.stylix.fonts.sizes.applications;
-            # in {
-            #   textsize = 4 * pixels;
-            #   textcolor = "rgba(${colors.base0D}FF)";
-            #   bgcolor = "rgba(${colors.base01}FF)";
-            #   bordercolor = "rgba(${colors.base01}FF)";
-            #   bordersize = pixels;
-            #   rounding = pixels;
-            #   motionkeys = "wfpgarstdzxcvb";
-            #   motionlabels = "WFPGARSTDZXCVB";
-            # };
+            easymotion = let
+              pixels = config.stylix.fonts.sizes.applications;
+            in {
+              textsize = 4 * pixels;
+              textcolor = "rgba(${colors.base0D}FF)";
+              bgcolor = "rgba(${colors.base01}FF)";
+              bordercolor = "rgba(${colors.base01}FF)";
+              bordersize = pixels;
+              rounding = pixels;
+              motionkeys = "wfpgarstdzxcvb";
+              motionlabels = "WFPGARSTDZXCVB";
+            };
           };
         };
       };

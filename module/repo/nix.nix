@@ -24,7 +24,6 @@ in
     };
 
     nix = {
-      # package = inputs.nixpkgs.legacyPackages.${pkgs.system}.git;
       registry = mapAttrs (_: v: {flake = v;}) (filterAttrs (_: v: isType "flake" v) inputs);
       extraOptions = "gc-keep-outputs = true";
 

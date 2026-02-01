@@ -208,12 +208,5 @@ in rec {
       b = ceil (rgb1.b * percent1 + rgb2.b * percent2);
     };
 
-  isDecrypted = let
-    file = ../${replaceStrings ["#SALT#" "\n"] ["" ""] (readFile ../.crypted.crypt.txt)};
-  in
-    isPath file && pathExists file;
-
-  mkIfDecrypted = mkIf isDecrypted;
-
-  fromNpins = import ./npins.nix {inherit lib;};
+  fromNpins = target: (import ./npins.nix { input = target; });
 }

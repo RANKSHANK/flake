@@ -32,15 +32,10 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    hypr-darkwindow = {
-      url = "github:micha4w/Hypr-DarkWindow";
+    hypr-easymotion = {
+      url = "github:zakk4223/hyprland-easymotion";
       inputs.hyprland.follows = "hyprland";
     };
-    #
-    # hypr-easymotion = {
-    #   url = "github:zakk4223/hyprland-easymotion";
-    #   inputs.hyprland.follows = "hyprland";
-    # };
 
     impermanence.url = "github:nix-community/Impermanence";
 
@@ -76,10 +71,9 @@
       url = "github:xremap/nix-flake";
       inputs = {
         xremap = {
-          url = "github:RANKSHANK/xremap?ref=hyprland-bindings-update";
-          #"github:xremap/xremap";
+          # url = "github:RANKSHANK/xremap?ref=hyprland-bindings-update";
+          url = "github:xremap/xremap";
         };
-        hyprland.follows = "hyprland";
       };
     };
   };
@@ -88,7 +82,7 @@
     inherit (inputs) nixpkgs;
     inherit (nixpkgs) lib;
 
-    inherit (builtins) readDir;
+    inherit (builtins) pathExists readDir;
 
     inherit (lib.attrsets) attrValues genAttrs filterAttrs listToAttrs mapAttrs' nameValuePair;
     inherit (lib.lists) flatten last;
@@ -97,6 +91,7 @@
     inherit (lib.trivial) pipe;
 
     util = import ./util {lib = nixpkgs.lib;};
+
     inherit (util) fromNpins findTopLevelDirectories listNixFilesRecursively readFileOrDefault ternary;
 
     eachSys = genAttrs all;
@@ -163,6 +158,7 @@
         lib.nixosSystem {
           specialArgs = {
             inherit inputs self util user;
+            decrypted = pathExists "${path}/decrypted";
             pkgs-stable = inputs.nix-stable.legacyPackages.${system};
             pkgs-staging = inputs.nix-staging.legacyPackages.${system};
             modulesPath = "${nixpkgs}/nixos/modules";

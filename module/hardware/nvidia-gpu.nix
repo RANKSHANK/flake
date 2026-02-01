@@ -15,21 +15,25 @@ in
         "module_blacklist=nouveau"
       ];
     };
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [
+      "modesetting"
+      "nvidia"
+    ];
     hardware = {
+      graphics.enable = true;
       nvidia = {
         open = false;
-        modesetting.enable = true;
         powerManagement.enable = false;
-        nvidiaSettings = false;
-        forceFullCompositionPipeline = true;
-        package = config.boot.kernelPackages.nvidiaPackages.beta;
+        modesetting.enable = true;
+        nvidiaSettings = true;
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
         prime = {
           offload = {
             enable = true;
             enableOffloadCmd = true;
           };
-          sync.enable = false;
+          intelBusId = "PCI:0:2:0";
+          nvidiaBusId = "PCI:1:0:0";
         };
       };
       graphics = {

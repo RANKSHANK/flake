@@ -7,6 +7,7 @@
   inherit (pkgs.stdenv.hostPlatform) system;
   inherit (lib.attrsets) attrValues;
   inherit (lib.fileset) toSource unions;
+  inherit (lib.lists) flatten;
   inherit (inputs.mnw.lib) npinsToPlugins wrap;
 
   injectBaseColors = let
@@ -48,14 +49,16 @@ in wrap pkgs {
   '';
 
   plugins = {
-    start = npinsToPlugins pkgs ./startup.json;
+    start = flatten [
+      (npinsToPlugins pkgs ./startup.json)
+      pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies
+    ];
 
     opt =
       attrValues {
         inherit (inputs.self.packages.${system}) blink-cmp;
-        inherit (pkgs.vimPlugins.nvim-treesitter) withAllGrammars;
       }
-      ++ npinsToPlugins pkgs ./lazy.json;
+      ++ (npinsToPlugins pkgs ./lazy.json);
 
     dev.nvim = {
       pure = toSource {

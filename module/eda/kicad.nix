@@ -15,11 +15,11 @@ in
   mkModule "kicad" ["desktop" "cad"] {
     environment.systemPackages = attrValues {
       inherit (pkgs) kicad-unstable-small;
-      # inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) kicad; # OOM -_-
+      # inherit (inputs.nix-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system}) kicad; # OOM -_-
     };
     services.flatpak.packages = [
       # "flathub-beta:app/org.kicad.KiCad"
-      "flathub-beta:app/org.kicad.KiCad.Library.Packages3D/${pkgs.system}/beta"
+      "flathub-beta:app/org.kicad.KiCad.Library.Packages3D/${pkgs.stdenv.hostPlatform.system}/beta"
     ];
 
     home-manager.users.${user}.xdg.configFile."kicad/9.99/colors/stylix.json".text = let

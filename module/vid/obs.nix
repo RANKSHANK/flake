@@ -14,9 +14,9 @@ in
       enable = true;
       enableVirtualCamera = true;
       package = (
-        ternary (elem "nvidia" config.boot.kernelModules) (pkgs.obs-studio.override {
+        ternary (util.isEnabled "nvidia-gpu" config) (pkgs.obs-studio.override {
           cudaSupport = true;
-        }) {}
+        }) null
       );
       plugins = attrValues {
         inherit

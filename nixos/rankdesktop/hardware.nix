@@ -41,18 +41,5 @@ in {
 
   hardware = {
     enableAllFirmware = true;
-    nvidia = {
-      prime = {
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
-    };
-    graphics = {
-      enable = true;
-      # enable32Bit = true;
-      extraPackages = attrValues {
-        inherit (pkgs) libvdpau-va-gl;
-      };
-    };
   };
 }

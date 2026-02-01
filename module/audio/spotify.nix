@@ -14,7 +14,7 @@ in
       enable = true;
       enabledExtensions = attrValues {
         inherit
-          (inputs.spicetify.legacyPackages.${pkgs.system}.extensions)
+          (inputs.spicetify.legacyPackages.${pkgs.stdenv.hostPlatform.system}.extensions)
           adblock
           hidePodcasts
           keyboardShortcut

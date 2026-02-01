@@ -25,6 +25,13 @@ in
         '')
   )
   {
+  "kdenlive" = {
+    package = pkgs.kdePackages.kdenlive;
+    reason = "Broken build";
+    disabledModule = "kdenlive";
+    path = "/nix/store/c040h8xhq1gjlqsh10vs7l9jl3cxg95a-kdenlive-25.12.1";
+  };
+    # "satisfactory-mod-manager" = {
     # "spyder" = {
     #   package = pkgs.spyder;
     #   reason = "Missing setuptools.build_meta";

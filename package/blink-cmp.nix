@@ -12,7 +12,7 @@ in
 
     inherit src;
 
-    cargoHash = "sha256-pWBOPMUy/gXeujaowlp2I6kqD+Q95h+f9mXl231DN88=";
+    cargoHash = "sha256-Qdt8O7IGj2HySb1jxsv3m33ZxJg96Ckw26oTEEyQjfs=";
 
     # Cheers Gerg-L
 

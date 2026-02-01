@@ -1,4 +1,5 @@
 {
+  decrypted,
   lib,
   util,
   ...
@@ -8,7 +9,7 @@
   inherit (lib.strings) replaceStrings;
   inherit (lib.trivial) readFile;
   inherit (lib.types) attrs attrsOf listOf str;
-  inherit (util) isDecrypted ternary;
+  inherit (util) ternary;
 in {
   options = {
     termInit = mkOption {
@@ -86,9 +87,10 @@ in {
       type = str;
       description = "Ending of the URL for the server";
     };
+
   };
 
   config = {
-    baseURL = mkDefault (ternary isDecrypted (replaceStrings ["\n"] [""] (readFile ./domain.crypt.txt)) "local");
+    baseURL = mkDefault (ternary decrypted (replaceStrings ["\n"] [""] (readFile ./domain.crypt.txt)) "local");
   };
 }

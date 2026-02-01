@@ -1,10 +1,11 @@
 {
+  decrypted,
   lib,
   util,
   ...
 }: let
   inherit (lib.lists) flatten;
-  inherit (util) isDecrypted ternary;
+  inherit (util) ternary;
 in {
   imports = flatten [
     [
@@ -18,6 +19,6 @@ in {
       ./tor.nix
       ./vikunja.nix
     ]
-    (ternary isDecrypted ./security.crypt.nix [])
+    (ternary decrypted ./security.crypt.nix [])
   ];
 }

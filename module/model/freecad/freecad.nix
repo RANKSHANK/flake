@@ -14,7 +14,8 @@
 in
   mkModule "freecad" ["desktop" "cad"] {
     environment.systemPackages = attrValues {
-      inherit (inputs.nix-stable.legacyPackages.${pkgs.system}) freecad;
+      # inherit (inputs.nix-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system}) freecad;
+      inherit (pkgs) freecad;
     };
     home-manager.users.${user}.xdg.dataFile = {
       "FreeCAD/Mod/Stylix/Stylix/Stylix.cfg".text = callPackage ./cfg.nix args;

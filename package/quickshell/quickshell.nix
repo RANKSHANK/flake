@@ -20,7 +20,7 @@
 
   }) (util.fromNpins ./sources.json);
 in wrap pkgs {
-  quickshell = inputs.quickshell.packages.${pkgs.system}.quickshell.withModules [
+  quickshell = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.quickshell.withModules [
       pkgs.kdePackages.qtmultimedia
     ];
   sources = {

@@ -1,7 +1,14 @@
-{...}: {
+{
+  decrypted,
+  util,
+  ...
+}: let
+  inherit (util) ternary;
+in {
   imports = [
-    ./bookmarks.crypt.nix
     ./icons.nix
     ./options.nix
-  ];
+  ] ++ (ternary decrypted [
+    ./bookmarks.crypt.nix
+  ] []);
 }

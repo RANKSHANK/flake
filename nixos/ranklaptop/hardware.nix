@@ -21,14 +21,16 @@ in {
       horizontal = 1920;
       vertical = 1080;
       refreshRate = 60;
+      yPos = 1;
       xPos = 1;
     };
     c = {
-      connection = "HDMI-A-4";
-      horizontal = 1280;
-      vertical = 1024;
+      connection = "HDMI-A-1";
+      horizontal = 1920;
+      vertical = 1080;
       refreshRate = 60;
-      xPos = 2;
+      yPos = 1;
+      xPos = 0;
     };
   };
 
@@ -36,24 +38,11 @@ in {
     {
       name = "tablet-monitor-pen";
       transform = 0;
-      output = "HDMI-A-2";
+      output = "HDMI-A-1";
     }
   ];
 
   hardware = {
     enableAllFirmware = true;
-    nvidia = {
-      prime = {
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
-    };
-    graphics = {
-      enable = true;
-      # enable32Bit = true;
-      extraPackages = attrValues {
-        inherit (pkgs) libvdpau-va-gl;
-      };
-    };
   };
 }

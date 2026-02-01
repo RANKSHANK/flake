@@ -1,3 +1,11 @@
+vim.g._ts_force_sync_parsing = true
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = vim.treesitter.language._complete(),
+  group = vim.api.nvim_create_augroup("LoadTreesitter", {}),
+  callback = function()
+    vim.treesitter.start()
+  end,
+})
 local highlight = {
   "RainbowDelimiterRed",
   "RainbowDelimiterYellow",
@@ -8,28 +16,6 @@ local highlight = {
   "RainbowDelimiterCyan",
 }
 return {
-  {
-    "nvim-treesitter",
-    after = function()
-      require("nvim-treesitter.configs").setup({
-        modules = {},
-        sync_install = false,
-        ignore_install = {},
-        ensure_installed = {},
-        auto_install = false,
-        indent = {
-          enable = true,
-        },
-        context_commentstring = {
-          enable = true,
-        },
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
-        },
-      })
-    end,
-  },
   {
     "rainbow-delimiters.nvim",
     after = function()
@@ -42,7 +28,6 @@ return {
     "indent-blankline.nvim",
     event = "DeferredUIEnter",
     before = function()
-      require("lz.n").trigger_load("nvim-treesitter")
       require("lz.n").trigger_load("rainbow-delimiters.nvim")
     end,
     after = function()
@@ -68,10 +53,6 @@ return {
   },
   {
     "nvim-treesitter-context",
-    event = "DeferredUIEnter",
-    before = function()
-      require("lz.n").trigger_load("nvim-treesitter")
-    end,
     after = function()
       require("treesitter-context").setup({
         enable = true,
@@ -85,15 +66,6 @@ return {
   },
   {
     "nvim-treesitter-textobjects",
-    event = "DeferredUIEnter",
-    before = function()
-      require("lz.n").trigger_load("nvim-treesitter")
-    end,
-    after = function()
-      require("nvim-treesitter.configs").setup({
-        textobjects = {},
-      })
-    end,
     binds = {},
   },
   {

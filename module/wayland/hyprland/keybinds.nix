@@ -33,11 +33,11 @@ in {
         "super, mouse:273, resizewindow"
       ];
       bind = flatten [
-        "super, q, killactive"
-        # "supershift, q, killactive"
-        # "super, q, easymotion, textcolor:rgba(${colors.base08}FF), action:hyprctl dispatch closewindow address:{}"
-        # "super, t, easymotion, action:hyprctl dispatch focuswindow address:{}"
-        # "super, b, easymotion, action:hyprctl dispatch focuswindow address:{}"
+        # "super, q, killactive"
+        "supershift, q, killactive"
+        "super, q, easymotion, textcolor:rgba(${colors.base08}FF), action:hyprctl dispatch closewindow address:{}"
+        "super, t, easymotion, action:hyprctl dispatch focuswindow address:{}"
+        "super, b, easymotion, action:hyprctl dispatch focuswindow address:{}"
         "super, h, movefocus, l"
         "super, j, movefocus, d"
         "super, k, movefocus, u"

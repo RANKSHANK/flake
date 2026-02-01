@@ -7,7 +7,7 @@
 in
   mkModule "flatpak" ["repo"] {
     imports = [
-      inputs.flatpak.nixosModule
+      inputs.flatpak.nixosModules.default
     ];
     xdg.portal.enable = true;
     services.flatpak = {

@@ -1,5 +1,6 @@
 {
   config,
+  decrypted,
   inputs,
   lib,
   pkgs,
@@ -11,7 +12,7 @@
   inherit (lib.meta) getExe;
   inherit (lib.strings) splitString;
   inherit (lib.trivial) pathExists;
-  inherit (util) isDecrypted getModuleName listNixFilesRecursively mkModule ternary;
+  inherit (util) getModuleName listNixFilesRecursively mkModule ternary;
 in
   mkModule "glance" ["server"] {
     services = {
@@ -37,7 +38,7 @@ in
                   inherit config inputs lib util widgets;
                 }
                 // {name = head (splitString "." (getModuleName page));})
-            ) (ternary (pathExists ./pages) (ternary isDecrypted (listNixFilesRecursively ./pages) []) [])));
+            ) (ternary (pathExists ./pages) (ternary decrypted (listNixFilesRecursively ./pages) []) [])));
         };
       };
 
