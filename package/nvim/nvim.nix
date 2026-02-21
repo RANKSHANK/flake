@@ -56,7 +56,8 @@ in wrap pkgs {
 
     opt =
       attrValues {
-        inherit (inputs.self.packages.${system}) blink-cmp;
+        # inherit (inputs.self.packages.${system}) blink-cmp;
+        inherit (pkgs.vimPlugins) blink-cmp;
       }
       ++ (npinsToPlugins pkgs ./lazy.json);
 

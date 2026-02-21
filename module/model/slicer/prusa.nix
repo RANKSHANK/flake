@@ -1,14 +1,15 @@
 {
-  lib,
   pkgs,
   util,
   ...
 }: let
-  inherit (lib.attrsets) attrValues;
-  inherit (util) mkModule;
+  inherit (util) mkModule fromNpins;
 in
   mkModule "prusa" ["desktop" "cad"] {
-    environment.systemPackages = attrValues {
-      inherit (pkgs) prusa-slicer;
-    };
+    environment.systemPackages = [
+      (pkgs.prusa-slicer.overrideAttrs (orig: {
+        src = (fromNpins ../../../package/packages.json)."PrusaSlicer";
+        doCheck = false;
+      }))
+    ];
   }

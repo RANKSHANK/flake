@@ -65,5 +65,6 @@ in
     nix = mkIf decrypted {
       distributedBuilds = true;
       buildMachines = keys.builder;
+      settings.trusted-users = [ "nixremote" ];
     };
   }

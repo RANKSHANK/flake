@@ -1,5 +1,44 @@
 {
   "pins": {
+    "BrickLayers": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "GeekDetour",
+        "repo": "BrickLayers"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "59e581e3643c1aeacb8f10af4789f20e261ba4b5",
+      "url": "https://github.com/GeekDetour/BrickLayers/archive/59e581e3643c1aeacb8f10af4789f20e261ba4b5.tar.gz",
+      "hash": "sha256-gARSpeB1JWoMpHKUNXg4duDnh8cuXu0vRJxP3xJPytE="
+    },
+    "MZ_Flow_Temp_processor": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Yury-MonZon",
+        "repo": "MZ_Flow_Temp_processor"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "eed7b64466983eec2701ebac6d9ca47f59e803ff",
+      "url": "https://github.com/Yury-MonZon/MZ_Flow_Temp_processor/archive/eed7b64466983eec2701ebac6d9ca47f59e803ff.tar.gz",
+      "hash": "sha256-q+K2+m9M7pGG4b+KCJcMppcamB/4aXElaZWT8oRjwX8="
+    },
+    "PrusaSlicer": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "mjonuschat",
+        "repo": "PrusaSlicer"
+      },
+      "branch": "boss",
+      "submodules": false,
+      "revision": "e7f522d2ac7336bdc0f507d0bbf7feaaf67eda59",
+      "url": "https://github.com/mjonuschat/PrusaSlicer/archive/e7f522d2ac7336bdc0f507d0bbf7feaaf67eda59.tar.gz",
+      "hash": "sha256-Pg0x+ZjFeWLtgwEnRt2R0kjN05cJLvp7orZNJwpXD0k="
+    },
     "blink.cmp": {
       "type": "Git",
       "repository": {
@@ -9,9 +48,22 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "b137f63d89d0285ca76eed12e1923220e0aff8c1",
-      "url": "https://github.com/Saghen/blink.cmp/archive/b137f63d89d0285ca76eed12e1923220e0aff8c1.tar.gz",
-      "hash": "sha256-28s+BWRW9krrAvCUqyMUHf8YXNkov3CmdWOFzei1cqs="
+      "revision": "b4b7cbb52bab6c716b317433fa9348a070cccee5",
+      "url": "https://github.com/Saghen/blink.cmp/archive/b4b7cbb52bab6c716b317433fa9348a070cccee5.tar.gz",
+      "hash": "sha256-HqpJawxncYUzCayV5wPxZ141n7vLh9HyAlDwpNNHynE="
+    },
+    "kalico": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "KalicoCrew",
+        "repo": "kalico"
+      },
+      "branch": "bleeding-edge-v2",
+      "submodules": false,
+      "revision": "107302c468c2e692e7bcb1e8c66032782c4ad555",
+      "url": "https://github.com/KalicoCrew/kalico/archive/107302c468c2e692e7bcb1e8c66032782c4ad555.tar.gz",
+      "hash": "sha256-hNH6bFgSI3xIJQx5M1o7h5SMSP09mLdJwDmZtEn0p/E="
     }
   },
   "version": 7

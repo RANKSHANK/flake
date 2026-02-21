@@ -5,7 +5,7 @@
 }: let
   inherit (util) mkModule;
 in
-  mkModule "tor" ["connectivity"] {
+  mkModule "tor" [ "connectivity" "server" ] {
     services = {
       tor = {
         enable = true;
@@ -34,9 +34,9 @@ in
         enable = true;
         enableTor = true;
       };
-      Resolve = {
+      resolved = {
         enable = true;
-        FallbackDns = [""];
+        fallbackDns = [""];
       };
       networkd-dispatcher = {
         enable = true;

@@ -2,9 +2,11 @@
   pkgs,
   lib,
   user,
+  util,
   ...
 }: let
   inherit (lib.modules) mkForce mkIf;
+  inherit (util) isEnabled mkIfEnabled ternary;
 in {
   stylix = {
     enable = true;
@@ -18,6 +20,8 @@ in {
       popups = 0.5;
       terminal = 0.9;
     };
+    } // (ternary (isEnabled "" ["desktop"]) {
+
     fonts = import ./font.nix { inherit pkgs; };
     cursor = {
       package = pkgs.phinger-cursors;
@@ -26,10 +30,10 @@ in {
       name = "phinger-cursors-dark";
       # name = "material-dark";
     };
-  };
+  } {});
 
   home-manager.users = mkIf (user != null) {
-    ${user}.gtk.iconTheme = {
+    ${user}.gtk.iconTheme = mkIfEnabled "" ["desktop"]{
       package = pkgs.beauty-line-icon-theme;
       name = "BeautyLine";
     };

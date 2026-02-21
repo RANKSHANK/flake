@@ -9,9 +9,12 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  nix.settings.extra-platforms = [ "aarch64-linux" "arm-linux" ];
+
   boot = {
     binfmt.emulatedSystems = [
       "armv7l-linux"
+      "aarch64-linux"
     ];
     supportedFilesystems = [
       "btrfs"

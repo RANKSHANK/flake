@@ -25,19 +25,12 @@ in
         '')
   )
   {
-  "kdenlive" = {
-    package = pkgs.kdePackages.kdenlive;
-    reason = "Broken build";
-    disabledModule = "kdenlive";
-    path = "/nix/store/c040h8xhq1gjlqsh10vs7l9jl3cxg95a-kdenlive-25.12.1";
-  };
-    # "satisfactory-mod-manager" = {
-    # "spyder" = {
-    #   package = pkgs.spyder;
-    #   reason = "Missing setuptools.build_meta";
-    #   disabledModule = "spyder";
-    #   path = "/nix/store/r24rxgm82zn9kipm7z1hd6x5nnvp85a2-python3.13-spyder-6.1.0a2";
-    # };
+  # "kdenlive" = {
+  #   package = pkgs.kdePackages.kdenlive;
+  #   reason = "Broken build";
+  #   disabledModule = "kdenlive";
+  #   path = "/nix/store/plvss0zfavc7k030rxizlmg08mcrds35-kdenlive-25.12.1";
+  # };
     # "satisfactory-mod-manager" = {
     #   package = pkgs.satisfactorymodmanager;
     #   reason = "qt5-webengine CVE";

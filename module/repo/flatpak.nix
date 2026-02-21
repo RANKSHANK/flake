@@ -5,7 +5,7 @@
 }: let
   inherit (util) mkModule;
 in
-  mkModule "flatpak" ["repo"] {
+  mkModule "flatpak" ["repo" "desktop"] {
     imports = [
       inputs.flatpak.nixosModules.default
     ];

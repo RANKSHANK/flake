@@ -165,8 +165,8 @@ in
               "windowsOut,1,0.25,default,popin 60%"
               "windowsMove,1,0.25,move"
               "borderangle,1,100,border,loop"
-              "hyprfocusIn, 1, 0.25, focusIn"
-              "hyprfocusOut, 1, 0.25, focusOut"
+              # "hyprfocusIn, 1, 0.25, focusIn"
+              # "hyprfocusOut, 1, 0.25, focusOut"
             ];
           };
 

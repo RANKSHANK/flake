@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (builtins) attrValues;
-  inherit (util) mkModule;
+  inherit (util) mkModule isEnabled ternary;
 in
   mkModule "audio" [] {
     exec-once = [
@@ -91,8 +91,8 @@ in
     };
 
     environment = {
-      systemPackages = attrValues {
-        inherit (pkgs) playerctl pulsemixer qpwgraph;
-      };
+      systemPackages = attrValues ({
+        inherit (pkgs) playerctl pulsemixer;
+      } // (ternary (isEnabled "" [ "desktop" ]) { inherit (pkgs) qpwgraph;} {}));
     };
   }

@@ -9,6 +9,8 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     nix-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     disko.url = "github:nix-community/disko";
@@ -41,7 +43,8 @@
 
     mnw.url = "github:Gerg-L/mnw";
 
-    mqsw.url = "/home/rankshank/projects/mqsw";
+    mqsw.url = "github:RANKSHANK/mqsw";
+    #"/home/rankshank/projects/mqsw";
 
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
@@ -90,7 +93,7 @@
     inherit (lib.strings) hasSuffix removeSuffix splitString;
     inherit (lib.trivial) pipe;
 
-    util = import ./util {lib = nixpkgs.lib;};
+    util = import ./util {inherit (nixpkgs) lib;};
 
     inherit (util) fromNpins findTopLevelDirectories listNixFilesRecursively readFileOrDefault ternary;
 
@@ -116,7 +119,8 @@
       eachSys (system: let
         pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {
-          inherit self pkgs inputs util;
+          inherit self pkgs inputs;
+          util = util // (import ./util/packages-util.nix {inherit pkgs lib util;});
           fromNpins = fromNpins ./package/packages.json;
         };
         pack = name: val:
@@ -140,7 +144,7 @@
         user = readFileOrDefault "${path}/user" "rankshank";
         system = readFileOrDefault "${path}/architecture" "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
-        util = nixpkgs.lib.extend (_: final:
+        util = nixpkgs.lib.extend (_: _: (
           import ./util {
             inherit lib;
             enables = let
@@ -153,7 +157,7 @@
                   (pkgs.callPackage ./util/broken-modules.nix {inherit util inputs;})
                 ];
               };
-          });
+          }) // import ./util/packages-util.nix { inherit lib pkgs; });
       in
         lib.nixosSystem {
           specialArgs = {

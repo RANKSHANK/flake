@@ -1,0 +1,18 @@
+{
+  "pins": {
+    "klipper-led_effect": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "julianschill",
+        "repo": "klipper-led_effect"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "266f1049c7172c2fba0da4a52314dcfc0c3bb56f",
+      "url": "https://github.com/julianschill/klipper-led_effect/archive/266f1049c7172c2fba0da4a52314dcfc0c3bb56f.tar.gz",
+      "hash": "sha256-ZGYk1Qdm7GFEiS7xepjqIlo1L/AZZKEEIOWdG9UA+4I="
+    }
+  },
+  "version": 7
+}
