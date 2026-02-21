@@ -12,6 +12,19 @@
       "revision": "b137f63d89d0285ca76eed12e1923220e0aff8c1",
       "url": "https://github.com/Saghen/blink.cmp/archive/b137f63d89d0285ca76eed12e1923220e0aff8c1.tar.gz",
       "hash": "sha256-28s+BWRW9krrAvCUqyMUHf8YXNkov3CmdWOFzei1cqs="
+    },
+    "kalico": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "KalicoCrew",
+        "repo": "kalico"
+      },
+      "branch": "bleeding-edge-v2",
+      "submodules": false,
+      "revision": "107302c468c2e692e7bcb1e8c66032782c4ad555",
+      "url": "https://github.com/KalicoCrew/kalico/archive/107302c468c2e692e7bcb1e8c66032782c4ad555.tar.gz",
+      "hash": "sha256-hNH6bFgSI3xIJQx5M1o7h5SMSP09mLdJwDmZtEn0p/E="
     }
   },
   "version": 7

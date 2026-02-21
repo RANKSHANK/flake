@@ -39,19 +39,6 @@
       "url": "https://github.com/wsdjeg/bufdel.nvim/archive/da193ec9ab87b6b5032b12466bb221f377aa762d.tar.gz",
       "hash": "sha256-c/v13epgRoS81RPBti0rQjvznD0Fr+zkCbiMRqGr52g="
     },
-    "bufferline.nvim": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "akinsho",
-        "repo": "bufferline.nvim"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3",
-      "url": "https://github.com/akinsho/bufferline.nvim/archive/655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3.tar.gz",
-      "hash": "sha256-ae4MB6+6v3awvfSUWlau9ASJ147ZpwuX1fvJdfMwo1Q="
-    },
     "harpoon": {
       "type": "Git",
       "repository": {
