@@ -7,8 +7,8 @@
   inherit (lib.attrsets) attrValues;
   inherit (util) mkModule;
 in
-  mkModule "aseprite" ["desktop" "graphics"] {
+  mkModule "awww" ["desktop" "wayland"] {
     environment.systemPackages = attrValues {
-      inherit (pkgs) aseprite;
+      inherit (pkgs) awww;
     };
   }

@@ -88,6 +88,7 @@ in
       stylix.targets.hyprpaper.enable = mkForce false;
       services.hyprpaper.enable = mkForce false;
       wayland.windowManager.hyprland = {
+        configType = "hyprlang";
         enable = true;
         xwayland.enable = true;
 
@@ -123,7 +124,7 @@ in
             border_size = 0;
             gaps_in = 0;
             gaps_out = 0;
-            layout = "dwindle";
+            # layout = "dwindle";
           };
           render = {
             # explicit_sync = false;

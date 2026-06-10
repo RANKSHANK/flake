@@ -1,5 +1,31 @@
 {
   "pins": {
+    "cartographer3d-plugin": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Cartographer3D",
+        "repo": "cartographer3d-plugin"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "46142bf871093705dea33a3a0d21ea46ead98f6b",
+      "url": "https://github.com/Cartographer3D/cartographer3d-plugin/archive/46142bf871093705dea33a3a0d21ea46ead98f6b.tar.gz",
+      "hash": "sha256-Fv4QHFD5PfSWOWxBW1linIboUQrk7GwSiPn4xYFv+QE="
+    },
+    "klippain-shaketune": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Frix-x",
+        "repo": "klippain-shaketune"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "354ee4be6db218715239f7b9411c2c37fdea23dd",
+      "url": "https://github.com/Frix-x/klippain-shaketune/archive/354ee4be6db218715239f7b9411c2c37fdea23dd.tar.gz",
+      "hash": "sha256-ztgLp8PUJafUBt/PdlGj5x7ER5vxw4uIfh3/3Cbl8Ps="
+    },
     "klipper-led_effect": {
       "type": "Git",
       "repository": {
@@ -14,5 +40,5 @@
       "hash": "sha256-ZGYk1Qdm7GFEiS7xepjqIlo1L/AZZKEEIOWdG9UA+4I="
     }
   },
-  "version": 7
+  "version": 8
 }

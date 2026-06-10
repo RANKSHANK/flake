@@ -18,42 +18,42 @@
   inherit (lib.attrsets) attrValues hasAttr mapAttrs' nameValuePair;
   inherit (lib.lists) flatten;
   inherit (lib.strings) concatStringsSep substring removeSuffix;
-  combinedPythonPackages = flatten [
-    (extraPythonPackages python3.pythonPackages)
+
+  combinedPythonPackages = py: (flatten [
+    (extraPythonPackages py)
     (map (plugin:
       if hasAttr "extraPythonPackages" plugin then
-        (plugin.extraPythonPackages python3.pythonPackages)
+        (plugin.extraPythonPackages py)
       else
         []
     ) plugins)
-  ];
+  ]);
+
+  python = python3.withPackages (py: (
+    attrValues {
+      inherit (py)
+        cffi
+        greenlet
+        jinja2
+        markupsafe
+        numpy
+        python-can
+        pyserial
+      ;
+    } ++ combinedPythonPackages py
+  ));
   kalico = stdenv.mkDerivation rec {
     pname = "kalico";
     inherit version;
     inherit src;
 
     nativeBuildInputs = [
-      (python3.withPackages (py: attrValues {
-        inherit (py)
-          cffi
-        ;
-      }))
+      python
       makeShellWrapper
-      combinedPythonPackages
     ];
 
     buildInputs = [
-      (python3.withPackages (py: (attrValues {
-        inherit (py)
-          cffi
-          greenlet
-          jinja2
-          markupsafe
-          numpy
-          python-can
-          pyserial
-        ;
-      }) ++ combinedPythonPackages))
+      python
     ];
 
     postPatch = ''
@@ -62,13 +62,22 @@
 
     buildPhase = /* bash */ ''
       runHook preBuild
+
+      ${concatStringsSep "\n" (map (plugin: ''
+        if [ -d ${plugin}/lib/klippy/extras ]; then
+          cp -R --no-preserve=mode,ownership ${plugin}/lib/klippy/extras/. ./klippy/extras/
+        fi
+        if [ -d ${plugin}/lib/klippy/plugins ]; then
+          cp -R --no-preserve=mode,ownership ${plugin}/lib/klippy/plugins/. ./klippy/plugins/
+        fi
+      '') plugins)}
+
+      chmod -R u+rwX ./klippy/extras ./klippy/plugins
+      find ./klippy -type d -name __pycache__ -prune -exec rm -rf {} +
+
       python -m compileall ./klippy
       python ./klippy/chelper/__init__.py
 
-      ${concatStringsSep "\n" (map (plugin: ''
-        [ -d ${plugin}/lib/klippy/extras ] && cp -r ${plugin}/lib/klippy/extras  ./klippy
-        [ -d ${plugin}/lib/klippy/plugins ] && cp -r ${plugin}/lib/klippy/plugins ./klippy
-      '') plugins)}
       runHook postBuild
     '';
 
@@ -99,7 +108,8 @@
     echo "${version}" > $out/lib/${pname}/klippy/.version
 
     mkdir -p $out/bin
-    makeShellWrapper $out/lib/${pname}/klippy/klippy.py $out/bin/klippy
+    makeShellWrapper ${python}/bin/python $out/bin/klippy \
+      --add-flags "$out/lib/${pname}/klippy/klippy.py"
 
     for script in ${concatStringsSep " " klipperPythonScripts}; do
       substitute "$pythonScriptWrapper" "$out/bin/klipper-$script" \
@@ -111,6 +121,7 @@
 
     runHook postInstall
     '';
+
   };
  in
 kalico // {

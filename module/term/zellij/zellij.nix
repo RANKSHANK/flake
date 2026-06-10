@@ -6,11 +6,8 @@
   util,
   ...
 }: let
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkForce;
-  inherit (lib.options) mkOption;
-  inherit (lib.types) listOf str;
-  inherit (util) concatLines mkModule;
+  inherit (util) mkModule;
 in
   mkModule "zellij" ["shell"] {
     home-manager.users.${user} = {

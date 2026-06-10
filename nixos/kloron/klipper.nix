@@ -13,10 +13,31 @@
   inherit (util) listTargetFilesRecursively;
   inherit (self.packages.${pkgs.stdenv.system}) kalico;
 in {
+  nixpkgs.overlays = [
+    (_: prev: {
+      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+        (_: pyPrev: {
+          mpv = pyPrev.mpv.overridePythonAttrs (old: {
+            preCheck = (old.preCheck or "") + ''
+              export HOME=$TMPDIR/home
+              export XDG_CACHE_HOME=$TMPDIR/cache
+              mkdir -p "$HOME" "$XDG_CACHE_HOME"
+            '';
+
+            disabledTests = (old.disabledTests or []) ++ [
+              "test_sub_add"
+            ];
+          });
+        })
+      ];
+    })
+  ];
   services = {
     klipper = {
       package = kalico.override (_: { plugins = attrValues {
         inherit (kalico.kalicoPlugins)
+          cartographer3d-plugin
+          klipain-shaketune
           klipper-led-effect
         ;
       };});
@@ -26,9 +47,11 @@ in {
       group = "klipper";
       configDir = "/etc/klipper";
       configFile = ./klipper/printer.cfg;
+      logFile = "/var/lib/moonraker/logs/klippy.log";
     };
     moonraker = {
       inherit (config.services.klipper) group user;
+      configDir = "/var/lib/moonraker/config/";
       enable = true;
       address = "0.0.0.0";
       allowSystemControl = true; # power and systemd units

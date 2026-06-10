@@ -1,4 +1,5 @@
-{lib, ...}: let
+{lib, pkgs, ...}: let
+  inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkBefore;
   inherit (lib.lists) flatten;
   rootDisk = "wwn-0x5002538870016672";
@@ -14,13 +15,35 @@
     ];
 in {
   boot.initrd = {
-    postDeviceCommands = mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
-    luks = {
-      devices."luks-root" = {
-        allowDiscards = true;
-        preLVM = true;
+    enable = true;
+    services.btrfs-subvol-cycler = {
+      description = "Subvol cycling for impermanence";
+      wantedBy = [ "initrd.target" ];
+      requires = [ "systemd-cryptsetup@luks\\x2droot.service" ];
+      after = [
+        "systemd-cryptsetup@luks\\x2droot.service"
+        "systemd-hibernate-resume.service"
+      ];
+      before = [
+        "sysroot.mount"
+        "initrd-root-fs.target"
+      ];
+      unitConfig.DefaultDependenceies = false;
+      serviceConfig = {
+        Type = "oneshot";
       };
-      reusePassphrases = true;
+      path = attrValues {
+        inherit (pkgs)
+          btrfs-progs
+          coreutils
+          findutils
+          gawk
+          gnugrep
+          gnused
+          util-linux
+        ;
+      };
+      script = import ../../script/btrfs-subvol-cylcler.nix "luks-root";
     };
   };
 
@@ -70,6 +93,10 @@ in {
                     };
                   };
                 };
+                settings = {
+                  allowDiscards = true;
+                  crypttabExtraOpts = [ "password-cache=yes" ];
+                };
               };
             };
           };
@@ -94,6 +121,10 @@ in {
                       mountpoint = "/nix";
                       mountOptions = mtOpts "nix" [];
                     };
+                  settings = {
+                    allowDiscards = true;
+                    crypttabExtraOpts = [ "password-cache=yes" ];
+                  };
                   };
                 };
               };
@@ -124,6 +155,9 @@ in {
                       mountpoint = "/persist";
                       mountOptions = mtOpts "persist" [];
                     };
+                  };
+                  settings = {
+                    crypttabExtraOpts = [ "password-cache=yes" ];
                   };
                 };
               };

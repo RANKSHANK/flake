@@ -59,6 +59,7 @@ in
       enable = true;
       userDirs = {
         enable = true;
+        setSessionVariables = true;
         createDirectories = true;
         desktop = "$HOME/.cache/desktop";
         documents = "$HOME/documents";

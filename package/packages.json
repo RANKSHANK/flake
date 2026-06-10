@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "eed7b64466983eec2701ebac6d9ca47f59e803ff",
-      "url": "https://github.com/Yury-MonZon/MZ_Flow_Temp_processor/archive/eed7b64466983eec2701ebac6d9ca47f59e803ff.tar.gz",
-      "hash": "sha256-q+K2+m9M7pGG4b+KCJcMppcamB/4aXElaZWT8oRjwX8="
+      "revision": "fb82c31fce4cbd285698d6f686ec22ad9f941adb",
+      "url": "https://github.com/Yury-MonZon/MZ_Flow_Temp_processor/archive/fb82c31fce4cbd285698d6f686ec22ad9f941adb.tar.gz",
+      "hash": "sha256-lQ04pDpCPAik3ys/DsTqhoo8EcB35bMWJGynFJ9eHGQ="
     },
     "PrusaSlicer": {
       "type": "Git",
@@ -35,9 +35,9 @@
       },
       "branch": "boss",
       "submodules": false,
-      "revision": "e7f522d2ac7336bdc0f507d0bbf7feaaf67eda59",
-      "url": "https://github.com/mjonuschat/PrusaSlicer/archive/e7f522d2ac7336bdc0f507d0bbf7feaaf67eda59.tar.gz",
-      "hash": "sha256-Pg0x+ZjFeWLtgwEnRt2R0kjN05cJLvp7orZNJwpXD0k="
+      "revision": "9bf786b6afa3aa173b1fffe117b67447a6b9fd99",
+      "url": "https://github.com/mjonuschat/PrusaSlicer/archive/9bf786b6afa3aa173b1fffe117b67447a6b9fd99.tar.gz",
+      "hash": "sha256-zHvbkblghIm2KxfqbuGKfbOE0YSQjBHRVDsXeHCsRTs="
     },
     "blink.cmp": {
       "type": "Git",
@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "b4b7cbb52bab6c716b317433fa9348a070cccee5",
-      "url": "https://github.com/Saghen/blink.cmp/archive/b4b7cbb52bab6c716b317433fa9348a070cccee5.tar.gz",
-      "hash": "sha256-HqpJawxncYUzCayV5wPxZ141n7vLh9HyAlDwpNNHynE="
+      "revision": "3db7326f54b73df4789e0fd6274bedda33975fea",
+      "url": "https://github.com/Saghen/blink.cmp/archive/3db7326f54b73df4789e0fd6274bedda33975fea.tar.gz",
+      "hash": "sha256-xIPTQD/08t8v8gxF3+WMWmQ3mOUs+B3kr1I+QSO9K7k="
     },
     "kalico": {
       "type": "Git",
@@ -66,5 +66,5 @@
       "hash": "sha256-hNH6bFgSI3xIJQx5M1o7h5SMSP09mLdJwDmZtEn0p/E="
     }
   },
-  "version": 7
+  "version": 8
 }

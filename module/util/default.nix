@@ -6,7 +6,6 @@
   inherit (util) ternary isEnabled;
 in {
   imports = lib.flatten [
-    ./bitwarden.nix
     ./btop.nix
     ./direnv.nix
     ./git.nix

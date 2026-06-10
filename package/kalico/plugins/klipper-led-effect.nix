@@ -16,8 +16,8 @@ in stdenv.mkDerivation {
 
   installPhase = ''
     runHook preInstall
-    mkdir -p $out/lib/klippy/extras
-    cp $src/src/led_effect.py $out/lib/klippy/extras/
+    mkdir -p $out/lib/klippy/plugins
+    cp $src/src/led_effect.py $out/lib/klippy/plugins/
     runHook postInstall
   '';
 

@@ -4,6 +4,7 @@
     "ssh"
     "netmanager"
     "tailscale"
+    "avahi"
   ];
 
   disabledModules = [

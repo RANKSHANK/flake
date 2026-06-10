@@ -41,9 +41,6 @@
         "ums_realtek"
         "sd_mod"
       ];
-      luks = {
-        reusePassphrases = true;
-      };
     };
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
     kernelModules = [

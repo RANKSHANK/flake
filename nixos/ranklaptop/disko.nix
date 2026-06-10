@@ -1,4 +1,5 @@
-{lib, ...}: let
+{lib, pkgs, ...}: let
+  inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkBefore;
   inherit (lib.lists) flatten;
   rootDisk = "nvme0n1";
@@ -7,15 +8,38 @@
   mountOptions = ["noatime" "compress=zstd" "nodiratime" "discard"];
   extraArgs = ["-f"];
 in {
-  boot.initrd = {
-    postDeviceCommands = mkBefore (import ../../script/btrfs-subvol-cylcler.nix "luks-root");
-    luks.devices."luks-root" = {
-      # device = "/dev/disk/by-partlabel/disk-${rootDisk}-luks";
-      allowDiscards = true;
-      preLVM = true;
+  boot.initrd.systemd = {
+    enable = true;
+    services.btrfs-subvol-cycler = {
+      description = "Subvol cycling for impermanence";
+      wantedBy = [ "initrd.target" ];
+      requires = [ "systemd-cryptsetup@luks\\x2droot.service" ];
+      after = [
+        "systemd-cryptsetup@luks\\x2droot.service"
+        "systemd-hibernate-resume.service"
+      ];
+      before = [
+        "sysroot.mount"
+        "initrd-root-fs.target"
+      ];
+      unitConfig.DefaultDependenceies = false;
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      path = attrValues {
+        inherit (pkgs)
+          btrfs-progs
+          coreutils
+          findutils
+          gawk
+          gnugrep
+          gnused
+          util-linux
+        ;
+      };
+      script = import ../../script/btrfs-subvol-cylcler.nix "luks-root";
     };
   };
-
   disko.devices = {
     disk = {
       ${rootDisk} = {
@@ -78,6 +102,10 @@ in {
                     };
                   };
                 };
+                settings = {
+                  allowDiscards = true;
+                  crypttabExtraOpts = [ "password-cache=yes" ];
+                };
               };
             };
           };
@@ -103,6 +131,10 @@ in {
                       inherit mountOptions;
                     };
                   };
+                };
+                settings = {
+                  allowDiscards = true;
+                  crypttabExtraOpts = [ "password-cache=yes" ];
                 };
               };
             };
